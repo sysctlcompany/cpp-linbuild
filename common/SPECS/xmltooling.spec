@@ -1,0 +1,213 @@
+Name:		xmltooling
+Version:	3.0.4
+Release:	1
+Summary:	OpenSAML XML Processing library
+Group:		Development/Libraries/C and C++
+Vendor:		Shibboleth Consortium
+License:	Apache-2.0
+URL:		http://www.opensaml.org/
+Source:		%{name}-%{version}.tar.bz2
+BuildRoot:	%{_tmppath}/%{name}-%{version}-root
+BuildRequires:  libxerces-c-devel >= 3.2
+BuildRequires:  libxml-security-c-devel >= 2.0.0
+%{?_with_log4cpp:BuildRequires: liblog4cpp-devel >= 1.0}
+%{!?_with_log4cpp:BuildRequires: liblog4shib-devel >= 1.0.4}
+BuildRequires: gcc-c++, pkgconfig, zlib-devel, openssl-devel, boost-devel >= 1.32.0
+%if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} >= 1
+BuildRequires: libcurl-openssl-devel >= 7.21.7
+Requires: libcurl-openssl >= 7.21.7
+%else
+BuildRequires: curl-devel >= 7.10.6
+%endif
+%{!?_without_doxygen:BuildRequires: doxygen}
+%if "%{_vendor}" == "redhat"
+BuildRequires: redhat-rpm-config
+%endif
+
+%if 0%{?rhel} == 8
+BuildRequires: gdb
+%endif
+
+%if "%{_vendor}" == "suse"
+%define pkgdocdir %{_docdir}/%{name}
+%else
+%define pkgdocdir %{_docdir}/%{name}-%{version}
+%endif
+
+# Prevent the RHEL/etc 6/7 package from requiring a vanilla libcurl.
+%if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} >= 1
+%filter_from_requires /libcurl\.so\..*/d
+%filter_setup
+%endif
+
+%description
+The XMLTooling library contains generic XML parsing and processing
+classes based on the Xerces-C DOM. It adds more powerful facilities
+for declaring element- and type-specific API and implementation
+classes to add value around the DOM, as well as signing and encryption
+support.
+
+%package -n libxmltooling8
+Summary:    OpenSAML XMLTooling library
+Group:      Development/Libraries/C and C++
+Provides:   xmltooling = %{version}-%{release}
+Obsoletes:  xmltooling < %{version}-%{release}
+%if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} >= 1
+Requires: libcurl-openssl >= 7.21.7
+%endif
+
+%description -n libxmltooling8
+The XMLTooling library contains generic XML parsing and processing
+classes based on the Xerces-C DOM. It adds more powerful facilities
+for declaring element- and type-specific API and implementation
+classes to add value around the DOM, as well as signing and encryption
+support.
+
+This package contains just the shared library.
+
+%package -n libxmltooling-devel
+Summary:	XMLTooling development Headers
+Group:		Development/Libraries/C and C++
+Requires:	libxmltooling8 = %{version}-%{release}
+Provides:	xmltooling-devel = %{version}-%{release}
+Obsoletes:	xmltooling-devel < %{version}-%{release}
+Requires:  libxerces-c-devel >= 3.2
+Requires: libxml-security-c-devel >= 2.0.0
+%{?_with_log4cpp:Requires: liblog4cpp-devel >= 1.0}
+%{!?_with_log4cpp:Requires: liblog4shib-devel >= 1.0.4}
+Requires: openssl-devel, boost-devel >= 1.32.0
+%if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} >= 1
+Requires: libcurl-openssl-devel >= 7.21.7
+%else
+Requires: curl-devel >= 7.10.6
+%endif
+
+%description -n libxmltooling-devel
+The XMLTooling library contains generic XML parsing and processing
+classes based on the Xerces-C DOM. It adds more powerful facilities
+for declaring element- and type-specific API and implementation
+classes to add value around the DOM, as well as signing and encryption
+support.
+
+This package includes files needed for development with XMLTooling.
+
+%package -n xmltooling-schemas
+Summary:	XMLTooling schemas and catalog
+Group:		Development/Libraries/C and C++
+
+%description -n xmltooling-schemas
+The XMLTooling library contains generic XML parsing and processing
+classes based on the Xerces-C DOM. It adds more powerful facilities
+for declaring element- and type-specific API and implementation
+classes to add value around the DOM, as well as signing and encryption
+support.
+
+This package includes XML schemas and related files.
+
+%prep
+%setup -q
+
+%build
+%if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} >= 1
+%configure %{?xmltooling_options} %{!?_without_xmlsec: --with-xmlsec} PKG_CONFIG_PATH=/opt/shibboleth/%{_lib}/pkgconfig
+%else
+%configure %{?xmltooling_options} %{!?_without_xmlsec: --with-xmlsec}
+%endif
+%{__make}
+
+%install
+%{__make} install DESTDIR=$RPM_BUILD_ROOT pkgdocdir=%{pkgdocdir}
+# Don't package unit tester if present.
+%{__rm} -f $RPM_BUILD_ROOT/%{_bindir}/xmltoolingtest
+
+%check
+%{__make} check
+
+%clean
+[ "$RPM_BUILD_ROOT" != "/" ] && %{__rm} -rf $RPM_BUILD_ROOT
+
+%post -n libxmltooling8 -p /sbin/ldconfig
+
+%postun -n libxmltooling8 -p /sbin/ldconfig
+
+%files -n libxmltooling8
+%defattr(-,root,root,-)
+%{_libdir}/*.so.*
+%exclude %{_libdir}/*.la
+
+%files -n xmltooling-schemas
+%defattr(-,root,root,-)
+%dir %{_datadir}/xml/xmltooling
+%{_datadir}/xml/xmltooling/*
+
+%files -n libxmltooling-devel
+%defattr(-,root,root,-)
+%{_includedir}/*
+%{_libdir}/*.so
+%{_libdir}/pkgconfig/xmltooling.pc
+%{_libdir}/pkgconfig/xmltooling-lite.pc
+%doc %{pkgdocdir}
+
+%changelog
+* Tue Nov 21 2017 Scott Cantor <cantor.2@osu.edu> - 3.0.0-1
+- Update soname
+- Require Xerces 3.2 as shipped by me on all platforms
+- Exclude libtool archives
+
+* Fri Jun 24 2016 Scott Cantor <cantor.2@osu.edu> - 1.6.0-1
+- Fix some lint issues
+- Update soname in package name
+
+* Thu Feb 26 2015 Scott Cantor <cantor.2@osu.edu> - 1.5.4-1
+- Require Xerces 3.1 even on older platforms
+- Add Amazon platform checks
+- Switch to bz2 source to avoid future SuSE issues
+
+* Tue May 13 2014 Ian Young <ian@iay.org.uk> - 1.5.3-1.2
+- Update package dependencies for RHEL/CentOS 7
+
+* Wed Dec 14 2011 Scott Cantor  <cantor.2@osu.edu>  - 1.5-1
+- Update lib package number.
+- Add boost-devel dependency.
+
+* Sun Jun 26 2011  Scott Cantor  <cantor.2@osu.edu>  - 1.4.2-1
+- Override curl build for RHEL6.
+
+* Tue Oct 26 2010  Scott Cantor  <cantor.2@osu.edu>  - 1.4-1
+- Update version
+- Add pkg-config support.
+- Sync package names for side by side install.
+- Adjust Xerces dependency name and Group setting
+- Split out schemas into separate subpackage
+
+* Mon Aug 31 2009  Scott Cantor  <cantor.2@osu.edu>  - 1.3-1
+- Bump soname for SUSE packaging.
+
+* Thu Aug 6 2009  Scott Cantor  <cantor.2@osu.edu>  - 1.2.1-1
+- SuSE conventions
+- Stop packaging unit tester
+
+* Wed Dec 3 2008  Scott Cantor  <cantor.2@osu.edu>  - 1.2-1
+- Bumping for minor update.
+- Fixing SuSE Xerces dependency name.
+
+* Tue Jul 1 2008  Scott Cantor  <cantor.2@osu.edu>  - 1.1-1
+- Bumping for minor update.
+
+* Mon Mar 17 2008  Scott Cantor  <cantor.2@osu.edu>  - 1.0-6
+- Official release.
+
+* Fri Jan 18 2008  Scott Cantor  <cantor.2@osu.edu>  - 1.0-5
+- Release candidate 1.
+
+* Thu Nov 08 2007  Scott Cantor  <cantor.2@osu.edu>  - 1.0-4
+- Second public beta.
+
+* Thu Aug 16 2007  Scott Cantor  <cantor.2@osu.edu>  - 1.0-3
+- First public beta.
+
+* Fri Jul 13 2007  Scott Cantor  <cantor.2@osu.edu>  - 1.0-2
+- Second alpha.
+
+* Wed Apr 12 2006  Scott Cantor  <cantor.2@osu.edu>  - 1.0-1
+- First SPEC file based on various versions in existence.
