@@ -1,0 +1,6 @@
+# vim droppings
+*.swp
+
+# proxy artifacts
+.*_image
+.*_products
