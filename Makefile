@@ -192,6 +192,7 @@ images: $(foreach platform,$(PLATFORMS),$(platform)-image)
 define build-component-platform
 $(1)_$(2)_token = $(srcdir).$(1)_$(2)_products
 $$($(1)_$(2)_token): $$($(2)_token) $(SOURCEDIR)/$$($(1)_DISTFILE) $(SPECDIR)/$$($(1)_COMPNAME).spec
+	mkdir -p $(srcdir)os/$(2)/products/{RPMS,SRPMS}
 	docker run -it --rm \
 		--mount type=bind,source=$(srcdir)os/$(2)/products,target=/opt/build/external/out \
 		--mount type=bind,source=$(srcdir)common,target=/opt/build/external/in \
