@@ -119,8 +119,9 @@ all: $(TARGETS)
 
 # Retreive the tarball for each component from its distfile URL
 define curl-distfile-component
-$(SOURCEDIR)/$$($(1)_DISTFILE):
-	(cd $(SOURCEDIR) && curl -O $$($(1)_URL))
+$$(SOURCEDIR)/$$($(1)_DISTFILE):
+	mkdir -p $$(SOURCEDIR)
+	(cd $$(SOURCEDIR) && curl -O $$($(1)_URL))
 endef
 
 $(foreach component,$(COMPONENTS),$(eval $(call curl-distfile-component,$(component))))
