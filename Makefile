@@ -206,6 +206,7 @@ $(foreach platform,$(PLATFORMS),$(foreach component,$(COMPONENTS),$(eval $(call 
 
 # TODO:
 #  update components to latest versions (opensaml 3.1.0, sp 3.1.0.2)
+#  delete stale products on version bump
 #  add a clean target
 #  teach each image to depend on the build scripts for that image
 #  refresh an affected image in the event one of its dependencies changes
