@@ -136,10 +136,9 @@ distfiles: $(foreach component,$(COMPONENTS),$(SOURCEDIR)/$($(component)_DISTFIL
 #
 
 PLATFORMS=\
+	centos6 \
 	centos7 \
 	centos8
-
-# XXX took centos6 out because it just went EoL and the upstream repos broke
 
 # To add a new platform, create the following
 #	os/$OS/

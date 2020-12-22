@@ -2,6 +2,8 @@ FROM centos:6.10
 
 MAINTAINER John W. O'Brien <john@saltant.com>
 
+COPY *.repo /etc/yum.repos.d/
+
 RUN yum -y update \
     && yum -y install \
         autoconf automake boost-devel chrpath doxygen gcc-c++ git groff \
@@ -29,6 +31,6 @@ RUN echo "%_rpmdir ${EXT_BASE}/out/RPMS" >> ~/.rpmmacros
 RUN echo "%_srcrpmdir ${EXT_BASE}/out/SRPMS" >> ~/.rpmmacros
 RUN echo "%packager PLACE HOLDER <USER@EXAMPLE.COM>" >> ~/.rpmmacros
 
-COPY . ${BUILD_BASE}
+COPY *.sh ${BUILD_BASE}/
 
 WORKDIR ${EXT_BASE}/in/SPECS
