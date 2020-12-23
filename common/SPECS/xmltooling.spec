@@ -1,5 +1,5 @@
 Name:		xmltooling
-Version:	3.0.4
+Version:	3.2.0
 Release:	1
 Summary:	OpenSAML XML Processing library
 Group:		Development/Libraries/C and C++
@@ -34,7 +34,7 @@ BuildRequires: gdb
 %define pkgdocdir %{_docdir}/%{name}-%{version}
 %endif
 
-# Prevent the RHEL/etc 6/7 package from requiring a vanilla libcurl.
+# Prevent the RHEL/etc 6+ package from requiring a vanilla libcurl.
 %if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} >= 1
 %filter_from_requires /libcurl\.so\..*/d
 %filter_setup
@@ -47,7 +47,7 @@ for declaring element- and type-specific API and implementation
 classes to add value around the DOM, as well as signing and encryption
 support.
 
-%package -n libxmltooling8
+%package -n libxmltooling10
 Summary:    OpenSAML XMLTooling library
 Group:      Development/Libraries/C and C++
 Provides:   xmltooling = %{version}-%{release}
@@ -56,7 +56,7 @@ Obsoletes:  xmltooling < %{version}-%{release}
 Requires: libcurl-openssl >= 7.21.7
 %endif
 
-%description -n libxmltooling8
+%description -n libxmltooling10
 The XMLTooling library contains generic XML parsing and processing
 classes based on the Xerces-C DOM. It adds more powerful facilities
 for declaring element- and type-specific API and implementation
@@ -68,7 +68,7 @@ This package contains just the shared library.
 %package -n libxmltooling-devel
 Summary:	XMLTooling development Headers
 Group:		Development/Libraries/C and C++
-Requires:	libxmltooling8 = %{version}-%{release}
+Requires:	libxmltooling10 = %{version}-%{release}
 Provides:	xmltooling-devel = %{version}-%{release}
 Obsoletes:	xmltooling-devel < %{version}-%{release}
 Requires:  libxerces-c-devel >= 3.2
@@ -126,11 +126,11 @@ This package includes XML schemas and related files.
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && %{__rm} -rf $RPM_BUILD_ROOT
 
-%post -n libxmltooling8 -p /sbin/ldconfig
+%post -n libxmltooling10 -p /sbin/ldconfig
 
-%postun -n libxmltooling8 -p /sbin/ldconfig
+%postun -n libxmltooling10 -p /sbin/ldconfig
 
-%files -n libxmltooling8
+%files -n libxmltooling10
 %defattr(-,root,root,-)
 %{_libdir}/*.so.*
 %exclude %{_libdir}/*.la
@@ -149,6 +149,15 @@ This package includes XML schemas and related files.
 %doc %{pkgdocdir}
 
 %changelog
+* Tue Dec 2 2020 Scott Cantor <cantor.2@osu.edu> - 3.2.0-1
+- Version bump
+
+* Mon Feb 3 2020 Scott Cantor <cantor.2@osu.edu> - 3.1.0-1
+- Version and lib bump
+
+* Mon Sep 30 2019 Scott Cantor <cantor.2@osu.edu> - 3.0.4-1
+- CentOS 8 cleanup
+
 * Tue Nov 21 2017 Scott Cantor <cantor.2@osu.edu> - 3.0.0-1
 - Update soname
 - Require Xerces 3.2 as shipped by me on all platforms

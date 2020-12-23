@@ -1,5 +1,5 @@
 Name:		shibboleth
-Version:	3.0.4
+Version:	3.2.0
 Release:	1
 Summary:	Open source system for attribute-based Web SSO
 Group:		Productivity/Networking/Security
@@ -10,24 +10,30 @@ Source:		%{name}-sp-%{version}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-sp-%{version}-root
 Obsoletes:	shibboleth-sp = 2.5.0
 Requires:	openssl
-%if 0%{?rhel} >= 6 || 0%{?centos_version} >= 600 || 0%{?amzn} >= 1
-PreReq:		xmltooling-schemas%{?_isa} >= 3.0.0, opensaml-schemas%{?_isa} >= 3.0.0
+%if 0%{?rhel} >= 6 || 0%{?amzn} >= 1
+PreReq:		xmltooling-schemas%{?_isa} >= 3.2.0, opensaml-schemas%{?_isa} >= 3.2.0
 %else
-PreReq:		xmltooling-schemas >= 3.0.0, opensaml-schemas >= 3.0.0
+PreReq:		xmltooling-schemas >= 3.2.0, opensaml-schemas >= 3.2.0
 %endif
 %if 0%{?suse_version} > 1030 && 0%{?suse_version} < 1130
 PreReq:		%{insserv_prereq} %{fillup_prereq}
 %endif
-%if 0%{?rhel} >= 7 || 0%{?centos_version} >= 700
+%if 0%{?rhel} >= 7
+Requires: hostname
 BuildRequires:  systemd-devel
+%else
+Requires: net-tools
+%endif
+%if 0%{?rhel} >= 8
+BuildRequires:  gdb
 %endif
 BuildRequires:  libxerces-c-devel >= 3.2
 BuildRequires:	libxml-security-c-devel >= 2.0.0
-BuildRequires:	libxmltooling-devel >= 3.0.0
-BuildRequires:	libsaml-devel >= 3.0.0
+BuildRequires:	libxmltooling-devel >= 3.1.0
+BuildRequires:	libsaml-devel >= 3.1.0
 %{?_with_log4cpp:BuildRequires: liblog4cpp-devel >= 1.0}
 %{!?_with_log4cpp:BuildRequires: liblog4shib-devel >= 2}
-%if 0%{?rhel} >= 6 || 0%{?centos_version} >= 600 || 0%{?amzn} >= 1
+%if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} >= 1
 Requires:	libcurl-openssl%{?_isa} >= 7.21.7
 BuildRequires:	chrpath
 %endif
@@ -39,12 +45,12 @@ BuildRequires:  gcc-c++, pkgconfig, boost-devel >= 1.32.0
 %{!?_without_doxygen:BuildRequires: doxygen}
 %{!?_without_odbc:BuildRequires:unixODBC-devel}
 %{?_with_fastcgi:BuildRequires: fcgi-devel}
-%if 0%{?centos_version} >= 600
+%if 0%{?centos} == 6 || 0%{?centos} == 7
 BuildRequires:	libmemcached-devel
 %endif
 %{?_with_memcached:BuildRequires: libmemcached-devel}
 %if "%{_vendor}" == "redhat" || "%{_vendor}" == "amazon"
-%if 0%{?rhel} >= 6 || 0%{?centos_version} >= 600 || 0%{?amzn} >= 1
+%if 0%{?rhel} >= 6 || 0%{?amzn} >= 1
 %{!?_without_builtinapache:BuildRequires: httpd-devel%{?_isa}}
 %else
 %{!?_without_builtinapache:BuildRequires: httpd-devel}
@@ -87,8 +93,8 @@ Requires:	%{name} = %{version}-%{release}
 Obsoletes:	shibboleth-sp-devel = 2.5.0
 Requires:	libxerces-c-devel >= 3.2
 Requires: 	libxml-security-c-devel >= 2.0.0
-Requires: 	libxmltooling-devel >= 3.0.0
-Requires: 	libsaml-devel >= 3.0.0
+Requires: 	libxmltooling-devel >= 3.1.0
+Requires: 	libsaml-devel >= 3.1.0
 %{?_with_log4cpp:Requires: liblog4cpp-devel >= 1.0}
 %{!?_with_log4cpp:Requires: liblog4shib-devel >= 2}
 
@@ -107,13 +113,16 @@ This package includes files needed for development with Shibboleth.
     %configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{!?_without_systemd:--enable-systemd} %{?shib_options} PKG_CONFIG_PATH=./pkgconfig-workarounds/opensuse13
 %else
 %if 0%{?suse_version} >= 1210
-	%configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{!?_without_systemd:--enable-systemd} %{?shib_options}
+    %configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{!?_without_systemd:--enable-systemd} %{?shib_options}
 %else
-%if 0%{?rhel} >= 7 || 0%{?centos_version} >= 700
-	%configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{!?_without_memcached:--with-memcached} %{!?_without_systemd:--enable-systemd} %{?shib_options} PKG_CONFIG_PATH=/opt/shibboleth/%{_lib}/pkgconfig
+%if 0%{?rhel} >= 8
+    %configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{?_with-memcached} %{!?_without_systemd:--enable-systemd} %{?shib_options}
 %else
-%if 0%{?centos_version} >= 600
-	%configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{!?_without_memcached:--with-memcached} %{?shib_options} PKG_CONFIG_PATH=/opt/shibboleth/%{_lib}/pkgconfig:./pkgconfig-workarounds/rh6
+%if 0%{?rhel} >= 7
+    %configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{!?_without_memcached:--with-memcached} %{!?_without_systemd:--enable-systemd} %{?shib_options} PKG_CONFIG_PATH=/opt/shibboleth/%{_lib}/pkgconfig
+%else
+%if 0%{?centos} >= 6
+    %configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{!?_without_memcached:--with-memcached} %{?shib_options} PKG_CONFIG_PATH=/opt/shibboleth/%{_lib}/pkgconfig:./pkgconfig-workarounds/rh6
 %else
 %if 0%{?rhel} >= 6
     %configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{?_with-memcached} %{?shib_options} PKG_CONFIG_PATH=/opt/shibboleth/%{_lib}/pkgconfig:./pkgconfig-workarounds/rh6
@@ -121,7 +130,8 @@ This package includes files needed for development with Shibboleth.
 %if 0%{?rhel} >= 5
     %configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{?_with_memcached} %{?shib_options} PKG_CONFIG_PATH=./pkgconfig-workarounds/rh5
 %else
-	%configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{?_with_memcached} %{?shib_options}
+    %configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{?_with_memcached} %{?shib_options}
+%endif
 %endif
 %endif
 %endif
@@ -171,7 +181,7 @@ fi
 
 # Establish location of systemd file, if any.
 SYSTEMD_SHIBD="no"
-%if 0%{?suse_version} >= 1210 || 0%{?rhel} >= 7 || 0%{?centos_version} >= 700
+%if 0%{?suse_version} >= 1210 || 0%{?rhel} >= 7
 	%{__mkdir} -p $RPM_BUILD_ROOT%{_unitdir}
 	echo "%attr(0444,-,-) %{_unitdir}/shibd.service" >> rpm.filelist
 	SYSTEMD_SHIBD="$RPM_BUILD_ROOT%{_unitdir}/shibd.service"
@@ -205,14 +215,14 @@ if [ "$SYSTEMD_SHIBD" != "no" ] ; then
 [Unit]
 Description=Shibboleth Service Provider Daemon
 Documentation=https://wiki.shibboleth.net/confluence/display/SP3/Home
-After=network.target
+After=network-online.target
 Before=httpd.service
 
 [Service]
 Type=notify
 NotifyAccess=main
 User=%{runuser}
-%if 0%{?rhel} >= 6 || 0%{?centos_version} >= 600 || 0%{?amzn} >= 1
+%if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} >= 1
 Environment=LD_LIBRARY_PATH=/opt/shibboleth/%{_lib}
 %endif
 ExecStart=%{_sbindir}/shibd -f -F
@@ -241,7 +251,7 @@ SHIBD_USER=%{runuser}
 # Wait period (secs) for configuration (and metadata) to load
 SHIBD_WAIT=30
 EOF
-	%if 0%{?rhel} >= 6 || 0%{?centos_version} >= 600 || 0%{?amzn} >= 1
+	%if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} >= 1
 		cat >> $SYSCONFIG_SHIBD <<EOF
 
 # Override OS-supplied libcurl
@@ -250,7 +260,7 @@ EOF
 	%endif
 fi
 
-%if 0%{?rhel} >= 6 || 0%{?centos_version} >= 600 || 0%{?amzn} >= 1
+%if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} >= 1
 	# Strip existing rpath to libcurl.
 	chrpath -d $RPM_BUILD_ROOT%{_sbindir}/shibd
 	chrpath -d $RPM_BUILD_ROOT%{_bindir}/mdquery
@@ -285,17 +295,7 @@ getent passwd %{runuser} >/dev/null || useradd -r -g %{runuser} \
 exit 0
 
 %post
-%ifnos solaris2.8 solaris2.9 solaris2.10 solaris2.11
 /sbin/ldconfig
-%endif
-
-# Key ownership fix.
-if [ -f %{_sysconfdir}/shibboleth/sp-key.pem ] ; then
-	%{__chown} %{runuser}:%{runuser} %{_sysconfdir}/shibboleth/sp-key.pem %{_sysconfdir}/shibboleth/sp-cert.pem 2>/dev/null || :
-fi
-
-# Fix ownership of log files (even on new installs, if they're left from an older one).
-%{__chown} %{runuser}:%{runuser} %{_localstatedir}/log/shibboleth/* 2>/dev/null || :
 
 # Generate two keys on new installs.
 if [ $1 -eq 1 ] ; then
@@ -324,7 +324,7 @@ if [ $1 -gt 1 ] ; then
 		fi
 	fi
 
-%if 0%{?rhel} >= 7 || 0%{?centos_version} >= 700
+%if 0%{?rhel} >= 7
 	# Initial prep for systemd
 	%systemd_post shibd.service
 	if [ $1 -gt 1 ] ; then
@@ -351,7 +351,7 @@ if [ $1 -gt 1 ] ; then
 %preun
 # On final removal, stop shibd and remove service, restart Apache if running.
 %if "%{_vendor}" == "redhat" || "%{_vendor}" == "amazon"
-%if 0%{?rhel} >= 7 || 0%{?centos_version} >= 700
+%if 0%{?rhel} >= 7
 	%systemd_preun shibd.service
 %else
 	if [ $1 -eq 0 ] ; then
@@ -361,6 +361,7 @@ if [ $1 -gt 1 ] ; then
 %endif
 	if [ $1 -eq 0 ] ; then
 		%{!?_without_builtinapache:/sbin/service httpd status 1>/dev/null && /sbin/service httpd restart 1>/dev/null}
+		exit 0
 	fi
 %endif
 %if "%{_vendor}" == "suse"
@@ -371,17 +372,16 @@ if [ $1 -gt 1 ] ; then
 %endif
 	if [ $1 -eq 0 ] ; then
 		%{!?_without_builtinapache:/sbin/service apache2 status 1>/dev/null && /sbin/service apache2 restart 1>/dev/null}
+		exit 0
 	fi
 %endif
 exit 0
 
 %postun
-%ifnos solaris2.8 solaris2.9 solaris2.10 solaris2.11
 /sbin/ldconfig
-%endif
 %if "%{_vendor}" == "redhat" || "%{_vendor}" == "amazon"
 # On upgrade, restart components if they're already running.
-%if 0%{?rhel} >= 7 || 0%{?centos_version} >= 700
+%if 0%{?rhel} >= 7
 	%systemd_postun_with_restart shibd.service
 %else
 	if [ $1 -ge 1 ] ; then
@@ -447,7 +447,7 @@ exit 0
 %config(noreplace) %{_sysconfdir}/shibboleth/*.html
 %config(noreplace) %{_sysconfdir}/shibboleth/*.logger
 %if "%{_vendor}" == "redhat"
-%if 0%{?rhel} >= 7 || 0%{?centos_version} >= 700
+%if 0%{?rhel} >= 7
 %else
 %config %{_initrddir}/shibd
 %endif
@@ -459,7 +459,7 @@ exit 0
 %config %{_initrddir}/shibd
 %{_sbindir}/rcshibd
 %endif
-%if 0%{?suse_version} >= 1210 || 0%{?rhel} >= 7 || 0%{?centos_version} >= 700
+%if 0%{?suse_version} >= 1210 || 0%{?rhel} >= 7
 %{_tmpfilesdir}/%{name}.conf
 %endif
 %{_sysconfdir}/shibboleth/example-shibboleth2.xml
@@ -481,6 +481,16 @@ exit 0
 %doc %{pkgdocdir}/api
 
 %changelog
+* Tue Dec 1 2020 Scott Cantor <cantor.2@osu.edu> - 3.2.0-1
+- Version and lib bump
+
+* Mon Feb 3 2020 Scott Cantor <cantor.2@osu.edu> - 3.1.0-1
+- Version and lib bump
+- Add hostname dependency for keygen script
+
+* Mon Sep 30 2019 Scott Cantor <cantor.2@osu.edu> - 3.0.4-1
+- CentOS 8 cleanup
+
 * Mon Apr 30 2018 Scott Cantor <cantor.2@osu.edu> - 3.0.0-1
 - Bump dependency versions
 - Require updated libraries across the board
