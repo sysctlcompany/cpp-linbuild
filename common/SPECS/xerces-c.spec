@@ -1,16 +1,23 @@
-Summary:	Xerces-C++ validating XML parser
-Name:		xerces-c
-Version:	3.2.3
-Release:	1
-URL:		http://xerces.apache.org/xerces-c/
-Source0:	%{name}-%{version}.tar.bz2
-License:        Apache
-Group:		Libraries
-BuildRoot:	%{_tmppath}/%{name}-root
-Prefix:		/usr
+Summary:    Xerces-C++ validating XML parser
+Name:       xerces-c
+Version:    3.2.1
+Release:    1
+URL:        http://xerces.apache.org/xerces-c/
+Source0:    %{name}-%{version}.tar.bz2
+License:    Apache
+Group:      Libraries
+BuildRoot:  %{_tmppath}/%{name}-root
+Prefix:     /usr
+BuildRequires: gcc-c++ pkgconfig
 %{?_with_curl:BuildRequires: curl-devel}
 %{?_with_icu:BuildRequires: libicu-devel}
+%if "%{_vendor}" == "redhat"
+BuildRequires: redhat-rpm-config
+%endif
 
+%if 0%{?rhel} >= 8 || 0%{?centos_version} >= 800
+BuildRequires: gdb
+%endif
 
 %description
 Xerces-C++ is a validating XML parser written in a portable subset of C++.
@@ -18,72 +25,96 @@ Xerces-C++ makes it easy to give your application the ability to read and
 write XML data. A shared library is provided for parsing, generating,
 manipulating, and validating XML documents.
 
-The parser provides high performance, modularity, and scalability. Source
-code, samples and API documentation are provided with the parser. For
-portability, care has been taken to make minimal use of templates and
-minimal use of #ifdefs.
+%package -n xerces-c-bin
+Summary:    Utilities for Xerces-C++ validating XML parser
+Group:      Development/Libraries
 
-%package devel
-Requires:	%{name} = %{version}
-Group:		Development/Libraries
-Summary:	Header files for Xerces-C++ validating XML parser
-
-%description devel
-Header files you can use to develop XML applications with Xerces-C++.
-
+%description -n xerces-c-bin
 Xerces-C++ is a validating XML parser written in a portable subset of C++.
 Xerces-C++ makes it easy to give your application the ability to read and
 write XML data. A shared library is provided for parsing, generating,
 manipulating, and validating XML documents.
 
+This package contains the utility programs.
+
+%package -n libxerces-c-3_2
+Summary:    Shared library for Xerces-C++ validating XML parser
+Group:      Development/Libraries
+Provides:   xerces-c = %{version}-%{release}
+
+%description -n libxerces-c-3_2
+Xerces-C++ is a validating XML parser written in a portable subset of C++.
+Xerces-C++ makes it easy to give your application the ability to read and
+write XML data. A shared library is provided for parsing, generating,
+manipulating, and validating XML documents.
+
+This package contains just the shared library.
+
+%package -n libxerces-c-devel
+Group:      Development/Libraries
+Summary:    Header files for Xerces-C++ validating XML parser
+Requires:   libxerces-c-3_2 = %{version}-%{release}
+Provides:   xerces-c-devel = %{version}-%{release}
+
+%description -n libxerces-c-devel
+Xerces-C++ is a validating XML parser written in a portable subset of C++.
+Xerces-C++ makes it easy to give your application the ability to read and
+write XML data. A shared library is provided for parsing, generating,
+manipulating, and validating XML documents.
+
+The static libraries and header files needed for development with Xerces-C++.
+
 %prep
 %setup -q
 
 %build
-%configure %{!?_without_curl:--enable-netaccessor-curl} %{?_with_icu:--enable-transcoder-icu --enable-msgloader-icu} %{?xerces_options}
+%configure %{?_with_curl:--enable-netaccessor-curl} %{!?_with_curl:--disable-netaccessor-curl} %{?_with_icu:--enable-transcoder-icu --enable-msgloader-icu} %{?xerces_options}
 %{__make}
 
 %install
-[ "$RPM_BUILD_ROOT" != "/" ] && %{__rm} -rf $RPM_BUILD_ROOT
 %{__make} install DESTDIR=$RPM_BUILD_ROOT
 
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && %{__rm} -rf $RPM_BUILD_ROOT
 
-%ifnos solaris2.8 solaris2.9 solaris2.10
-%post -p /sbin/ldconfig
-%endif
+%post -n libxerces-c-3_2 -p /sbin/ldconfig
 
-%ifnos solaris2.8 solaris2.9 solaris2.10
-%postun -p /sbin/ldconfig
-%endif
+%postun -n libxerces-c-3_2 -p /sbin/ldconfig
 
-%files
+%files -n xerces-c-bin
 %defattr(755,root,root)
 %{_bindir}/*
-%{_libdir}/lib%{name}-*.so
-%exclude %{_libdir}/lib%{name}.la
 
+%files -n libxerces-c-3_2
+%defattr(755,root,root)
+%{_libdir}/libxerces-c-*.so
 
-%files devel
+%files -n libxerces-c-devel
 %defattr(-,root,root)
 %{_includedir}/xercesc
-%{_libdir}/lib%{name}.so
-%{_libdir}/lib%{name}.a
-%{_libdir}/pkgconfig/%{name}.pc
+%{_libdir}/libxerces-c.so
+%{_libdir}/libxerces-c.a
+%{_libdir}/pkgconfig/xerces-c.pc
+%exclude %{_libdir}/libxerces-c.la
 
 %changelog
-* Mon Dec 30 2019 Scott Cantor <cantor.2@osu.edu>
-- Upped version
+* Tue May 1 2018 Scott Cantor <cantor.2@osu.edu> 3.2.0-1
+- Bump version
 
-* Wed Jun 21 2017 Scott Cantor <cantor.2@osu.edu>
-- Upped version
+* Thu Feb 19 2015 Scott Cantor <cantor.2@osu.edu> 3.1.2-1
+- Bump version, and remove Obsoletes
 
-* Thu Jun 9 2016 Scott Cantor <cantor.2@osu.edu>
-- Upped version
+* Thu Apr 29 2010 Scott Cantor <cantor.2@osu.edu> 3.1.1-1
+- Bump version and fix Provides/Obsoletes versioning
 
-* Fri Feb 27 2015 Scott Cantor <cantor.2@osu.edu>
-- Upped version and avoided ownership of /usr/include
+* Sun Feb 14 2010 Scott Cantor <cantor.2@osu.edu> 3.1.0-1
+- Bump version
+
+* Mon Dec 28 2009 Scott Cantor <cantor.2@osu.edu> 3.0.1-2
+- Sync package names for side by side installation
+
+* Wed Aug  5 2009 Scott Cantor <cantor.2@osu.edu> 3.0.1-1
+- Disabled curl thanks to Red Hat
 
 * Fri Mar  7 2008 Boris Kolpackov <boris@codesynthesis.com>
 - Integrated updates for 3.0.0 from Scott Cantor.
