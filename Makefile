@@ -67,7 +67,7 @@ LOG4SHIB_DISTFILE=$(LOG4SHIB_COMPNAME)-$(LOG4SHIB_VERSION).$(DEFAULT_DIST_EXT)
 LOG4SHIB_URL=https://shibboleth.net/downloads/$(LOG4SHIB_COMPNAME)/$(LOG4SHIB_VERSION)/$(LOG4SHIB_DISTFILE)
 
 XERCESC_COMPNAME=xerces-c
-XERCESC_VERSION=3.2.1
+XERCESC_VERSION=3.2.3
 XERCESC_MAJORVER=3
 XERCESC_DISTFILE=$(XERCESC_COMPNAME)-$(XERCESC_VERSION).$(DEFAULT_DIST_EXT)
 XERCESC_URL=https://archive.apache.org/dist/xerces/c/$(XERCESC_MAJORVER)/sources/$(XERCESC_DISTFILE)
@@ -204,7 +204,7 @@ endef
 $(foreach platform,$(PLATFORMS),$(foreach component,$(COMPONENTS),$(eval $(call build-component-platform,$(component),$(platform)))))
 
 # TODO:
-#  update components to latest versions (opensaml 3.1.0, xerces-c 3.2.3, sp 3.1.0.2)
+#  update components to latest versions (opensaml 3.1.0, sp 3.1.0.2)
 #  delete stale products on version bump
 #  add a clean target
 #  teach each image to depend on the build scripts for that image
