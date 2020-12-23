@@ -166,10 +166,10 @@ $(foreach component,$(COMPONENTS),$(eval $(call validity-component,$(component))
 # Each component may depend on other components, generally or on
 # specific platforms
 define dependencies-component-platform
-$$($(1)_COMPNAME)_$(2): $(foreach depend,$$($(1)_DEPENDS),$$($(depend)_COMPNAME)_$(1)) $(foreach component,$$($(1)_DEPENDS_$(2)),$$($(component)_COMPNAME)_$(1))
+$($(1)_COMPNAME)_$(2): $(foreach depend,$($(1)_DEPENDS),$($(depend)_COMPNAME)_$(2)) $(foreach component,$($(1)_DEPENDS_$(2)),$($(component)_COMPNAME)_$(2))
 endef
 
-$(foreach platform,$(PLATFORMS),$(foreach component,$(COMPONENTS),$(eval $(call dependencies-component-platform,$(platform),$(component)))))
+$(foreach platform,$(PLATFORMS),$(foreach component,$(COMPONENTS),$(eval $(call dependencies-component-platform,$(component),$(platform)))))
 
 # Build a docker image for each supported platform
 define build-docker-image-platform
