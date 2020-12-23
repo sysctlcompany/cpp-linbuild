@@ -9,7 +9,7 @@ Source:         %{name}-%{version}.tar.bz2
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 %{?_with_xalan:BuildRequires: libxalan-c-devel >= 1.11}
-BuildRequires:  xerces-c-devel >= 3.2
+BuildRequires:  libxerces-c-devel >= 3.2
 BuildRequires:  openssl-devel gcc-c++ pkgconfig
 %if "%{_vendor}" == "redhat"
 BuildRequires: redhat-rpm-config
@@ -55,7 +55,7 @@ Summary:	Development files for the Apache C++ XML security library
 Group:		Development/Libraries/C and C++
 Requires:	libxml-security-c20 = %{version}-%{release}
 Requires:	openssl-devel
-Requires:       xerces-c-devel >= 3.2
+Requires:       libxerces-c-devel >= 3.2
 %{?_with_xalan:Requires: libxalan-c-devel >= 1.11}
 Provides:   xml-security-c-devel = %{version}-%{release}
 
