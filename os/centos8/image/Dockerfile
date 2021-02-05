@@ -1,7 +1,5 @@
 FROM centos:8.3.2011
 
-MAINTAINER John W. O'Brien <john@saltant.com>
-
 RUN sed -i "s/enabled=0/enabled=1/" /etc/yum.repos.d/CentOS-Linux-PowerTools.repo \
     && yum -y update \
     && yum -y install \

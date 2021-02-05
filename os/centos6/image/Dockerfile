@@ -1,7 +1,5 @@
 FROM centos:6.10
 
-MAINTAINER John W. O'Brien <john@saltant.com>
-
 COPY *.repo /etc/yum.repos.d/
 
 RUN yum -y update \
