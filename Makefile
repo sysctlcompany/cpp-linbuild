@@ -83,7 +83,7 @@ CURLOPENSSL_DISTNAME=curl
 CURLOPENSSL_VERSION=7.63.0
 CURLOPENSSL_DISTFILE=$(CURLOPENSSL_DISTNAME)-$(CURLOPENSSL_VERSION).$(DEFAULT_DIST_EXT)
 CURLOPENSSL_URL=https://curl.haxx.se/download/$(CURLOPENSSL_DISTFILE)
-CURLOPENSSL_VALID_PLATFORMS=centos6 centos7
+CURLOPENSSL_VALID_PLATFORMS=centos6 centos7 amazonlinux2
 
 # Look closely: these variables refer to the OPENSAML variables
 XMLTOOLING_COMPNAME=xmltooling
@@ -93,6 +93,7 @@ XMLTOOLING_URL=https://shibboleth.net/downloads/c++-opensaml/$(OPENSAML_VERSION)
 XMLTOOLING_DEPENDS=LOG4SHIB XERCESC XMLSECURITYC
 XMLTOOLING_DEPENDS_centos6=CURLOPENSSL
 XMLTOOLING_DEPENDS_centos7=CURLOPENSSL
+XMLTOOLING_DEPENDS_amazonlinux2=CURLOPENSSL
 
 OPENSAML_COMPNAME=opensaml
 OPENSAML_VERSION=3.2.0
@@ -139,7 +140,8 @@ distfiles: $(foreach component,$(COMPONENTS),$(SOURCEDIR)/$($(component)_DISTFIL
 PLATFORMS=\
 	centos6 \
 	centos7 \
-	centos8
+	centos8 \
+	amazonlinux2
 
 # To add a new platform, create the following
 #	os/$OS/
