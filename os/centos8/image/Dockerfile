@@ -18,15 +18,7 @@ ENV EXT_BASE=${BUILD_BASE}/external
 
 RUN mkdir -p \
     ${INT_BASE}/{BUILD,BUILDROOT} \
-    ${EXT_BASE}/{in,out}
-
-RUN echo "%_topdir ${EXT_BASE}" > ~/.rpmmacros
-RUN echo "%_builddir ${INT_BASE}/BUILD" >> ~/.rpmmacros
-RUN echo "%_buildrootdir ${INT_BASE}/BUILDROOT" >> ~/.rpmmacros
-RUN echo "%_specdir ${EXT_BASE}/in/SPECS" >> ~/.rpmmacros
-RUN echo "%_sourcedir ${EXT_BASE}/in/SOURCES" >> ~/.rpmmacros
-RUN echo "%_rpmdir ${EXT_BASE}/out/RPMS" >> ~/.rpmmacros
-RUN echo "%_srcrpmdir ${EXT_BASE}/out/SRPMS" >> ~/.rpmmacros
-RUN echo "%packager PLACE HOLDER <USER@EXAMPLE.COM>" >> ~/.rpmmacros
+    ${EXT_BASE}/{in,out} \
+    && ln -s ${EXT_BASE}/in/macros/macros.shibboleth /etc/rpm/
 
 WORKDIR ${EXT_BASE}/in/SPECS

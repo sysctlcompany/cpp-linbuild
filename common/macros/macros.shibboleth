@@ -1,0 +1,11 @@
+%shibbuildbase /opt/build
+%shibextbase %{shibbuildbase}/external
+%shibintbase %{shibbuildbase}/internal
+%_topdir %{shibextbase}
+%_builddir %{shibintbase}/BUILD
+%_buildrootdir %{shibintbase}/BUILDROOT
+%_specdir %{shibextbase}/in/SPECS
+%_sourcedir %{shibextbase}/in/SOURCES
+%_rpmdir %{shibextbase}/out/RPMS
+%_srcrpmdir %{shibextbase}/out/SRPMS
+%packager PLACE HOLDER <USER@EXAMPLE.COM>
