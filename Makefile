@@ -199,7 +199,8 @@ $(srcdir)os/$(2)/image/Dockerfile.$$($(1)_COMPNAME):
 
 $(1)_$(2)_image_token = $$(srcdir).$(1)_$(2)_image
 $$($(1)_$(2)_image_token): $$($(2)_token) $(srcdir)os/$(2)/image/Dockerfile.$$($(1)_COMPNAME) $(srcdir)os/$(2)/image/build-$$($(1)_COMPNAME).sh
-	docker build -t shibboleth/$(2):$($(1)_COMPNAME) \
+	docker build --no-cache \
+		-t shibboleth/$(2):$($(1)_COMPNAME) \
 		-f os/$(2)/image/Dockerfile.$$($(1)_COMPNAME) \
 		os/$(2)/image
 	touch $$($(1)_$(2)_image_token)
