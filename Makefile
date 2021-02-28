@@ -191,16 +191,33 @@ $(foreach platform,$(PLATFORMS),$(eval $(call build-docker-image-platform,$(plat
 .PHONY: images
 images: $(foreach platform,$(PLATFORMS),$(platform)-image)
 
+# Build a docker image for each component/platform combination
+define build-docker-image-component-platform
+$(srcdir)os/$(2)/image/Dockerfile.$$($(1)_COMPNAME):
+	echo "FROM shibboleth/$(2):$$(BASETAG)" > $$@
+	echo "COPY build-$($(1)_COMPNAME).sh \$$$${BUILD_BASE}/" >> $$@
+
+$(1)_$(2)_image_token = $$(srcdir).$(1)_$(2)_image
+$$($(1)_$(2)_image_token): $$($(2)_token) $(srcdir)os/$(2)/image/Dockerfile.$$($(1)_COMPNAME) $(srcdir)os/$(2)/image/build-$$($(1)_COMPNAME).sh
+	docker build -t shibboleth/$(2):$($(1)_COMPNAME) \
+		-f os/$(2)/image/Dockerfile.$$($(1)_COMPNAME) \
+		os/$(2)/image
+	touch $$($(1)_$(2)_image_token)
+$$($(1)_COMPNAME)-$(2)-image: $$($(1)_$(2)_image_token)
+endef
+
+$(foreach platform,$(PLATFORMS),$(foreach component,$(COMPONENTS),$(eval $(call build-docker-image-component-platform,$(component),$(platform)))))
+
 
 # Build RPMs and SRPMs for a each component on each platform
 define build-component-platform
 $(1)_$(2)_token = $(srcdir).$(1)_$(2)_products
-$$($(1)_$(2)_token): $$($(2)_token) $(SOURCEDIR)/$$($(1)_DISTFILE) $(SPECDIR)/$$($(1)_COMPNAME).spec
+$$($(1)_$(2)_token): $$($(1)_$(2)_image_token) $(SOURCEDIR)/$$($(1)_DISTFILE) $(SPECDIR)/$$($(1)_COMPNAME).spec
 	mkdir -p $(srcdir)os/$(2)/products/{RPMS,SRPMS}
 	docker run -it --rm \
 		--mount type=bind,source=$(srcdir)os/$(2)/products,target=/opt/build/external/out \
 		--mount type=bind,source=$(srcdir)common,target=/opt/build/external/in \
-		shibboleth/$(2):$(BASETAG) \
+		shibboleth/$(2):$($(1)_COMPNAME) \
 		/bin/sh /opt/build/build-$($(1)_COMPNAME).sh
 	touch $$($(1)_$(2)_token)
 $$($(1)_COMPNAME)_$(2): $$($(1)_$(2)_token)
@@ -211,7 +228,6 @@ $(foreach platform,$(PLATFORMS),$(foreach component,$(COMPONENTS),$(eval $(call 
 # TODO:
 #  delete stale products on version bump
 #  add a clean target
-#  teach each image to depend on the build scripts for that image
 #  refresh an affected image in the event one of its dependencies changes
 #  save build logs to the host
 #  auto-generate build-scripts (maybe)
