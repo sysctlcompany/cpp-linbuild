@@ -28,6 +28,8 @@ DEFAULT_DIST_EXT=tar.bz2
 SOURCEDIR=$(srcdir)common/SOURCES
 SPECDIR=$(srcdir)common/SPECS
 
+BASETAG=base
+
 
 # All components
 
@@ -178,7 +180,7 @@ $(foreach platform,$(PLATFORMS),$(foreach component,$(COMPONENTS),$(eval $(call 
 define build-docker-image-platform
 $(1)_token = $$(srcdir).$(1)_image
 $$($(1)_token): $(srcdir)os/$(1)/image/Dockerfile
-	docker build -t shibboleth/$(1):latest $(srcdir)os/$(1)/image
+	docker build -t shibboleth/$(1):$(BASETAG) $(srcdir)os/$(1)/image
 	touch $$($(1)_token)
 $(1)-image: $$($(1)_token)
 endef
@@ -198,7 +200,7 @@ $$($(1)_$(2)_token): $$($(2)_token) $(SOURCEDIR)/$$($(1)_DISTFILE) $(SPECDIR)/$$
 	docker run -it --rm \
 		--mount type=bind,source=$(srcdir)os/$(2)/products,target=/opt/build/external/out \
 		--mount type=bind,source=$(srcdir)common,target=/opt/build/external/in \
-		shibboleth/$(2):latest \
+		shibboleth/$(2):$(BASETAG) \
 		/bin/sh /opt/build/build-$($(1)_COMPNAME).sh
 	touch $$($(1)_$(2)_token)
 $$($(1)_COMPNAME)_$(2): $$($(1)_$(2)_token)
