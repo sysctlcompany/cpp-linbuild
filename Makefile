@@ -125,7 +125,7 @@ all: $(TARGETS)
 define curl-distfile-component
 $$(SOURCEDIR)/$$($(1)_DISTFILE):
 	mkdir -p $$(SOURCEDIR)
-	(cd $$(SOURCEDIR) && curl -O $$($(1)_URL))
+	(cd $$(SOURCEDIR) && curl -L -O $$($(1)_URL))
 endef
 
 $(foreach component,$(COMPONENTS),$(eval $(call curl-distfile-component,$(component))))
