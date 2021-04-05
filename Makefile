@@ -180,6 +180,7 @@ $(foreach platform,$(PLATFORMS),$(foreach component,$(COMPONENTS),$(eval $(call 
 define build-docker-image-platform
 $(1)_token = $$(srcdir).$(1)_image
 $$($(1)_token): $(srcdir)os/$(1)/image/Dockerfile
+	@echo "==> Building base Docker image for $(1)"
 	docker build -t shibboleth/$(1):$(BASETAG) $(srcdir)os/$(1)/image
 	touch $$($(1)_token)
 $(1)-image: $$($(1)_token)
@@ -199,6 +200,7 @@ $(srcdir)os/$(2)/image/Dockerfile.$$($(1)_COMPNAME):
 
 $(1)_$(2)_image_token = $$(srcdir).$(1)_$(2)_image
 $$($(1)_$(2)_image_token): $$($(2)_token) $(srcdir)os/$(2)/image/Dockerfile.$$($(1)_COMPNAME) $(srcdir)os/$(2)/image/build-$$($(1)_COMPNAME).sh
+	@echo "==> Building Docker image for $(1) on $(2)"
 	docker build --no-cache \
 		-t shibboleth/$(2):$($(1)_COMPNAME) \
 		-f os/$(2)/image/Dockerfile.$$($(1)_COMPNAME) \
@@ -215,6 +217,7 @@ define build-component-platform
 $(1)_$(2)_token = $(srcdir).$(1)_$(2)_products
 $$($(1)_$(2)_token): $$($(1)_$(2)_image_token) $(SOURCEDIR)/$$($(1)_DISTFILE) $(SPECDIR)/$$($(1)_COMPNAME).spec
 	mkdir -p $(srcdir)os/$(2)/products/{RPMS,SRPMS}
+	@echo "==> Building $(1) on $(2)"
 	docker run -it --rm \
 		--mount type=bind,source=$(srcdir)os/$(2)/products,target=/opt/build/external/out \
 		--mount type=bind,source=$(srcdir)common,target=/opt/build/external/in \
