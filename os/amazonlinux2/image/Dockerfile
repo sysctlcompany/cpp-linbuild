@@ -1,5 +1,7 @@
 FROM amazonlinux:2.0.20210326.0
 
+COPY *.repo /etc/yum.repos.d/
+
 RUN yum -y update \
     && yum -y install \
         autoconf automake boost-devel chrpath curl-devel doxygen \

@@ -1,5 +1,7 @@
 FROM centos:7.9.2009
 
+COPY *.repo /etc/yum.repos.d/
+
 RUN yum -y update \
     && yum -y install \
         autoconf automake boost-devel chrpath doxygen gcc-c++ git groff \
