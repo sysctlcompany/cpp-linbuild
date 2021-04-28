@@ -6,7 +6,7 @@ RUN yum -y update \
         gcc-c++ gdb git groff httpd-devel libidn-devel \
         libmemcached-devel libtool make openldap-devel openssl-devel \
         pkgconfig rpm-build stunnel systemd-devel unixODBC-devel \
-        zlib-devel \
+        zlib-devel createrepo_c \
     && yum clean all \
     && rm -rf /var/cache/yum
 

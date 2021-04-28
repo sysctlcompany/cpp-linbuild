@@ -8,6 +8,7 @@ RUN yum -y update \
         httpd-devel libidn-devel libmemcached-devel libtool make \
         openldap-devel openssl-devel pkgconfig \
         rpm-build stunnel systemd-devel unixODBC-devel zlib-devel \
+        createrepo \
     && yum clean all
 
 # internal and external are w.r.t. a container, where external locations
