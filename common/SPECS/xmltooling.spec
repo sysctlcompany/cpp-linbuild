@@ -149,7 +149,7 @@ This package includes XML schemas and related files.
 %doc %{pkgdocdir}
 
 %changelog
-* Tue Dec 2 2020 Scott Cantor <cantor.2@osu.edu> - 3.2.0-1
+* Wed Dec 2 2020 Scott Cantor <cantor.2@osu.edu> - 3.2.0-1
 - Version bump
 
 * Mon Feb 3 2020 Scott Cantor <cantor.2@osu.edu> - 3.1.0-1

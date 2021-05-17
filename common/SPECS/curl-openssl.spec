@@ -389,7 +389,7 @@ rm -rf $RPM_BUILD_ROOT
 * Mon Aug 11 2008 Tom "spot" Callaway <tcallawa@redhat.com> 7.18.2-4
 - make miniature library for libcurl.so.3
 
-* Wed Jul  4 2008 Jindrich Novy <jnovy@redhat.com> 7.18.2-3
+* Fri Jul  4 2008 Jindrich Novy <jnovy@redhat.com> 7.18.2-3
 - enable support for libssh2 (#453958)
 
 * Wed Jun 18 2008 Jindrich Novy <jnovy@redhat.com> 7.18.2-2
@@ -590,7 +590,7 @@ rm -rf $RPM_BUILD_ROOT
 - update to use ca-bundle in /etc/pki
 - mark License as MIT not MPL
 
-* Mon Mar  9 2005 Ivana Varekova <varekova@redhat.com> 7.13.1-1
+* Wed Mar  9 2005 Ivana Varekova <varekova@redhat.com> 7.13.1-1
 - rebuilt (7.13.1)
 
 * Tue Mar  1 2005 Tomas Mraz <tmraz@redhat.com> 7.13.0-2
@@ -621,7 +621,7 @@ rm -rf $RPM_BUILD_ROOT
 * Mon Sep 27 2004 Warren Togami <wtogami@redhat.com> 7.12.0-3
 - remove INSTALL, move libcurl docs to -devel
 
-* Fri Jul 26 2004 Jindrich Novy <jnovy@redhat.com>
+* Mon Jul 26 2004 Jindrich Novy <jnovy@redhat.com>
 - updated to 7.12.0
 - updated nousr patch
 
@@ -655,10 +655,10 @@ rm -rf $RPM_BUILD_ROOT
 * Tue Oct 07 2003 Adrian Havill <havill@redhat.com> 7.10.6-5
 - match serverAltName certs with SSL (#106168)
 
-* Mon Sep 16 2003 Adrian Havill <havill@redhat.com> 7.10.6-4.1
+* Tue Sep 16 2003 Adrian Havill <havill@redhat.com> 7.10.6-4.1
 - bump n-v-r for RHEL
 
-* Mon Sep 16 2003 Adrian Havill <havill@redhat.com> 7.10.6-4
+* Tue Sep 16 2003 Adrian Havill <havill@redhat.com> 7.10.6-4
 - restore ca cert bundle (#104400)
 - require openssl, we want to use its ca-cert bundle
 
@@ -674,7 +674,7 @@ rm -rf $RPM_BUILD_ROOT
 * Mon Aug 25 2003 Adrian Havill <havill@redhat.com> 7.10.6-2
 - devel subpkg needs openssl-devel as a Require (#102963)
 
-* Tue Jul 28 2003 Adrian Havill <havill@redhat.com> 7.10.6-1
+* Mon Jul 28 2003 Adrian Havill <havill@redhat.com> 7.10.6-1
 - bumped version
 
 * Tue Jul 01 2003 Adrian Havill <havill@redhat.com> 7.10.5-1
@@ -693,7 +693,7 @@ rm -rf $RPM_BUILD_ROOT
 * Tue Jan 21 2003 Joe Orton <jorton@redhat.com> 7.9.8-4
 - don't add -L/usr/lib to 'curl-config --libs' output
 
-* Mon Jan  7 2003 Nalin Dahyabhai <nalin@redhat.com> 7.9.8-3
+* Tue Jan  7 2003 Nalin Dahyabhai <nalin@redhat.com> 7.9.8-3
 - rebuild
 
 * Wed Nov  6 2002 Joe Orton <jorton@redhat.com> 7.9.8-2
