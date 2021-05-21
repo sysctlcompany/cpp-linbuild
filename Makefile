@@ -105,7 +105,7 @@ OPENSAML_DEPENDS=LOG4SHIB XERCESC XMLSECURITYC XMLTOOLING
 
 SHIBBOLETH_COMPNAME=shibboleth
 SHIBBOLETH_DISTNAME=shibboleth-sp
-SHIBBOLETH_VERSION=3.2.1
+SHIBBOLETH_VERSION=3.2.2
 SHIBBOLETH_DISTFILE=$(SHIBBOLETH_DISTNAME)-$(SHIBBOLETH_VERSION).$(DEFAULT_DIST_EXT)
 SHIBBOLETH_URL=https://shibboleth.net/downloads/service-provider/$(SHIBBOLETH_VERSION)/$(SHIBBOLETH_DISTFILE)
 SHIBBOLETH_DEPENDS=LOG4SHIB XERCESC XMLSECURITYC XMLTOOLING OPENSAML
@@ -217,6 +217,8 @@ define build-component-platform
 $(1)_$(2)_token = $(srcdir).$(1)_$(2)_products
 $$($(1)_$(2)_token): $$($(1)_$(2)_image_token) $(SOURCEDIR)/$$($(1)_DISTFILE) $(SPECDIR)/$$($(1)_COMPNAME).spec
 	mkdir -p $(srcdir)os/$(2)/products/{RPMS,SRPMS}
+	@echo "==> Sanity checking $(1) on $(2)"
+	grep -E "^Version:[[:space:]]+$$($(1)_VERSION)" $(SPECDIR)/$$($(1)_COMPNAME).spec
 	@echo "==> Building $(1) on $(2)"
 	docker run -it --rm \
 		--mount type=bind,source=$(srcdir)os/$(2)/products,target=/opt/build/external/out \
