@@ -194,10 +194,9 @@ images: $(foreach platform,$(PLATFORMS),$(platform)-image)
 define build-docker-image-component-platform
 $(srcdir)os/$(2)/image/Dockerfile.$$($(1)_COMPNAME):
 	echo "FROM shibboleth/$(2):$$(BASETAG)" > $$@
-	echo "COPY build-$($(1)_COMPNAME).sh \$$$${BUILD_BASE}/" >> $$@
 
 $(1)_$(2)_image_token = $$(srcdir).$(1)_$(2)_image
-$$($(1)_$(2)_image_token): $$($(2)_token) $(srcdir)os/$(2)/image/Dockerfile.$$($(1)_COMPNAME) $(srcdir)os/$(2)/image/build-$$($(1)_COMPNAME).sh
+$$($(1)_$(2)_image_token): $$($(2)_token) $(srcdir)os/$(2)/image/Dockerfile.$$($(1)_COMPNAME)
 	@echo "==> Building Docker image for $(1) on $(2)"
 	docker build --no-cache \
 		-t shibboleth/$(2):$($(1)_COMPNAME) \
@@ -222,7 +221,7 @@ $$($(1)_$(2)_token): $$($(1)_$(2)_image_token) $(SOURCEDIR)/$$($(1)_DISTFILE) $(
 		--mount type=bind,source=$(srcdir)os/$(2)/products,target=/opt/build/external/out \
 		--mount type=bind,source=$(srcdir)common,target=/opt/build/external/in \
 		shibboleth/$(2):$($(1)_COMPNAME) \
-		/bin/sh /opt/build/build-$($(1)_COMPNAME).sh
+		/bin/sh /opt/build/external/in/build.sh $($(1)_COMPNAME)
 	touch $$($(1)_$(2)_token)
 $$($(1)_COMPNAME)_$(2): $$($(1)_$(2)_token)
 endef
@@ -234,5 +233,4 @@ $(foreach platform,$(PLATFORMS),$(foreach component,$(COMPONENTS),$(eval $(call 
 #  add a clean target
 #  refresh an affected image in the event one of its dependencies changes
 #  save build logs to the host
-#  auto-generate build-scripts (maybe)
 #  template %packager
