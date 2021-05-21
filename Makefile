@@ -216,7 +216,7 @@ $(1)_$(2)_token = $(srcdir).$(1)_$(2)_products
 $$($(1)_$(2)_token): $$($(1)_$(2)_image_token) $(SOURCEDIR)/$$($(1)_DISTFILE) $(SPECDIR)/$$($(1)_COMPNAME).spec
 	mkdir -p $(srcdir)os/$(2)/products/{RPMS,SRPMS}
 	@echo "==> Sanity checking $(1) on $(2)"
-	grep -E "^Version:[[:space:]]+$$($(1)_VERSION)" $(SPECDIR)/$$($(1)_COMPNAME).spec
+	grep -E "^Version:[[:space:]]+$$($(1)_VERSION)$$$$" $(SPECDIR)/$$($(1)_COMPNAME).spec
 	@echo "==> Building $(1) on $(2)"
 	docker run -it --rm \
 		--mount type=bind,source=$(srcdir)os/$(2)/products,target=/opt/build/external/out \
