@@ -141,7 +141,8 @@ distfiles: $(foreach component,$(COMPONENTS),$(SOURCEDIR)/$($(component)_DISTFIL
 PLATFORMS=\
 	centos7 \
 	centos8 \
-	amazonlinux2
+	amazonlinux2 \
+	rockylinux8
 
 # To add a new platform, create the following
 #	os/$OS/

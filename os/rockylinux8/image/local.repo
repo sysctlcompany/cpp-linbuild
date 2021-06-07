@@ -1,0 +1,5 @@
+[local]
+name=Local Shibboleth-SP Build Repo
+baseurl=file:///opt/build/external/out/RPMS/$basearch/
+gpgcheck=0
+enabled=0
