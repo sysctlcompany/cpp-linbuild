@@ -34,6 +34,7 @@ BASETAG=base
 # All components
 
 COMPONENTS=\
+	SHIBEDS \
 	LOG4SHIB \
 	XERCESC \
 	XMLSECURITYC \
@@ -62,6 +63,11 @@ COMPONENTS=\
 #		components.
 #		Default: $(PLATFORMS)
 
+
+SHIBEDS_COMPNAME=shibboleth-embedded-ds
+SHIBEDS_VERSION=1.2.2
+SHIBEDS_DISTFILE=$(SHIBEDS_COMPNAME)-$(SHIBEDS_VERSION).tar.gz
+SHIBEDS_URL=https://shibboleth.net/downloads/embedded-discovery-service/$(SHIBEDS_VERSION)/$(SHIBEDS_DISTFILE)
 
 LOG4SHIB_COMPNAME=log4shib
 LOG4SHIB_VERSION=2.0.0
