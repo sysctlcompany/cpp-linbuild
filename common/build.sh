@@ -6,7 +6,14 @@ if [ $# -ne 1 ]; then
 fi
 
 component=$1
-arch=$(rpm -E '%{_arch}')
+machine_arch=$(rpm -E '%{_arch}')
+spec_arch=$(awk '$1=="BuildArch:" {print $2}' ${component}.spec)
+
+if [ -n "$spec_arch" ]; then
+    arch=$spec_arch
+else
+    arch=$machine_arch
+fi
 
 # Install dependencies
 yum-config-manager --enable local
