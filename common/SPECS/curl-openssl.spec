@@ -6,7 +6,7 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: curl-openssl
-Version: 7.63.0
+Version: 7.79.1
 Release: 1%{?dist}
 License: MIT
 Group: Applications/Internet
@@ -108,9 +108,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %doc CHANGES README* COPYING
-%doc docs/BUGS docs/FAQ docs/FEATURES
-%doc docs/MANUAL docs/RESOURCES
-%doc docs/TheArtOfHttpScripting docs/TODO
+%doc docs/FAQ docs/TODO
 %dir %{_bindir}
 %{_bindir}/curl
 %dir %{_mandir}
@@ -126,7 +124,6 @@ rm -rf $RPM_BUILD_ROOT
 %files -n libcurl-openssl-devel
 %defattr(-,root,root,-)
 %doc docs/examples/*.c docs/examples/Makefile.example
-%doc docs/libcurl/ABI
 %dir %{_bindir}
 %dir %{_includedir}
 %dir %{_libdir}/pkgconfig

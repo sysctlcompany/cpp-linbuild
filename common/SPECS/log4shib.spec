@@ -1,11 +1,11 @@
 Name:       log4shib
-Version:    2.0.0
+Version:    2.0.1
 Release:    1
 Summary:    Log for C++, Shibboleth Edition
 License:    LGPL
 Group:      Development/Libraries
 Vendor:     Shibboleth Consortium
-URL:        http://shibboleth.net/downloads/log4shib/2.0.0
+URL:        http://shibboleth.net/downloads/log4shib/%version%
 Source:     %name-%version.tar.bz2
 BuildRoot:  %_tmppath/%name-%version-root
 BuildRequires:  gcc-c++ pkgconfig
@@ -70,18 +70,14 @@ config/install-sh -m 644 -c AUTHORS COPYING INSTALL NEWS README THANKS ChangeLog
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && %{__rm} -rf $RPM_BUILD_ROOT
 
-%ifnos solaris2.8 solaris2.9 solaris2.10
 %post -n liblog4shib2 -p /sbin/ldconfig
-%endif
 
 %post -n liblog4shib-devel
 if test "x$RPM_INSTALL_PREFIX0" != "x" ; then
     %{__perl} -pi -e"s|^prefix=\"[^\"]*\"|prefix=\"$RPM_INSTALL_PREFIX0\"|" $RPM_INSTALL_PREFIX0/bin/log4shib-config
 fi
 
-%ifnos solaris2.8 solaris2.9 solaris2.10 
 %postun -n liblog4shib2 -p /sbin/ldconfig
-%endif
 
 %files -n liblog4shib2
 %defattr(-,root,root,755)
@@ -91,13 +87,19 @@ fi
 %defattr(-,root,root,755)
 %{_includedir}/*
 %{!?_without_doxygenrpm:%{_mandir}/man?/*}
-%attr(755,root,root) %{_libdir}/*.so
-%attr(644,root,root) %{_libdir}/*.a
+%{_libdir}/*.so
 %attr(644,root,root) %{_libdir}/pkgconfig/log4shib.pc
 %exclude %{_libdir}/*.la
 %doc %{pkgdocdir}
 
 %changelog
+* Thu Oct 28 2021 Scott Cantor <cantor.2@osu.edu> - 2.0.1-1
+- Remove static library from manifest.
+
+* Fri Sep 27 2019 Scott Cantor <cantor.2@osu.edu> - 2.0.0-2
+- Remove old Solaris exclusions
+- Add CentOS 8 gdb dependency
+
 * Mon Jun 25 2018 Scott Cantor <cantor.2@osu.edu> - 2.0.0-1
 - Bump version
 - Switch to bzipped source

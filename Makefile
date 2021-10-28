@@ -70,7 +70,7 @@ SHIBEDS_DISTFILE=$(SHIBEDS_COMPNAME)-$(SHIBEDS_VERSION).tar.gz
 SHIBEDS_URL=https://shibboleth.net/downloads/embedded-discovery-service/$(SHIBEDS_VERSION)/$(SHIBEDS_DISTFILE)
 
 LOG4SHIB_COMPNAME=log4shib
-LOG4SHIB_VERSION=2.0.0
+LOG4SHIB_VERSION=2.0.1
 LOG4SHIB_DISTFILE=$(LOG4SHIB_COMPNAME)-$(LOG4SHIB_VERSION).$(DEFAULT_DIST_EXT)
 LOG4SHIB_URL=https://shibboleth.net/downloads/$(LOG4SHIB_COMPNAME)/$(LOG4SHIB_VERSION)/$(LOG4SHIB_DISTFILE)
 
@@ -81,14 +81,14 @@ XERCESC_DISTFILE=$(XERCESC_COMPNAME)-$(XERCESC_VERSION).$(DEFAULT_DIST_EXT)
 XERCESC_URL=https://archive.apache.org/dist/xerces/c/$(XERCESC_MAJORVER)/sources/$(XERCESC_DISTFILE)
 
 XMLSECURITYC_COMPNAME=xml-security-c
-XMLSECURITYC_VERSION=2.0.2
+XMLSECURITYC_VERSION=2.0.4
 XMLSECURITYC_DISTFILE=$(XMLSECURITYC_COMPNAME)-$(XMLSECURITYC_VERSION).$(DEFAULT_DIST_EXT)
 XMLSECURITYC_URL=https://downloads.apache.org/santuario/c-library/$(XMLSECURITYC_DISTFILE)
 XMLSECURITYC_DEPENDS=XERCESC
 
 CURLOPENSSL_COMPNAME=curl-openssl
 CURLOPENSSL_DISTNAME=curl
-CURLOPENSSL_VERSION=7.63.0
+CURLOPENSSL_VERSION=7.79.1
 CURLOPENSSL_DISTFILE=$(CURLOPENSSL_DISTNAME)-$(CURLOPENSSL_VERSION).$(DEFAULT_DIST_EXT)
 CURLOPENSSL_URL=https://curl.haxx.se/download/$(CURLOPENSSL_DISTFILE)
 CURLOPENSSL_VALID_PLATFORMS=centos7 amazonlinux2
@@ -216,7 +216,7 @@ endef
 $(foreach platform,$(PLATFORMS),$(foreach component,$(COMPONENTS),$(eval $(call build-docker-image-component-platform,$(component),$(platform)))))
 
 
-# Build RPMs and SRPMs for a each component on each platform
+# Build RPMs and SRPMs for each component on each platform
 define build-component-platform
 $(1)_$(2)_token = $(srcdir).$(1)_$(2)_products
 $$($(1)_$(2)_token): $$($(1)_$(2)_image_token) $(SOURCEDIR)/$$($(1)_DISTFILE) $(SPECDIR)/$$($(1)_COMPNAME).spec
