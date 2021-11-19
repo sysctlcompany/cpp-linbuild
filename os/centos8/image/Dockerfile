@@ -1,4 +1,4 @@
-FROM centos:8.3.2011
+FROM centos:8.4.2105
 
 COPY *.repo /etc/yum.repos.d/
 
