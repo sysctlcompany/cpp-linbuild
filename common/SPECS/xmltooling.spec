@@ -1,5 +1,5 @@
 Name:		xmltooling
-Version:	3.2.0
+Version:	3.2.1
 Release:	1
 Summary:	OpenSAML XML Processing library
 Group:		Development/Libraries/C and C++

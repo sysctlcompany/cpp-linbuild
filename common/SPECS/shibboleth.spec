@@ -1,6 +1,6 @@
 Name:		shibboleth
-Version:	3.2.3
-Release:	3.1
+Version:	3.3.0
+Release:	1
 Summary:	Open source system for attribute-based Web SSO
 Group:		Productivity/Networking/Security
 Vendor:		Shibboleth Consortium

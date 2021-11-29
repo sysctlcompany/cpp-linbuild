@@ -1,5 +1,5 @@
 Name:		opensaml
-Version:	3.2.0
+Version:	3.2.1
 Release:	1
 Summary:	OpenSAML SAML library
 Group:		Development/Libraries/C and C++
