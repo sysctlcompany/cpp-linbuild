@@ -233,8 +233,8 @@ $$($(1)_$(2)_token): $$($(1)_$(2)_image_token) $(SOURCEDIR)/$$($(1)_DISTFILE) $(
 	grep -E "^Version:[[:space:]]+$$($(1)_VERSION)$$$$" $(SPECDIR)/$$($(1)_COMPNAME).spec
 	@echo "==> Building $(1) on $(2)"
 	docker run -it --rm \
-		-v $(srcdir)os/$(2)/products:/opt/build/external/out \
-		-v $(srcdir)common:/opt/build/external/in \
+		-v $(srcdir)os/$(2)/products:/opt/build/external/out:z \
+		-v $(srcdir)common:/opt/build/external/in:z \
 		shibboleth/$(2):$($(1)_COMPNAME) \
 		/bin/sh /opt/build/external/in/build.sh $($(1)_COMPNAME)
 	touch $$($(1)_$(2)_token)
