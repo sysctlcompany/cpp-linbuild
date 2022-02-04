@@ -243,6 +243,20 @@ endef
 
 $(foreach platform,$(PLATFORMS),$(foreach component,$(COMPONENTS),$(eval $(call build-component-platform,$(component),$(platform)))))
 
+# Run an interactive build environment container for each component on each platform
+define run-container-component-platform
+.PHONY: run_container_$($(1)_COMPNAME)_$(2)
+run_container_$($(1)_COMPNAME)_$(2): $$($(1)_$(2)_image_token) $(SOURCEDIR)/$$($(1)_DISTFILE)
+	mkdir -p $(srcdir)os/$(2)/products/{RPMS,SRPMS}
+	docker run -it --rm \
+		-v $(srcdir)os/$(2)/products:/opt/build/external/out:z \
+		-v $(srcdir)common:/opt/build/external/in:z \
+		shibboleth/$(2):$($(1)_COMPNAME) \
+		/bin/bash
+endef
+
+$(foreach platform,$(PLATFORMS),$(foreach component,$(COMPONENTS),$(eval $(call run-container-component-platform,$(component),$(platform)))))
+
 # TODO:
 #  delete stale products on version bump
 #  add a clean target
