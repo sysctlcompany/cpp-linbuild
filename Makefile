@@ -160,6 +160,7 @@ PLATFORMS=\
 	centos7 \
 	centos8 \
 	amazonlinux2 \
+	amazonlinux2022 \
 	rockylinux8
 
 # To add a new platform, create the following
