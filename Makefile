@@ -18,6 +18,10 @@
 #			products of which are a set of RPMs and SRPMs.
 # <comp>_<plat>		Build component <comp> on platform <plat>
 #
+# run_container_<comp>_<plat>
+# 			Run an interactive build environment container
+# 			for component <comp> on platform <plat>
+#
 
 # Constants and utility variables
 
