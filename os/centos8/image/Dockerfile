@@ -3,6 +3,10 @@ FROM centos:8.4.2105
 COPY *.repo /etc/yum.repos.d/
 
 RUN sed -i "s/enabled=0/enabled=1/" /etc/yum.repos.d/CentOS-Linux-PowerTools.repo \
+    && sed -i \
+        -e "s/^mirrorlist/#mirrorlist/" \
+        -e "s|^#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|" \
+        /etc/yum.repos.d/CentOS-Linux-*.repo \
     && yum -y update \
     && yum -y install \
         autoconf automake boost-devel chrpath curl-devel doxygen \
