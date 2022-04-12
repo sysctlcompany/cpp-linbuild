@@ -1,4 +1,4 @@
-FROM amazonlinux:2.0.20211223.0
+FROM amazonlinux:2.0.20220316.0
 
 COPY *.repo /etc/yum.repos.d/
 
