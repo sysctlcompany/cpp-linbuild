@@ -1,4 +1,4 @@
-FROM rockylinux/rockylinux:8.5
+FROM rockylinux/rockylinux:8.5.20220308
 
 COPY *.repo /etc/yum.repos.d/
 
