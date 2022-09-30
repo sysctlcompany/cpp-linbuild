@@ -168,7 +168,6 @@ PLATFORMS=\
 #	os/$OS/
 #		image/
 #			Dockerfile
-#			build-<comp>.sh  # one per valid component
 #		products/
 #			RPMS/
 #			SRPMS/
