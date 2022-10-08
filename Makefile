@@ -13,9 +13,13 @@
 #
 # <plat>-image		Build Docker image for platform <plat>
 #
+# <plat>		Build all components on platform <plat> that are
+#			supported on that platform.
+#
 # <comp>		Build component <comp> on each supported platform
 #			<comp> is a virtual component name the actual
 #			products of which are a set of RPMs and SRPMs.
+#
 # <comp>_<plat>		Build component <comp> on platform <plat>
 #
 # run_container_<comp>_<plat>
@@ -185,6 +189,13 @@ $$($(1)_COMPNAME): $(foreach platform,$($(1)_VALID_PLATFORMS),$$($(1)_COMPNAME)_
 endef
 
 $(foreach component,$(COMPONENTS),$(eval $(call validity-component,$(component))))
+
+# Building for each platform depends on all components valid on that platform
+define validity-platform
+$(1): $(foreach component,$(COMPONENTS),$(if $(filter $(1),$($(component)_VALID_PLATFORMS)),$($(component)_COMPNAME)_$(1)))
+endef
+
+$(foreach platform,$(PLATFORMS),$(eval $(call validity-platform,$(platform))))
 
 # Each component may depend on other components, generally or on
 # specific platforms
