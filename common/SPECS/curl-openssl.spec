@@ -6,7 +6,7 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: curl-openssl
-Version: 7.80.0
+Version: 7.86.0
 Release: 1%{?dist}
 License: MIT
 Group: Applications/Internet
