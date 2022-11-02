@@ -1,5 +1,5 @@
 Name:		shibboleth-resolver
-Version:	3.3.0
+Version:	3.4.0
 Summary:	Shibboleth SP Attribute Resolver Library
 Release:	1
 Vendor:		Shibboleth Consortium
@@ -12,7 +12,7 @@ BuildRequires:  libxerces-c-devel >= 3.2
 BuildRequires:  libxml-security-c-devel >= 2.0.0
 BuildRequires:  libxmltooling-devel >= 3.2.0
 BuildRequires:  libsaml-devel >= 3.2.0
-BuildRequires:  shibboleth-devel >= 3.3.0
+BuildRequires:  shibboleth-devel >= 3.4.0
 %{?_with_log4cpp:BuildRequires: liblog4cpp-devel >= 1.0}
 %{!?_with_log4cpp:BuildRequires: liblog4shib-devel >= 1.0.4}
 %{!?_without_gssapi:BuildRequires: krb5-devel}
@@ -32,13 +32,13 @@ This package contains a Shibboleth SP Extension that provides
 externally accessible attribute resolver functionality for processing
 local and remote sources of federated attribute information.
 
-%package -n libshibresolver5
+%package -n libshibresolver6
 Summary:    Shibboleth SP Attribute Resolver library
 Group:      Development/Libraries
 Provides:   shibboleth-resolver = %{version}-%{release}
 Obsoletes:  shibboleth-resolver < %{version}-%{release}
 
-%description -n libshibresolver5
+%description -n libshibresolver6
 This package contains a Shibboleth SP Extension that provides
 externally accessible attribute resolver functionality for processing
 local and remote sources of federated attribute information.
@@ -48,14 +48,14 @@ This package contains just the shared library.
 %package -n libshibresolver-devel
 Summary:    Shibboleth SP Attribute Resolver development Headers
 Group:      Development/Libraries
-Requires:   libshibresolver5 = %{version}-%{release}
+Requires:   libshibresolver6 = %{version}-%{release}
 Provides:   shibboleth-resolver-devel = %{version}-%{release}
 Obsoletes:  shibboleth-resolver-devel < %{version}-%{release}
 Requires: libxerces-c-devel >= 3.2
 Requires: libxml-security-c-devel >= 2.0.0
 Requires: libxmltooling-devel >= 3.2.0
 Requires: libsaml-devel >= 3.2.0
-Requires: shibboleth-devel >= 3.3.0
+Requires: shibboleth-devel >= 3.4.0
 %{?_with_log4cpp:Requires: liblog4cpp-devel >= 1.0}
 %{!?_with_log4cpp:Requires: liblog4shib-devel >= 1.0.4}
 
@@ -107,7 +107,7 @@ This package includes files needed for development.
 
 %postun -n libshibresolver5 -p /sbin/ldconfig
 
-%files -n libshibresolver5
+%files -n libshibresolver6
 %defattr(-,root,root,-)
 %{_libdir}/libshibresolver-lite.so.*
 %{_libdir}/libshibresolver.so.*
@@ -122,6 +122,9 @@ This package includes files needed for development.
 %doc %{pkgdocdir}
 
 %changelog
+* Mon Oct 24 2022 Scott Cantor <cantor.2@osu.edu> - 3.4.0-1
+- Bump version
+
 * Thu Oct 28 2021 Scott Cantor  <cantor.2@osu.edu> - 3.3.0-1
 - Bump version
 

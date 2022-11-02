@@ -1,5 +1,5 @@
 Name:		xmltooling
-Version:	3.2.1
+Version:	3.2.2
 Release:	1
 Summary:	OpenSAML XML Processing library
 Group:		Development/Libraries/C and C++
@@ -149,6 +149,9 @@ This package includes XML schemas and related files.
 %doc %{pkgdocdir}
 
 %changelog
+* Wed Nov 2 2022 Scott Cantor <cantor.2@osu.edu> - 3.2.2-1
+- Version bump
+
 * Wed Dec 2 2020 Scott Cantor <cantor.2@osu.edu> - 3.2.0-1
 - Version bump
 

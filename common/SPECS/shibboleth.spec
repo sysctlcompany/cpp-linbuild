@@ -1,5 +1,5 @@
 Name:		shibboleth
-Version:	3.3.0
+Version:	3.4.0
 Release:	1
 Summary:	Open source system for attribute-based Web SSO
 Group:		Productivity/Networking/Security
@@ -481,6 +481,9 @@ exit 0
 %doc %{pkgdocdir}/api
 
 %changelog
+* Wed Nov 2 2022 Scott Cantor <cantor.2@osu.edu> - 3.4.0-1
+- Version bump
+
 * Thu Apr 22 2021 Scott Cantor <cantor.2@osu.edu> - 3.2.2-1
 - Fix devel dependency versions
 
