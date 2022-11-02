@@ -103,9 +103,9 @@ This package includes files needed for development.
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && %{__rm} -rf $RPM_BUILD_ROOT
 
-%post -n libshibresolver5 -p /sbin/ldconfig
+%post -n libshibresolver6 -p /sbin/ldconfig
 
-%postun -n libshibresolver5 -p /sbin/ldconfig
+%postun -n libshibresolver6 -p /sbin/ldconfig
 
 %files -n libshibresolver6
 %defattr(-,root,root,-)
