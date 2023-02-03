@@ -1,0 +1,20 @@
+delete stale products on version bump
+
+refresh an affected image in the event one of its dependencies changes
+
+save build logs to the host
+
+template %packager
+
+Makefile clean targets
+    platform/component products
+        component products on all platforms
+        platform products for all components
+    platform/component image
+        */component images
+        platform/* images
+    platform image
+    all images
+    distfile for component
+    all distfiles
+    everything

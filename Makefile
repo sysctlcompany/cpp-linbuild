@@ -273,9 +273,3 @@ endef
 
 $(foreach platform,$(PLATFORMS),$(foreach component,$(COMPONENTS),$(eval $(call run-container-component-platform,$(component),$(platform)))))
 
-# TODO:
-#  delete stale products on version bump
-#  add a clean target
-#  refresh an affected image in the event one of its dependencies changes
-#  save build logs to the host
-#  template %packager
