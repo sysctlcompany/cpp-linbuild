@@ -172,9 +172,6 @@ PLATFORMS=\
 #	os/$OS/
 #		image/
 #			Dockerfile
-#		products/
-#			RPMS/
-#			SRPMS/
 
 # Platform-specific variables and rules
 
@@ -210,6 +207,7 @@ define prepare-platform
 $(1)_token = $$(srcdir).$(1)_image
 $(1)_products = $(srcdir)os/$(1)/products
 $$($(1)_token): $(srcdir)os/$(1)/image/Dockerfile
+	mkdir -p $$($(1)_products)/{RPMS,SRPMS}
 	@echo "==> Building base Docker image for $(1)"
 	docker build -t shibboleth/$(1):$(BASETAG) $(srcdir)os/$(1)/image
 	touch $$($(1)_token)
@@ -245,7 +243,6 @@ $(foreach platform,$(PLATFORMS),$(foreach component,$(COMPONENTS),$(eval $(call 
 define build-component-platform
 $(1)_$(2)_token = $(srcdir).$(1)_$(2)_products
 $$($(1)_$(2)_token): $$($(1)_$(2)_image_token) $(SOURCEDIR)/$$($(1)_DISTFILE) $(SPECDIR)/$$($(1)_COMPNAME).spec
-	mkdir -p $$($(2)_products)/{RPMS,SRPMS}
 	@echo "==> Sanity checking $(1) on $(2)"
 	grep -E "^Version:[[:space:]]+$$($(1)_VERSION)$$$$" $(SPECDIR)/$$($(1)_COMPNAME).spec
 	@echo "==> Building $(1) on $(2)"
@@ -264,7 +261,6 @@ $(foreach platform,$(PLATFORMS),$(foreach component,$(COMPONENTS),$(eval $(call 
 define run-container-component-platform
 .PHONY: run_container_$($(1)_COMPNAME)_$(2)
 run_container_$($(1)_COMPNAME)_$(2): $$($(1)_$(2)_image_token) $(SOURCEDIR)/$$($(1)_DISTFILE)
-       mkdir -p $$($(2)_products)/{RPMS,SRPMS}
 	docker run -it --rm \
 		-v $$($(2)_products):/opt/build/external/out:z \
 		-v $(srcdir)common:/opt/build/external/in:z \
