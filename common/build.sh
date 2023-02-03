@@ -15,6 +15,14 @@ else
     arch=$machine_arch
 fi
 
+localrepo=${EXT_BASE}/out/RPMS/${arch}
+
+if [ ! -e ${localrepo}/repodata/repomd.xml ]; then
+    # Initialize empty local RPM repository
+    mkdir -p ${localrepo}
+    createrepo_c ${localrepo}
+fi
+
 # Install dependencies
 yum-config-manager --enable local
 yum-builddep -y ${component}.spec
@@ -27,4 +35,4 @@ rpmspec -q --rpms ${component}.spec > ${EXT_BASE}/out/${component}.rpms
 rpmspec -q --srpm ${component}.spec > ${EXT_BASE}/out/${component}.srpm
 
 # Generate/update local RPM repository
-createrepo_c ${EXT_BASE}/out/RPMS/${arch}
+createrepo_c ${localrepo}
