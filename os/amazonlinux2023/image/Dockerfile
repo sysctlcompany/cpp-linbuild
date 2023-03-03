@@ -1,4 +1,4 @@
-FROM public.ecr.aws/amazonlinux/amazonlinux:2022.0.20221207.4
+FROM public.ecr.aws/amazonlinux/amazonlinux:2023.0.20230222.1
 
 COPY *.repo /etc/yum.repos.d/
 

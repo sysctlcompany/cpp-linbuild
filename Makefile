@@ -164,7 +164,7 @@ PLATFORMS=\
 	centos7 \
 	centos8 \
 	amazonlinux2 \
-	amazonlinux2022 \
+	amazonlinux2023 \
 	rockylinux8 \
 	rockylinux9
 
