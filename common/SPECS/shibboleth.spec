@@ -1,6 +1,6 @@
 Name:		shibboleth
 Version:	3.4.1
-Release:	1
+Release:	2
 Summary:	Open source system for attribute-based Web SSO
 Group:		Productivity/Networking/Security
 Vendor:		Shibboleth Consortium
@@ -116,7 +116,7 @@ This package includes files needed for development with Shibboleth.
     %configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{!?_without_systemd:--enable-systemd} %{?shib_options}
 %else
 %if 0%{?rhel} >= 8
-    %configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{?_with-memcached} %{!?_without_systemd:--enable-systemd} %{?shib_options}
+    %configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{!?_without_memcached:--with-memcached} %{!?_without_systemd:--enable-systemd} %{?shib_options}
 %else
 %if 0%{?rhel} >= 7
     %configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{!?_without_memcached:--with-memcached} %{!?_without_systemd:--enable-systemd} %{?shib_options} PKG_CONFIG_PATH=/opt/shibboleth/%{_lib}/pkgconfig
@@ -481,6 +481,9 @@ exit 0
 %doc %{pkgdocdir}/api
 
 %changelog
+* Fri Mar 24 2023 John W. O'Brien <john@saltant.com> 3.4.1-2
+- Build with memcached on RHEL 8 and later and derivatives
+
 * Wed Nov 2 2022 Scott Cantor <cantor.2@osu.edu> - 3.4.0-1
 - Version bump
 
