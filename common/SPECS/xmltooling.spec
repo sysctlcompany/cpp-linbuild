@@ -1,15 +1,15 @@
-Name:		xmltooling
-Version:	3.2.4
-Release:	1
-Summary:	OpenSAML XML Processing library
-Group:		Development/Libraries/C and C++
-Vendor:		Shibboleth Consortium
-License:	Apache-2.0
-URL:		http://www.opensaml.org/
-Source:		%{name}-%{version}.tar.bz2
-BuildRoot:	%{_tmppath}/%{name}-%{version}-root
-BuildRequires:  libxerces-c-devel >= 3.2
-BuildRequires:  libxml-security-c-devel >= 2.0.0
+Name: xmltooling
+Version: 3.2.4
+Release: 1
+Summary: OpenSAML XML Processing library
+Group: Development/Libraries/C and C++
+Vendor: Shibboleth Consortium
+License: Apache-2.0
+URL: http://www.opensaml.org/
+Source: %{name}-%{version}.tar.bz2
+BuildRoot: %{_tmppath}/%{name}-%{version}-root
+BuildRequires: libxerces-c-devel >= 3.2
+BuildRequires: libxml-security-c-devel >= 2.0.0
 %{?_with_log4cpp:BuildRequires: liblog4cpp-devel >= 1.0}
 %{!?_with_log4cpp:BuildRequires: liblog4shib-devel >= 1.0.4}
 BuildRequires: gcc-c++, pkgconfig, zlib-devel, openssl-devel, boost-devel >= 1.32.0
@@ -48,10 +48,10 @@ classes to add value around the DOM, as well as signing and encryption
 support.
 
 %package -n libxmltooling10
-Summary:    OpenSAML XMLTooling library
-Group:      Development/Libraries/C and C++
-Provides:   xmltooling = %{version}-%{release}
-Obsoletes:  xmltooling < %{version}-%{release}
+Summary: OpenSAML XMLTooling library
+Group: Development/Libraries/C and C++
+Provides: xmltooling = %{version}-%{release}
+Obsoletes: xmltooling < %{version}-%{release}
 %if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
 Requires: libcurl-openssl >= 7.21.7
 %endif
@@ -66,12 +66,12 @@ support.
 This package contains just the shared library.
 
 %package -n libxmltooling-devel
-Summary:	XMLTooling development Headers
-Group:		Development/Libraries/C and C++
-Requires:	libxmltooling10 = %{version}-%{release}
-Provides:	xmltooling-devel = %{version}-%{release}
-Obsoletes:	xmltooling-devel < %{version}-%{release}
-Requires:  libxerces-c-devel >= 3.2
+Summary: XMLTooling development Headers
+Group: Development/Libraries/C and C++
+Requires: libxmltooling10 = %{version}-%{release}
+Provides: xmltooling-devel = %{version}-%{release}
+Obsoletes: xmltooling-devel < %{version}-%{release}
+Requires: libxerces-c-devel >= 3.2
 Requires: libxml-security-c-devel >= 2.0.0
 %{?_with_log4cpp:Requires: liblog4cpp-devel >= 1.0}
 %{!?_with_log4cpp:Requires: liblog4shib-devel >= 1.0.4}
@@ -92,8 +92,8 @@ support.
 This package includes files needed for development with XMLTooling.
 
 %package -n xmltooling-schemas
-Summary:	XMLTooling schemas and catalog
-Group:		Development/Libraries/C and C++
+Summary: XMLTooling schemas and catalog
+Group: Development/Libraries/C and C++
 
 %description -n xmltooling-schemas
 The XMLTooling library contains generic XML parsing and processing

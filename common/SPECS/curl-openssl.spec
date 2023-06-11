@@ -30,10 +30,10 @@ BuildRequires: stunnel
 BuildRequires: zlib-devel
 Requires: libcurl-openssl = %{version}-%{release}
 
-# We do not want curl-openssl to provide or require the 
-#.so and similar  files that the real curl provides so we must 
+# We do not want curl-openssl to provide or require the
+#.so and similar files that the real curl provides so we must
 # filter them out.
-%filter_provides_in %{_libdir}/.*\.so.*$ 
+%filter_provides_in %{_libdir}/.*\.so.*$
 %filter_from_provides /pkgconfig(libcurl)/d
 %filter_from_requires /libcurl\.so\..*/d
 %filter_setup
@@ -69,19 +69,19 @@ developing applications which can use cURL's capabilities internally.
 
 # Convert docs to UTF-8
 for f in CHANGES README; do
-	iconv -f iso-8859-1 -t utf8 < ${f} > ${f}.utf8
-	mv -f ${f}.utf8 ${f}
+    iconv -f iso-8859-1 -t utf8 < ${f} > ${f}.utf8
+    mv -f ${f}.utf8 ${f}
 done
 
 %build
 %configure --with-ssl --enable-ipv6 --without-ca-bundle --with-libidn \
-	--with-gssapi --enable-ldaps --disable-static --enable-manual
+    --with-gssapi --enable-ldaps --disable-static --enable-manual
 sed -i -e 's,-L/usr/lib ,,g;s,-L/usr/lib64 ,,g;s,-L/usr/lib$,,g;s,-L/usr/lib64$,,g' \
-	Makefile libcurl.pc
+    Makefile libcurl.pc
 # Remove bogus rpath
 sed -i \
-	-e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
-	-e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+    -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
+    -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
 make %{?_smp_mflags}
 
@@ -102,7 +102,7 @@ rm -rf $RPM_BUILD_ROOT
 %post -n libcurl-openssl
 /sbin/ldconfig -N %{_libdir}
 
-%postun -n libcurl-openssl 
+%postun -n libcurl-openssl
 /sbin/ldconfig -N %{_libdir}
 
 %files
@@ -549,7 +549,7 @@ rm -rf $RPM_BUILD_ROOT
 - update to 7.15.3
 
 * Thu Feb 23 2006 Ivana Varekova <varekova@redhat.com> - 7.15.1-2
-- fix multilib problem - #181290 - 
+- fix multilib problem - #181290 -
   curl-devel.i386 not installable together with curl-devel.x86-64
 
 * Fri Feb 10 2006 Jesse Keating <jkeating@redhat.com> - 7.15.1-1.2.1
@@ -577,11 +577,11 @@ rm -rf $RPM_BUILD_ROOT
 - update to 7.14.1
 
 * Thu Jun 16 2005 Ivana Varekova <varekova@redhat.com> 7.14.0-1
-- rebuild new version 
+- rebuild new version
 
 * Tue May 03 2005 Ivana Varekova <varekova@redhat.com> 7.13.1-3
 - fix bug 150768 - curl-7.12.3-2 breaks basic authentication
-  used Daniel Stenberg patch 
+  used Daniel Stenberg patch
 
 * Mon Apr 25 2005 Joe Orton <jorton@redhat.com> 7.13.1-2
 - update to use ca-bundle in /etc/pki
@@ -628,7 +628,6 @@ rm -rf $RPM_BUILD_ROOT
 * Wed Apr 07 2004 Adrian Havill <havill@redhat.com> 7.11.1-1
 - upgraded; updated nousr patch
 - added COPYING (#115956)
-- 
 
 * Tue Mar 02 2004 Elliot Lee <sopwith@redhat.com>
 - rebuilt
@@ -714,7 +713,7 @@ rm -rf $RPM_BUILD_ROOT
 - 7.9.6
 
 * Thu Mar 21 2002 Trond Eivind Glomsrød <teg@redhat.com> 7.9.5-2
-- Stop the curl-config script from printing -I/usr/include 
+- Stop the curl-config script from printing -I/usr/include
   and -L/usr/lib (#59497)
 
 * Fri Mar  8 2002 Trond Eivind Glomsrød <teg@redhat.com> 7.9.5-1
@@ -764,7 +763,7 @@ rm -rf $RPM_BUILD_ROOT
 * Fri Oct 20 2000 Nalin Dahyabhai <nalin@redhat.com>
 - fix bogus req in -devel package
 
-* Fri Oct 20 2000 Tim Powers <timp@redhat.com> 
+* Fri Oct 20 2000 Tim Powers <timp@redhat.com>
 - devel package needed defattr so that root owns the files
 
 * Mon Oct 16 2000 Nalin Dahyabhai <nalin@redhat.com>

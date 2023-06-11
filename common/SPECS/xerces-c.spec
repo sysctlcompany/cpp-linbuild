@@ -1,13 +1,13 @@
-Summary:    Xerces-C++ validating XML parser
-Name:       xerces-c
-Version:    3.2.4
-Release:    1
-URL:        http://xerces.apache.org/xerces-c/
-Source0:    %{name}-%{version}.tar.bz2
-License:    Apache
-Group:      Libraries
-BuildRoot:  %{_tmppath}/%{name}-root
-Prefix:     /usr
+Summary: Xerces-C++ validating XML parser
+Name: xerces-c
+Version: 3.2.4
+Release: 1
+URL: http://xerces.apache.org/xerces-c/
+Source0: %{name}-%{version}.tar.bz2
+License: Apache
+Group: Libraries
+BuildRoot: %{_tmppath}/%{name}-root
+Prefix: /usr
 BuildRequires: gcc-c++ pkgconfig
 %{?_with_curl:BuildRequires: curl-devel}
 %{?_with_icu:BuildRequires: libicu-devel}
@@ -26,8 +26,8 @@ write XML data. A shared library is provided for parsing, generating,
 manipulating, and validating XML documents.
 
 %package -n xerces-c-bin
-Summary:    Utilities for Xerces-C++ validating XML parser
-Group:      Development/Libraries
+Summary: Utilities for Xerces-C++ validating XML parser
+Group: Development/Libraries
 
 %description -n xerces-c-bin
 Xerces-C++ is a validating XML parser written in a portable subset of C++.
@@ -38,9 +38,9 @@ manipulating, and validating XML documents.
 This package contains the utility programs.
 
 %package -n libxerces-c-3_2
-Summary:    Shared library for Xerces-C++ validating XML parser
-Group:      Development/Libraries
-Provides:   xerces-c = %{version}-%{release}
+Summary: Shared library for Xerces-C++ validating XML parser
+Group: Development/Libraries
+Provides: xerces-c = %{version}-%{release}
 
 %description -n libxerces-c-3_2
 Xerces-C++ is a validating XML parser written in a portable subset of C++.
@@ -51,10 +51,10 @@ manipulating, and validating XML documents.
 This package contains just the shared library.
 
 %package -n libxerces-c-devel
-Group:      Development/Libraries
-Summary:    Header files for Xerces-C++ validating XML parser
-Requires:   libxerces-c-3_2 = %{version}-%{release}
-Provides:   xerces-c-devel = %{version}-%{release}
+Group: Development/Libraries
+Summary: Header files for Xerces-C++ validating XML parser
+Requires: libxerces-c-3_2 = %{version}-%{release}
+Provides: xerces-c-devel = %{version}-%{release}
 
 %description -n libxerces-c-devel
 Xerces-C++ is a validating XML parser written in a portable subset of C++.

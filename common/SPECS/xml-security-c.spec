@@ -1,16 +1,16 @@
-Name:           xml-security-c
-Version:        2.0.4
-Release:        1
-Summary:        Apache XML security C++ library
-Group:          Development/Libraries/C and C++
-License:        Apache 2.0
-URL:            http://www.apache.org/dist/santuario/c-library/
-Source:         %{name}-%{version}.tar.bz2
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+Name: xml-security-c
+Version: 2.0.4
+Release: 1
+Summary: Apache XML security C++ library
+Group: Development/Libraries/C and C++
+License: Apache 2.0
+URL: http://www.apache.org/dist/santuario/c-library/
+Source: %{name}-%{version}.tar.bz2
+BuildRoot: %{_tmppath}/%{name}-%{version}-build
 
 %{?_with_xalan:BuildRequires: libxalan-c-devel >= 1.11}
-BuildRequires:  libxerces-c-devel >= 3.2
-BuildRequires:  openssl-devel gcc-c++ pkgconfig
+BuildRequires: libxerces-c-devel >= 3.2
+BuildRequires: openssl-devel gcc-c++ pkgconfig
 %if "%{_vendor}" == "redhat"
 BuildRequires: redhat-rpm-config
 %endif
@@ -26,8 +26,8 @@ Xerces-C XML Parser and Xalan-C XSLT processor. The latter is used for processin
 XPath and XSLT transforms.
 
 %package -n xml-security-c-bin
-Summary:    Utilities for XML security C++ library
-Group:      Development/Libraries/C and C++
+Summary: Utilities for XML security C++ library
+Group: Development/Libraries/C and C++
 
 %description -n xml-security-c-bin
 The xml-security-c library is a C++ implementation of the XML Digital Signature
@@ -38,9 +38,9 @@ XPath and XSLT transforms.
 This package contains the utility programs.
 
 %package -n libxml-security-c20
-Summary:    Apache XML security C++ library
-Group:      Development/Libraries/C and C++
-Provides:   xml-security-c = %{version}-%{release}
+Summary: Apache XML security C++ library
+Group: Development/Libraries/C and C++
+Provides: xml-security-c = %{version}-%{release}
 
 %description -n libxml-security-c20
 The xml-security-c library is a C++ implementation of the XML Digital Signature
@@ -51,13 +51,13 @@ XPath and XSLT transforms.
 This package contains just the shared library.
 
 %package -n libxml-security-c-devel
-Summary:	Development files for the Apache C++ XML security library
-Group:		Development/Libraries/C and C++
-Requires:	libxml-security-c20 = %{version}-%{release}
-Requires:	openssl-devel
-Requires:       libxerces-c-devel >= 3.2
+Summary: Development files for the Apache C++ XML security library
+Group: Development/Libraries/C and C++
+Requires: libxml-security-c20 = %{version}-%{release}
+Requires: openssl-devel
+Requires: libxerces-c-devel >= 3.2
 %{?_with_xalan:Requires: libxalan-c-devel >= 1.11}
-Provides:   xml-security-c-devel = %{version}-%{release}
+Provides: xml-security-c-devel = %{version}-%{release}
 
 %description -n libxml-security-c-devel
 The xml-security-c library is a C++ implementation of the XML Digital Signature

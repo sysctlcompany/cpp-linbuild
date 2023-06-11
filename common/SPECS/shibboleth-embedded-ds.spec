@@ -1,14 +1,14 @@
-Name:		shibboleth-embedded-ds
-Version:	1.2.2
-Release:	1
-Summary:	Client-side federation discovery service for SAML-based SSO
-Group:		Productivity/Networking/Security
-Vendor:		Shibboleth Consortium
-License:	Apache-2.0
-URL:		http://shibboleth.net/
-Source:		%{name}-%{version}.tar.gz
-BuildArch:	noarch
-BuildRoot:	%{_tmppath}/%{name}-%{version}-root
+Name: shibboleth-embedded-ds
+Version: 1.2.2
+Release: 1
+Summary: Client-side federation discovery service for SAML-based SSO
+Group: Productivity/Networking/Security
+Vendor: Shibboleth Consortium
+License: Apache-2.0
+URL: http://shibboleth.net/
+Source: %{name}-%{version}.tar.gz
+BuildArch: noarch
+BuildRoot: %{_tmppath}/%{name}-%{version}-root
 %if "%{_vendor}" == "redhat"
 BuildRequires: redhat-rpm-config
 %{!?_without_builtinapache:BuildRequires: httpd}
@@ -45,7 +45,7 @@ if [ "$APACHE_CONFIG" != "no" ] ; then
     fi
     if [ "$APACHE_CONFD" != "no" ] ; then
         %{__mkdir} -p $RPM_BUILD_ROOT$APACHE_CONFD
-        %{__cp} -p $RPM_BUILD_ROOT%{_sysconfdir}/shibboleth-ds/$APACHE_CONFIG $RPM_BUILD_ROOT$APACHE_CONFD/$APACHE_CONFIG 
+        %{__cp} -p $RPM_BUILD_ROOT%{_sysconfdir}/shibboleth-ds/$APACHE_CONFIG $RPM_BUILD_ROOT$APACHE_CONFD/$APACHE_CONFIG
         echo "%config(noreplace) $APACHE_CONFD/$APACHE_CONFIG" > rpm.filelist
     fi
 fi
@@ -55,7 +55,7 @@ fi
 
 %post
 %if "%{_vendor}" == "redhat"
-	# On upgrade, restart components if they're already running.
+    # On upgrade, restart components if they're already running.
     if [ "$1" -gt "1" ] ; then
         %{!?_without_builtinapache:/sbin/service httpd status 1>/dev/null && /sbin/service httpd restart 1>/dev/null}
         exit 0
@@ -64,9 +64,9 @@ fi
 
 %preun
 %if "%{_vendor}" == "redhat"
-	if [ "$1" = 0 ] ; then
+    if [ "$1" = 0 ] ; then
         %{!?_without_builtinapache:/sbin/service httpd status 1>/dev/null && /sbin/service httpd restart 1>/dev/null}
-	fi
+    fi
 %endif
 %if "%{_vendor}" == "suse"
     if [ "$1" = 0 ] ; then

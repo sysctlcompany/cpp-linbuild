@@ -1,52 +1,52 @@
-Name:		shibboleth
-Version:	3.4.1
-Release:	2
-Summary:	Open source system for attribute-based Web SSO
-Group:		Productivity/Networking/Security
-Vendor:		Shibboleth Consortium
-License:	Apache-2.0
-URL:		http://shibboleth.net/
-Source:		%{name}-sp-%{version}.tar.bz2
-BuildRoot:	%{_tmppath}/%{name}-sp-%{version}-root
-Obsoletes:	shibboleth-sp = 2.5.0
-Requires:	openssl
+Name: shibboleth
+Version: 3.4.1
+Release: 2
+Summary: Open source system for attribute-based Web SSO
+Group: Productivity/Networking/Security
+Vendor: Shibboleth Consortium
+License: Apache-2.0
+URL: http://shibboleth.net/
+Source: %{name}-sp-%{version}.tar.bz2
+BuildRoot: %{_tmppath}/%{name}-sp-%{version}-root
+Obsoletes: shibboleth-sp = 2.5.0
+Requires: openssl
 %if 0%{?rhel} >= 6 || 0%{?amzn} == 1 || 0%{?amzn} == 2
-PreReq:		xmltooling-schemas%{?_isa} >= 3.2.0, opensaml-schemas%{?_isa} >= 3.2.0
+PreReq: xmltooling-schemas%{?_isa} >= 3.2.0, opensaml-schemas%{?_isa} >= 3.2.0
 %else
-PreReq:		xmltooling-schemas >= 3.2.0, opensaml-schemas >= 3.2.0
+PreReq: xmltooling-schemas >= 3.2.0, opensaml-schemas >= 3.2.0
 %endif
 %if 0%{?suse_version} > 1030 && 0%{?suse_version} < 1130
-PreReq:		%{insserv_prereq} %{fillup_prereq}
+PreReq: %{insserv_prereq} %{fillup_prereq}
 %endif
 %if 0%{?rhel} >= 7
 Requires: hostname
-BuildRequires:  systemd-devel
+BuildRequires: systemd-devel
 %else
 Requires: net-tools
 %endif
 %if 0%{?rhel} >= 8
-BuildRequires:  gdb
+BuildRequires: gdb
 %endif
-BuildRequires:  libxerces-c-devel >= 3.2
-BuildRequires:	libxml-security-c-devel >= 2.0.0
-BuildRequires:	libxmltooling-devel >= 3.2.0
-BuildRequires:	libsaml-devel >= 3.2.0
+BuildRequires: libxerces-c-devel >= 3.2
+BuildRequires: libxml-security-c-devel >= 2.0.0
+BuildRequires: libxmltooling-devel >= 3.2.0
+BuildRequires: libsaml-devel >= 3.2.0
 %{?_with_log4cpp:BuildRequires: liblog4cpp-devel >= 1.0}
 %{!?_with_log4cpp:BuildRequires: liblog4shib-devel >= 2}
 %if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
-Requires:	libcurl-openssl%{?_isa} >= 7.21.7
-BuildRequires:	chrpath
+Requires: libcurl-openssl%{?_isa} >= 7.21.7
+BuildRequires: chrpath
 %endif
 %if 0%{?suse_version} > 1300
-BuildRequires:	libtool
+BuildRequires: libtool
 %endif
-BuildRequires:  gcc-c++, pkgconfig, boost-devel >= 1.32.0
+BuildRequires: gcc-c++, pkgconfig, boost-devel >= 1.32.0
 %{!?_without_gssapi:BuildRequires: krb5-devel}
 %{!?_without_doxygen:BuildRequires: doxygen}
 %{!?_without_odbc:BuildRequires:unixODBC-devel}
 %{?_with_fastcgi:BuildRequires: fcgi-devel}
 %if 0%{?centos} == 6 || 0%{?centos} == 7
-BuildRequires:	libmemcached-devel
+BuildRequires: libmemcached-devel
 %endif
 %{?_with_memcached:BuildRequires: libmemcached-devel}
 %if "%{_vendor}" == "redhat" || "%{_vendor}" == "amazon"
@@ -87,14 +87,14 @@ This package contains the Shibboleth Service Provider runtime libraries,
 daemon, default plugins, and Apache module(s).
 
 %package devel
-Summary:	Shibboleth Development Headers
-Group:		Development/Libraries/C and C++
-Requires:	%{name} = %{version}-%{release}
-Obsoletes:	shibboleth-sp-devel = 2.5.0
-Requires:	libxerces-c-devel >= 3.2
-Requires: 	libxml-security-c-devel >= 2.0.0
-Requires: 	libxmltooling-devel >= 3.2.0
-Requires: 	libsaml-devel >= 3.2.0
+Summary: Shibboleth Development Headers
+Group: Development/Libraries/C and C++
+Requires: %{name} = %{version}-%{release}
+Obsoletes: shibboleth-sp-devel = 2.5.0
+Requires: libxerces-c-devel >= 3.2
+Requires: libxml-security-c-devel >= 2.0.0
+Requires: libxmltooling-devel >= 3.2.0
+Requires: libsaml-devel >= 3.2.0
 %{?_with_log4cpp:Requires: liblog4cpp-devel >= 1.0}
 %{!?_with_log4cpp:Requires: liblog4shib-devel >= 2}
 
@@ -144,52 +144,52 @@ This package includes files needed for development with Shibboleth.
 %{__make} install NOKEYGEN=1 DESTDIR=$RPM_BUILD_ROOT pkgdocdir=%{pkgdocdir}
 
 %if "%{_vendor}" == "suse"
-	%{__sed} -i "s/\/var\/log\/httpd/\/var\/log\/apache2/g" \
-		$RPM_BUILD_ROOT%{_sysconfdir}/shibboleth/native.logger
+    %{__sed} -i "s/\/var\/log\/httpd/\/var\/log\/apache2/g" \
+        $RPM_BUILD_ROOT%{_sysconfdir}/shibboleth/native.logger
 %endif
 
 # Plug the SP into the built-in Apache on a recognized system.
 touch rpm.filelist
 APACHE_CONFIG="no"
 if [ -f $RPM_BUILD_ROOT%{_libdir}/shibboleth/mod_shib_13.so ] ; then
-	APACHE_CONFIG="apache.config"
+    APACHE_CONFIG="apache.config"
 fi
 if [ -f $RPM_BUILD_ROOT%{_libdir}/shibboleth/mod_shib_20.so ] ; then
-	APACHE_CONFIG="apache2.config"
+    APACHE_CONFIG="apache2.config"
 fi
 if [ -f $RPM_BUILD_ROOT%{_libdir}/shibboleth/mod_shib_22.so ] ; then
-	APACHE_CONFIG="apache22.config"
+    APACHE_CONFIG="apache22.config"
 fi
 if [ -f $RPM_BUILD_ROOT%{_libdir}/shibboleth/mod_shib_24.so ] ; then
-	APACHE_CONFIG="apache24.config"
+    APACHE_CONFIG="apache24.config"
 fi
 %{?_without_builtinapache:APACHE_CONFIG="no"}
 if [ "$APACHE_CONFIG" != "no" ] ; then
-	APACHE_CONFD="no"
-	if [ -d %{_sysconfdir}/httpd/conf.d ] ; then
-		APACHE_CONFD="%{_sysconfdir}/httpd/conf.d"
-	fi
-	if [ -d %{_sysconfdir}/apache2/conf.d ] ; then
-		APACHE_CONFD="%{_sysconfdir}/apache2/conf.d"
-	fi
-	if [ "$APACHE_CONFD" != "no" ] ; then
-		%{__mkdir} -p $RPM_BUILD_ROOT$APACHE_CONFD
-		%{__cp} -p $RPM_BUILD_ROOT%{_sysconfdir}/shibboleth/$APACHE_CONFIG $RPM_BUILD_ROOT$APACHE_CONFD/shib.conf 
-		echo "%config(noreplace) $APACHE_CONFD/shib.conf" >> rpm.filelist
-	fi
+    APACHE_CONFD="no"
+    if [ -d %{_sysconfdir}/httpd/conf.d ] ; then
+        APACHE_CONFD="%{_sysconfdir}/httpd/conf.d"
+    fi
+    if [ -d %{_sysconfdir}/apache2/conf.d ] ; then
+        APACHE_CONFD="%{_sysconfdir}/apache2/conf.d"
+    fi
+    if [ "$APACHE_CONFD" != "no" ] ; then
+        %{__mkdir} -p $RPM_BUILD_ROOT$APACHE_CONFD
+        %{__cp} -p $RPM_BUILD_ROOT%{_sysconfdir}/shibboleth/$APACHE_CONFIG $RPM_BUILD_ROOT$APACHE_CONFD/shib.conf
+        echo "%config(noreplace) $APACHE_CONFD/shib.conf" >> rpm.filelist
+    fi
 fi
 
 # Establish location of systemd file, if any.
 SYSTEMD_SHIBD="no"
 %if 0%{?suse_version} >= 1210 || 0%{?rhel} >= 7
-	%{__mkdir} -p $RPM_BUILD_ROOT%{_unitdir}
-	echo "%attr(0444,-,-) %{_unitdir}/shibd.service" >> rpm.filelist
-	SYSTEMD_SHIBD="$RPM_BUILD_ROOT%{_unitdir}/shibd.service"
+    %{__mkdir} -p $RPM_BUILD_ROOT%{_unitdir}
+    echo "%attr(0444,-,-) %{_unitdir}/shibd.service" >> rpm.filelist
+    SYSTEMD_SHIBD="$RPM_BUILD_ROOT%{_unitdir}/shibd.service"
 
-	# Get run directory created at boot time.
-	%{__mkdir} -p $RPM_BUILD_ROOT%{_tmpfilesdir}
-	echo "%attr(0444,-,-) %{_tmpfilesdir}/%{name}.conf" >> rpm.filelist
-	cat > $RPM_BUILD_ROOT%{_tmpfilesdir}/%{name}.conf <<EOF
+    # Get run directory created at boot time.
+    %{__mkdir} -p $RPM_BUILD_ROOT%{_tmpfilesdir}
+    echo "%attr(0444,-,-) %{_tmpfilesdir}/%{name}.conf" >> rpm.filelist
+    cat > $RPM_BUILD_ROOT%{_tmpfilesdir}/%{name}.conf <<EOF
 d /run/%{name} 755 %{runuser} %{runuser} -
 EOF
 %endif
@@ -198,20 +198,20 @@ EOF
 SYSCONFIG_SHIBD="no"
 if [ "$SYSTEMD_SHIBD" == "no" ] ; then
 %if "%{_vendor}" == "redhat" || "%{_vendor}" == "amazon"
-	%{__mkdir} -p $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig
-	echo "%config(noreplace) %{_sysconfdir}/sysconfig/shibd" >> rpm.filelist
-	SYSCONFIG_SHIBD="$RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/shibd"
+    %{__mkdir} -p $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig
+    echo "%config(noreplace) %{_sysconfdir}/sysconfig/shibd" >> rpm.filelist
+    SYSCONFIG_SHIBD="$RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/shibd"
 %endif
 %if "%{_vendor}" == "suse"
-	%{__mkdir} -p $RPM_BUILD_ROOT%{_localstatedir}/adm/fillup-templates
-	echo "%{_localstatedir}/adm/fillup-templates/sysconfig.shibd" >> rpm.filelist
-	SYSCONFIG_SHIBD="$RPM_BUILD_ROOT%{_localstatedir}/adm/fillup-templates/sysconfig.shibd"
+    %{__mkdir} -p $RPM_BUILD_ROOT%{_localstatedir}/adm/fillup-templates
+    echo "%{_localstatedir}/adm/fillup-templates/sysconfig.shibd" >> rpm.filelist
+    SYSCONFIG_SHIBD="$RPM_BUILD_ROOT%{_localstatedir}/adm/fillup-templates/sysconfig.shibd"
 %endif
 fi
 
 if [ "$SYSTEMD_SHIBD" != "no" ] ; then
-	# Populate the systemd file
-	cat > $SYSTEMD_SHIBD <<EOF
+    # Populate the systemd file
+    cat > $SYSTEMD_SHIBD <<EOF
 [Unit]
 Description=Shibboleth Service Provider Daemon
 Documentation=https://wiki.shibboleth.net/confluence/display/SP3/Home
@@ -238,8 +238,8 @@ RestartSec=30s
 WantedBy=multi-user.target
 EOF
 elif [ "$SYSCONFIG_SHIBD" != "no" ] ; then
-	# Populate the sysconfig file.
-	cat > $SYSCONFIG_SHIBD <<EOF
+    # Populate the sysconfig file.
+    cat > $SYSCONFIG_SHIBD <<EOF
 # Shibboleth SP init script customization
 
 # User account for shibd
@@ -251,30 +251,30 @@ SHIBD_USER=%{runuser}
 # Wait period (secs) for configuration (and metadata) to load
 SHIBD_WAIT=30
 EOF
-	%if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
-		cat >> $SYSCONFIG_SHIBD <<EOF
+    %if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
+        cat >> $SYSCONFIG_SHIBD <<EOF
 
 # Override OS-supplied libcurl
 export LD_LIBRARY_PATH=/opt/shibboleth/%{_lib}
 EOF
-	%endif
+    %endif
 fi
 
 %if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
-	# Strip existing rpath to libcurl.
-	chrpath -d $RPM_BUILD_ROOT%{_sbindir}/shibd
-	chrpath -d $RPM_BUILD_ROOT%{_bindir}/mdquery
-	chrpath -d $RPM_BUILD_ROOT%{_bindir}/resolvertest
+    # Strip existing rpath to libcurl.
+    chrpath -d $RPM_BUILD_ROOT%{_sbindir}/shibd
+    chrpath -d $RPM_BUILD_ROOT%{_bindir}/mdquery
+    chrpath -d $RPM_BUILD_ROOT%{_bindir}/resolvertest
 %endif
 
 %if "%{_vendor}" == "redhat" || "%{_vendor}" == "amazon" || "%{_vendor}" == "suse"
 if [ "$SYSTEMD_SHIBD" == "no" ] ; then
-	# %{_initddir} not yet in RHEL5, use deprecated %{_initrddir}
-	install -d -m 0755 $RPM_BUILD_ROOT%{_initrddir}
-	install -m 0755 $RPM_BUILD_ROOT%{_sysconfdir}/shibboleth/shibd-%{_vendor} $RPM_BUILD_ROOT%{_initrddir}/shibd
+    # %{_initddir} not yet in RHEL5, use deprecated %{_initrddir}
+    install -d -m 0755 $RPM_BUILD_ROOT%{_initrddir}
+    install -m 0755 $RPM_BUILD_ROOT%{_sysconfdir}/shibboleth/shibd-%{_vendor} $RPM_BUILD_ROOT%{_initrddir}/shibd
 %if "%{_vendor}" == "suse"
-	install -d -m 0755 $RPM_BUILD_ROOT/%{_sbindir}
-	%{__ln_s} -f %{_initrddir}/shibd $RPM_BUILD_ROOT%{_sbindir}/rcshibd
+    install -d -m 0755 $RPM_BUILD_ROOT/%{_sbindir}
+    %{__ln_s} -f %{_initrddir}/shibd $RPM_BUILD_ROOT%{_sbindir}/rcshibd
 %endif
 fi
 %endif
@@ -288,9 +288,9 @@ fi
 %pre
 getent group %{runuser} >/dev/null || groupadd -r %{runuser}
 getent passwd %{runuser} >/dev/null || useradd -r -g %{runuser} \
-	-d  %{_localstatedir}/run/shibboleth -s /sbin/nologin -c "Shibboleth SP daemon" %{runuser}
+    -d  %{_localstatedir}/run/shibboleth -s /sbin/nologin -c "Shibboleth SP daemon" %{runuser}
 %if 0%{?suse_version} >= 1210
-	%service_add_pre shibd.service
+    %service_add_pre shibd.service
 %endif
 exit 0
 
@@ -299,52 +299,52 @@ exit 0
 
 # Generate two keys on new installs.
 if [ $1 -eq 1 ] ; then
-	cd %{_sysconfdir}/shibboleth
-	/bin/sh ./keygen.sh -b -n sp-signing -u %{runuser} -g %{runuser}
-	/bin/sh ./keygen.sh -b -n sp-encrypt -u %{runuser} -g %{runuser}
+    cd %{_sysconfdir}/shibboleth
+    /bin/sh ./keygen.sh -b -n sp-signing -u %{runuser} -g %{runuser}
+    /bin/sh ./keygen.sh -b -n sp-encrypt -u %{runuser} -g %{runuser}
 fi
 
 %if "%{_vendor}" == "redhat" || "%{_vendor}" == "amazon"
 if [ $1 -gt 1 ] ; then
-		# On Red Hat with shib.conf installed, clean up old Alias commands
-		# by pointing them at new version-independent /usr/share/share tree.
-		# Any Aliases we didn't create we assume are custom files.
-		# This is to accomodate making shib.conf a noreplace config file.
-		# We can't do this for SUSE, because they disallow changes to
-		# packaged files in scriplets.
-		APACHE_CONF="no"
-		if [ -f %{_sysconfdir}/httpd/conf.d/shib.conf ] ; then
-			APACHE_CONF="%{_sysconfdir}/httpd/conf.d/shib.conf"
-		fi
-		if [ "$APACHE_CONF" != "no" ] ; then
-			%{__sed} -i "s/\/usr\/share\/doc\/shibboleth\(\-\(.\)\{1,\}\)\{0,1\}\/main\.css/\/usr\/share\/shibboleth\/main.css/g" \
-				$APACHE_CONF
-			%{__sed} -i "s/\/usr\/share\/doc\/shibboleth\(\-\(.\)\{1,\}\)\{0,1\}\/logo\.jpg/\/usr\/share\/shibboleth\/logo.jpg/g" \
-				$APACHE_CONF
-		fi
-	fi
+        # On Red Hat with shib.conf installed, clean up old Alias commands
+        # by pointing them at new version-independent /usr/share/share tree.
+        # Any Aliases we didn't create we assume are custom files.
+        # This is to accomodate making shib.conf a noreplace config file.
+        # We can't do this for SUSE, because they disallow changes to
+        # packaged files in scriplets.
+        APACHE_CONF="no"
+        if [ -f %{_sysconfdir}/httpd/conf.d/shib.conf ] ; then
+            APACHE_CONF="%{_sysconfdir}/httpd/conf.d/shib.conf"
+        fi
+        if [ "$APACHE_CONF" != "no" ] ; then
+            %{__sed} -i "s/\/usr\/share\/doc\/shibboleth\(\-\(.\)\{1,\}\)\{0,1\}\/main\.css/\/usr\/share\/shibboleth\/main.css/g" \
+                $APACHE_CONF
+            %{__sed} -i "s/\/usr\/share\/doc\/shibboleth\(\-\(.\)\{1,\}\)\{0,1\}\/logo\.jpg/\/usr\/share\/shibboleth\/logo.jpg/g" \
+                $APACHE_CONF
+        fi
+    fi
 
 %if 0%{?rhel} >= 7
-	# Initial prep for systemd
-	%systemd_post shibd.service
-	if [ $1 -gt 1 ] ; then
-		systemctl daemon-reload
-	fi
+    # Initial prep for systemd
+    %systemd_post shibd.service
+    if [ $1 -gt 1 ] ; then
+        systemctl daemon-reload
+    fi
 %else
-	# Add the proper /etc/rc*.d links for the script
-	/sbin/chkconfig --add shibd
+    # Add the proper /etc/rc*.d links for the script
+    /sbin/chkconfig --add shibd
 %endif
 %endif
 %if "%{_vendor}" == "suse"
 %if 0%{?suse_version} >= 1210
-	%service_add_post shibd.service
-	systemd-tmpfiles --create %{_tmpfilesdir}/%{name}.conf
+    %service_add_post shibd.service
+    systemd-tmpfiles --create %{_tmpfilesdir}/%{name}.conf
 %else
-	# This adds the proper /etc/rc*.d links for the script
-	# and populates the sysconfig/shibd file.
-	cd /
-	%{fillup_only -n shibd}
-	%insserv_force_if_yast shibd
+    # This adds the proper /etc/rc*.d links for the script
+    # and populates the sysconfig/shibd file.
+    cd /
+    %{fillup_only -n shibd}
+    %insserv_force_if_yast shibd
 %endif
 %endif
 
@@ -352,28 +352,28 @@ if [ $1 -gt 1 ] ; then
 # On final removal, stop shibd and remove service, restart Apache if running.
 %if "%{_vendor}" == "redhat" || "%{_vendor}" == "amazon"
 %if 0%{?rhel} >= 7
-	%systemd_preun shibd.service
+    %systemd_preun shibd.service
 %else
-	if [ $1 -eq 0 ] ; then
-		/sbin/service shibd stop >/dev/null 2>&1
-		/sbin/chkconfig --del shibd
-	fi
+    if [ $1 -eq 0 ] ; then
+        /sbin/service shibd stop >/dev/null 2>&1
+        /sbin/chkconfig --del shibd
+    fi
 %endif
-	if [ $1 -eq 0 ] ; then
-		%{!?_without_builtinapache:/sbin/service httpd status 1>/dev/null && /sbin/service httpd restart 1>/dev/null}
-		exit 0
-	fi
+    if [ $1 -eq 0 ] ; then
+        %{!?_without_builtinapache:/sbin/service httpd status 1>/dev/null && /sbin/service httpd restart 1>/dev/null}
+        exit 0
+    fi
 %endif
 %if "%{_vendor}" == "suse"
 %if 0%{?suse_version} >= 1210
         %service_del_preun shibd.service
 %else
-	%stop_on_removal shibd
+    %stop_on_removal shibd
 %endif
-	if [ $1 -eq 0 ] ; then
-		%{!?_without_builtinapache:/sbin/service apache2 status 1>/dev/null && /sbin/service apache2 restart 1>/dev/null}
-		exit 0
-	fi
+    if [ $1 -eq 0 ] ; then
+        %{!?_without_builtinapache:/sbin/service apache2 status 1>/dev/null && /sbin/service apache2 restart 1>/dev/null}
+        exit 0
+    fi
 %endif
 exit 0
 
@@ -382,26 +382,26 @@ exit 0
 %if "%{_vendor}" == "redhat" || "%{_vendor}" == "amazon"
 # On upgrade, restart components if they're already running.
 %if 0%{?rhel} >= 7
-	%systemd_postun_with_restart shibd.service
+    %systemd_postun_with_restart shibd.service
 %else
-	if [ $1 -ge 1 ] ; then
-		/sbin/service shibd status 1>/dev/null && /sbin/service shibd restart 1>/dev/null
-	fi
+    if [ $1 -ge 1 ] ; then
+        /sbin/service shibd status 1>/dev/null && /sbin/service shibd restart 1>/dev/null
+    fi
 %endif
-	if [ $1 -ge 1 ] ; then
-		%{!?_without_builtinapache:/sbin/service httpd status 1>/dev/null && /sbin/service httpd restart 1>/dev/null}
-		exit 0
-	fi
+    if [ $1 -ge 1 ] ; then
+        %{!?_without_builtinapache:/sbin/service httpd status 1>/dev/null && /sbin/service httpd restart 1>/dev/null}
+        exit 0
+    fi
 %endif
 %if "%{_vendor}" == "suse"
 %if 0%{?suse_version} >= 1210
-	%service_del_postun shibd.service
+    %service_del_postun shibd.service
 %else
-	cd / 
-	%restart_on_update shibd
-	%{insserv_cleanup}
+    cd /
+    %restart_on_update shibd
+    %{insserv_cleanup}
 %endif
-	%{!?_without_builtinapache:%restart_on_update apache2}
+    %{!?_without_builtinapache:%restart_on_update apache2}
 %endif
 
 %posttrans
@@ -410,8 +410,8 @@ exit 0
 # If we remove, upgrades from pre-systemd to post-systemd
 # will stop doing the final restart.
 %if "%{_vendor}" == "suse" && 0%{?suse_version} >= 1210
-	/usr/bin/systemctl try-restart shibd >/dev/null 2>&1 || :
-	/usr/bin/systemctl try-restart apache2 >/dev/null 2>&1 || :
+    /usr/bin/systemctl try-restart shibd >/dev/null 2>&1 || :
+    /usr/bin/systemctl try-restart apache2 >/dev/null 2>&1 || :
 %endif
 exit 0
 
@@ -427,7 +427,7 @@ exit 0
 %{_libdir}/shibboleth/*.so
 %exclude %{_libdir}/shibboleth/*.la
 %{?_with_fastcgi:%{_libdir}/shibboleth/shibauthorizer}
-%{?_with_fastcgi:%{_libdir}/shibboleth/shibresponder} 
+%{?_with_fastcgi:%{_libdir}/shibboleth/shibresponder}
 %attr(0750,%{runuser},%{runuser}) %dir %{_localstatedir}/log/shibboleth
 %if 0%{?suse_version} < 1300
 %attr(0755,%{runuser},%{runuser}) %dir %{_localstatedir}/run/shibboleth
@@ -555,7 +555,7 @@ exit 0
 * Sun Jun 26 2011  Scott Cantor  <cantor.2@osu.edu>  - 2.4.3-1
 - Log files shouldn't be world readable.
 - Explicit requirement for libcurl-openssl on RHEL6
-- Uncomment LD_LIBRARY_PATH in init script for RHEL6 
+- Uncomment LD_LIBRARY_PATH in init script for RHEL6
 - Remove rpath from binaries for RHEL6
 
 * Fri Dec 25 2009  Scott Cantor  <cantor.2@osu.edu>  - 2.4-1
@@ -605,13 +605,13 @@ exit 0
 * Thu Aug 16 2007 Scott Cantor  <cantor.2@osu.edu>  - 2.0-3
 - First public beta.
 
-* Fri Jul 13 2007 Scott Cantor	<cantor.2@osu.edu>  - 2.0-2
+* Fri Jul 13 2007 Scott Cantor  <cantor.2@osu.edu>  - 2.0-2
 - Second alpha release.
 
-* Sun Jun 10 2007 Scott Cantor	<cantor.2@osu.edu>  - 2.0-1
+* Sun Jun 10 2007 Scott Cantor  <cantor.2@osu.edu>  - 2.0-1
 - First alpha release.
 
-* Mon Oct 2 2006 Scott Cantor	<cantor.2@osu.edu>  - 1.3-11
+* Mon Oct 2 2006 Scott Cantor   <cantor.2@osu.edu>  - 1.3-11
 - Applied fix for secadv 20061002
 - Fix for metadata loader loop
 

@@ -1,18 +1,18 @@
-Name:       log4shib
-Version:    2.0.1
-Release:    1
-Summary:    Log for C++, Shibboleth Edition
-License:    LGPL
-Group:      Development/Libraries
-Vendor:     Shibboleth Consortium
-URL:        http://shibboleth.net/downloads/log4shib/%version%
-Source:     %name-%version.tar.bz2
-BuildRoot:  %_tmppath/%name-%version-root
-BuildRequires:  gcc-c++ pkgconfig
+Name: log4shib
+Version: 2.0.1
+Release: 1
+Summary: Log for C++, Shibboleth Edition
+License: LGPL
+Group: Development/Libraries
+Vendor: Shibboleth Consortium
+URL: http://shibboleth.net/downloads/log4shib/%version%
+Source: %name-%version.tar.bz2
+BuildRoot: %_tmppath/%name-%version-root
+BuildRequires: gcc-c++ pkgconfig
 %{!?_without_doxygenrpm:BuildRequires: doxygen}
-%if "%{_vendor}" == "redhat"  
-BuildRequires: redhat-rpm-config  
-%endif  
+%if "%{_vendor}" == "redhat"
+BuildRequires: redhat-rpm-config
+%endif
 
 %if 0%{?rhel} >= 8 || 0%{?centos_version} >= 800
 BuildRequires: gdb
@@ -30,10 +30,10 @@ and other destinations. It is modeled after the Log for Java library and
 stays as close to its API as is reasonable.
 
 %package -n liblog4shib2
-Summary:    Log for C++, Shibboleth Edition
-Group:      Development/Libraries
-Provides:   log4shib = %{version}-%{release}
-Obsoletes:  log4shib < %{version}-%{release}
+Summary: Log for C++, Shibboleth Edition
+Group: Development/Libraries
+Provides: log4shib = %{version}-%{release}
+Obsoletes: log4shib < %{version}-%{release}
 
 %description -n liblog4shib2
 Log for C++ is a library of classes for flexible logging to files, syslog,
@@ -45,9 +45,9 @@ This package contains just the shared library.
 %package -n liblog4shib-devel
 Summary: Development tools for Log for C++
 Group: Development/Libraries
-Requires:   liblog4shib2 = %{version}-%{release}
-Provides:	log4shib-devel = %{version}-%{release}
-Obsoletes:  log4shib-devel < %{version}-%{release}
+Requires: liblog4shib2 = %{version}-%{release}
+Provides: log4shib-devel = %{version}-%{release}
+Obsoletes: log4shib-devel < %{version}-%{release}
 
 %description -n liblog4shib-devel
 The static libraries and header files needed for development with log4shib.
