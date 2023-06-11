@@ -7,7 +7,8 @@ Source0: %{name}-%{version}.tar.bz2
 License: Apache
 Group: Libraries
 Prefix: /usr
-BuildRequires: gcc-c++ pkgconfig
+BuildRequires: gcc-c++
+BuildRequires: pkgconfig
 %{?_with_curl:BuildRequires: curl-devel}
 %{?_with_icu:BuildRequires: libicu-devel}
 %if "%{_vendor}" == "redhat"

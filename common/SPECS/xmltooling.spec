@@ -11,7 +11,11 @@ BuildRequires: libxerces-c-devel >= 3.2
 BuildRequires: libxml-security-c-devel >= 2.0.0
 %{?_with_log4cpp:BuildRequires: liblog4cpp-devel >= 1.0}
 %{!?_with_log4cpp:BuildRequires: liblog4shib-devel >= 1.0.4}
-BuildRequires: gcc-c++, pkgconfig, zlib-devel, openssl-devel, boost-devel >= 1.32.0
+BuildRequires: gcc-c++
+BuildRequires: pkgconfig
+BuildRequires: zlib-devel
+BuildRequires: openssl-devel
+BuildRequires: boost-devel >= 1.32.0
 %if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
 BuildRequires: libcurl-openssl-devel >= 7.21.7
 Requires: libcurl-openssl >= 7.21.7
@@ -74,7 +78,8 @@ Requires: libxerces-c-devel >= 3.2
 Requires: libxml-security-c-devel >= 2.0.0
 %{?_with_log4cpp:Requires: liblog4cpp-devel >= 1.0}
 %{!?_with_log4cpp:Requires: liblog4shib-devel >= 1.0.4}
-Requires: openssl-devel, boost-devel >= 1.32.0
+Requires: openssl-devel
+Requires: boost-devel >= 1.32.0
 %if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
 Requires: libcurl-openssl-devel >= 7.21.7
 %else

@@ -10,12 +10,15 @@ Source: %{name}-sp-%{version}.tar.bz2
 Obsoletes: shibboleth-sp = 2.5.0
 Requires: openssl
 %if 0%{?rhel} >= 6 || 0%{?amzn} == 1 || 0%{?amzn} == 2
-PreReq: xmltooling-schemas%{?_isa} >= 3.2.0, opensaml-schemas%{?_isa} >= 3.2.0
+PreReq: xmltooling-schemas%{?_isa} >= 3.2.0
+PreReq: opensaml-schemas%{?_isa} >= 3.2.0
 %else
-PreReq: xmltooling-schemas >= 3.2.0, opensaml-schemas >= 3.2.0
+PreReq: xmltooling-schemas >= 3.2.0
+PreReq: opensaml-schemas >= 3.2.0
 %endif
 %if 0%{?suse_version} > 1030 && 0%{?suse_version} < 1130
-PreReq: %{insserv_prereq} %{fillup_prereq}
+PreReq: %{insserv_prereq}
+PreReq: %{fillup_prereq}
 %endif
 %if 0%{?rhel} >= 7
 Requires: hostname
@@ -39,7 +42,9 @@ BuildRequires: chrpath
 %if 0%{?suse_version} > 1300
 BuildRequires: libtool
 %endif
-BuildRequires: gcc-c++, pkgconfig, boost-devel >= 1.32.0
+BuildRequires: gcc-c++
+BuildRequires: pkgconfig
+BuildRequires: boost-devel >= 1.32.0
 %{!?_without_gssapi:BuildRequires: krb5-devel}
 %{!?_without_doxygen:BuildRequires: doxygen}
 %{!?_without_odbc:BuildRequires:unixODBC-devel}
@@ -57,14 +62,16 @@ BuildRequires: libmemcached-devel
 BuildRequires: redhat-rpm-config
 Requires(pre): shadow-utils
 Requires(post): chkconfig
-Requires(preun): chkconfig, initscripts
+Requires(preun): chkconfig
+Requires(preun): initscripts
 %endif
 %if "%{_vendor}" == "suse"
 Requires(pre): pwdutils
 %{!?_without_builtinapache:BuildRequires: apache2-devel}
 %{?systemd_requires}
 %if 0%{?suse_version} >= 1210
-BuildRequires: systemd-rpm-macros, systemd-devel
+BuildRequires: systemd-rpm-macros
+BuildRequires: systemd-devel
 %endif
 %endif
 

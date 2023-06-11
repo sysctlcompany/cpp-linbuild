@@ -15,7 +15,8 @@ BuildRequires: shibboleth-devel >= 3.4.0
 %{?_with_log4cpp:BuildRequires: liblog4cpp-devel >= 1.0}
 %{!?_with_log4cpp:BuildRequires: liblog4shib-devel >= 1.0.4}
 %{!?_without_gssapi:BuildRequires: krb5-devel}
-BuildRequires: gcc-c++, pkgconfig
+BuildRequires: gcc-c++
+BuildRequires: pkgconfig
 %if "%{_vendor}" == "redhat"
 BuildRequires: redhat-rpm-config
 %endif
