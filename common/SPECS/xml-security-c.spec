@@ -6,7 +6,6 @@ Group: Development/Libraries/C and C++
 License: Apache 2.0
 URL: http://www.apache.org/dist/santuario/c-library/
 Source: %{name}-%{version}.tar.bz2
-BuildRoot: %{_tmppath}/%{name}-%{version}-build
 
 %{?_with_xalan:BuildRequires: libxalan-c-devel >= 1.11}
 BuildRequires: libxerces-c-devel >= 3.2

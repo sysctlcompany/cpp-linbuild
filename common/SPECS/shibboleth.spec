@@ -7,7 +7,6 @@ Vendor: Shibboleth Consortium
 License: Apache-2.0
 URL: http://shibboleth.net/
 Source: %{name}-sp-%{version}.tar.bz2
-BuildRoot: %{_tmppath}/%{name}-sp-%{version}-root
 Obsoletes: shibboleth-sp = 2.5.0
 Requires: openssl
 %if 0%{?rhel} >= 6 || 0%{?amzn} == 1 || 0%{?amzn} == 2

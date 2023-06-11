@@ -6,7 +6,6 @@ URL: http://xerces.apache.org/xerces-c/
 Source0: %{name}-%{version}.tar.bz2
 License: Apache
 Group: Libraries
-BuildRoot: %{_tmppath}/%{name}-root
 Prefix: /usr
 BuildRequires: gcc-c++ pkgconfig
 %{?_with_curl:BuildRequires: curl-devel}

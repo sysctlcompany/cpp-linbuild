@@ -7,7 +7,6 @@ Vendor: Shibboleth Consortium
 License: Apache-2.0
 URL: http://www.opensaml.org/
 Source: %{name}-%{version}.tar.bz2
-BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildRequires: libxerces-c-devel >= 3.2
 BuildRequires: libxml-security-c-devel >= 2.0.0
 %{?_with_log4cpp:BuildRequires: liblog4cpp-devel >= 1.0}

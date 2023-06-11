@@ -8,7 +8,6 @@ License: Apache-2.0
 URL: http://shibboleth.net/
 Source: %{name}-%{version}.tar.gz
 BuildArch: noarch
-BuildRoot: %{_tmppath}/%{name}-%{version}-root
 %if "%{_vendor}" == "redhat"
 BuildRequires: redhat-rpm-config
 %{!?_without_builtinapache:BuildRequires: httpd}

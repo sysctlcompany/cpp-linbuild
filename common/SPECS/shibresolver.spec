@@ -7,7 +7,6 @@ Group: System Environment/Libraries
 License: Apache-2.0
 URL: https://www.shibboleth.net/
 Source0: https://shibboleth.net/downloads/extensions/sp/%{name}-%{version}.tar.bz2
-BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildRequires: libxerces-c-devel >= 3.2
 BuildRequires: libxml-security-c-devel >= 2.0.0
 BuildRequires: libxmltooling-devel >= 3.2.0

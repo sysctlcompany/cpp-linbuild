@@ -7,7 +7,6 @@ Group: Development/Libraries
 Vendor: Shibboleth Consortium
 URL: http://shibboleth.net/downloads/log4shib/%version%
 Source: %name-%version.tar.bz2
-BuildRoot: %_tmppath/%name-%version-root
 BuildRequires: gcc-c++ pkgconfig
 %{!?_without_doxygenrpm:BuildRequires: doxygen}
 %if "%{_vendor}" == "redhat"

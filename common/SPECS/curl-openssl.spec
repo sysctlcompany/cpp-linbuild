@@ -12,7 +12,6 @@ License: MIT
 Group: Applications/Internet
 Source: http://curl.haxx.se/download/curl-%{version}.tar.bz2
 URL: http://curl.haxx.se/
-BuildRoot: %{_tmppath}/curl-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: automake
 BuildRequires: redhat-rpm-config
 BuildRequires: groff
