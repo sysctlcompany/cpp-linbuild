@@ -28,7 +28,7 @@ single sign-on implementations such as Shibboleth.
 
 
 %install
-%{__make} install DESTDIR=$RPM_BUILD_ROOT
+%make_install
 
 # Plug the DS into the built-in Apache on a recognized system.
 touch rpm.filelist

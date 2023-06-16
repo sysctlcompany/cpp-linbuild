@@ -120,7 +120,7 @@ This package includes XML schemas and related files.
 %{__make}
 
 %install
-%{__make} install DESTDIR=$RPM_BUILD_ROOT pkgdocdir=%{pkgdocdir}
+%make_install pkgdocdir=%{pkgdocdir}
 # Don't package unit tester if present.
 %{__rm} -f $RPM_BUILD_ROOT/%{_bindir}/xmltoolingtest
 

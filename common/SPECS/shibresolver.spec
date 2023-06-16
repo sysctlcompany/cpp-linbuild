@@ -95,7 +95,7 @@ This package includes files needed for development.
 
 %install
 [ "$RPM_BUILD_ROOT" != "/" ] && %{__rm} -rf $RPM_BUILD_ROOT
-%{__make} install DESTDIR=$RPM_BUILD_ROOT pkgdocdir=%{pkgdocdir}
+%make_install pkgdocdir=%{pkgdocdir}
 
 %check
 %{__make} check

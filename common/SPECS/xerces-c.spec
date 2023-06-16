@@ -72,7 +72,7 @@ The static libraries and header files needed for development with Xerces-C++.
 %{__make}
 
 %install
-%{__make} install DESTDIR=$RPM_BUILD_ROOT
+%make_install
 
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && %{__rm} -rf $RPM_BUILD_ROOT

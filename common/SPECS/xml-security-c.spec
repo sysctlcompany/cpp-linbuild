@@ -74,7 +74,7 @@ This package includes files needed for development with xml-security-c.
 %{__make}
 
 %install
-%{__make} install DESTDIR=$RPM_BUILD_ROOT
+%make_install
 
 %clean
 %{__rm} -rf $RPM_BUILD_ROOT

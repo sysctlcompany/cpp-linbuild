@@ -145,7 +145,7 @@ This package includes files needed for development with Shibboleth.
 %{__make} pkgdocdir=%{pkgdocdir}
 
 %install
-%{__make} install NOKEYGEN=1 DESTDIR=$RPM_BUILD_ROOT pkgdocdir=%{pkgdocdir}
+%make_install NOKEYGEN=1 pkgdocdir=%{pkgdocdir}
 
 %if "%{_vendor}" == "suse"
     %{__sed} -i "s/\/var\/log\/httpd/\/var\/log\/apache2/g" \

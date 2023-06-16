@@ -60,7 +60,7 @@ The static libraries and header files needed for development with log4shib.
 %{__make}
 
 %install
-%{__make} DESTDIR=$RPM_BUILD_ROOT apidir=$RPM_BUILD_ROOT%{pkgdocdir}/api install
+%make_install apidir=$RPM_BUILD_ROOT%{pkgdocdir}/api
 # If we use %%doc down below to package the README files from the build tree,
 # it will blow away the package's docdir folder, and the installed API docs with it.
 # Instead, copy the README files manually into the platform's docdir.
