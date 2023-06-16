@@ -2,7 +2,7 @@ Name: log4shib
 Version: 2.0.1
 Release: 1
 Summary: Log for C++, Shibboleth Edition
-License: LGPL
+License: LGPL-2.1-only
 Group: Development/Libraries
 Vendor: Shibboleth Consortium
 URL: http://shibboleth.net/downloads/log4shib/%version%

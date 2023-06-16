@@ -3,7 +3,7 @@ Version: 2.0.4
 Release: 1
 Summary: Apache XML security C++ library
 Group: Development/Libraries/C and C++
-License: Apache 2.0
+License: Apache-2.0
 URL: http://www.apache.org/dist/santuario/c-library/
 Source: %{name}-%{version}.tar.bz2
 
