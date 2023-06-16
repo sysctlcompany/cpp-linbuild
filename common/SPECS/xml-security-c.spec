@@ -5,7 +5,7 @@ Summary: Apache XML security C++ library
 Group: Development/Libraries/C and C++
 License: Apache-2.0
 URL: http://www.apache.org/dist/santuario/c-library/
-Source: %{name}-%{version}.tar.bz2
+Source0: https://downloads.apache.org/santuario/c-library/%{name}-%{version}.tar.bz2
 
 %{?_with_xalan:BuildRequires: libxalan-c-devel >= 1.11}
 BuildRequires: libxerces-c-devel >= 3.2

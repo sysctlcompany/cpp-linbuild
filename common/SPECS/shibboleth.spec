@@ -6,7 +6,7 @@ Group: Productivity/Networking/Security
 Vendor: Shibboleth Consortium
 License: Apache-2.0
 URL: http://shibboleth.net/
-Source: %{name}-sp-%{version}.tar.bz2
+Source0: https://shibboleth.net/downloads/service-provider/%{version}/%{name}-sp-%{version}.tar.bz2
 Obsoletes: shibboleth-sp = 2.5.0
 Requires: openssl
 %if 0%{?rhel} >= 6 || 0%{?amzn} == 1 || 0%{?amzn} == 2

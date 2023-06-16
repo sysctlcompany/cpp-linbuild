@@ -6,7 +6,7 @@ Group: Development/Libraries/C and C++
 Vendor: Shibboleth Consortium
 License: Apache-2.0
 URL: http://www.opensaml.org/
-Source0: %{name}-%{version}.tar.bz2
+Source0: https://shibboleth.net/downloads/c++-%{name}/%{version}/%{name}-%{version}.tar.bz2
 BuildRequires: libxerces-c-devel >= 3.2
 BuildRequires: libxml-security-c-devel >= 2.0.0
 BuildRequires: libxmltooling-devel >= 3.2.0

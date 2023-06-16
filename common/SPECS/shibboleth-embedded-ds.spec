@@ -6,7 +6,7 @@ Group: Productivity/Networking/Security
 Vendor: Shibboleth Consortium
 License: Apache-2.0
 URL: http://shibboleth.net/
-Source: %{name}-%{version}.tar.gz
+Source0: https://shibboleth.net/downloads/embedded-discovery-service/%{version}/%{name}-%{version}.tar.gz
 BuildArch: noarch
 %if "%{_vendor}" == "redhat"
 BuildRequires: redhat-rpm-config

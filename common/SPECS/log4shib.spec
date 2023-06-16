@@ -6,7 +6,7 @@ License: LGPL-2.1-only
 Group: Development/Libraries
 Vendor: Shibboleth Consortium
 URL: http://shibboleth.net/downloads/log4shib/%version%
-Source: %name-%version.tar.bz2
+Source0: https://shibboleth.net/downloads/%{name}/%{version}/%{name}-%{version}.tar.bz2
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig
 %{!?_without_doxygenrpm:BuildRequires: doxygen}
