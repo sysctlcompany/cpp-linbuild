@@ -1,9 +1,14 @@
+%define compname xerces-c
+%define libname lib%{compname}-3_2
+%define develname lib%{compname}-devel
+%define utilname %{compname}-bin
+
 Summary: Xerces-C++ validating XML parser
-Name: xerces-c
+Name: %{compname}
 Version: 3.2.4
 Release: 1
-URL: http://xerces.apache.org/xerces-c/
-Source0: https://shibboleth.net/downloads/%{name}/%{name}-%{version}.tar.bz2
+URL: https://xerces.apache.org/%{compname}/
+Source0: https://shibboleth.net/downloads/%{compname}/%{compname}-%{version}.tar.bz2
 License: Apache-2.0
 Group: Libraries
 BuildRequires: gcc-c++
@@ -24,11 +29,11 @@ Xerces-C++ makes it easy to give your application the ability to read and
 write XML data. A shared library is provided for parsing, generating,
 manipulating, and validating XML documents.
 
-%package -n xerces-c-bin
+%package -n %{utilname}
 Summary: Utilities for Xerces-C++ validating XML parser
 Group: Development/Libraries
 
-%description -n xerces-c-bin
+%description -n %{utilname}
 Xerces-C++ is a validating XML parser written in a portable subset of C++.
 Xerces-C++ makes it easy to give your application the ability to read and
 write XML data. A shared library is provided for parsing, generating,
@@ -36,12 +41,12 @@ manipulating, and validating XML documents.
 
 This package contains the utility programs.
 
-%package -n libxerces-c-3_2
+%package -n %{libname}
 Summary: Shared library for Xerces-C++ validating XML parser
 Group: Development/Libraries
-Provides: xerces-c = %{version}-%{release}
+Provides: %{compname} = %{version}-%{release}
 
-%description -n libxerces-c-3_2
+%description -n %{libname}
 Xerces-C++ is a validating XML parser written in a portable subset of C++.
 Xerces-C++ makes it easy to give your application the ability to read and
 write XML data. A shared library is provided for parsing, generating,
@@ -49,13 +54,13 @@ manipulating, and validating XML documents.
 
 This package contains just the shared library.
 
-%package -n libxerces-c-devel
+%package -n %{develname}
 Group: Development/Libraries
 Summary: Header files for Xerces-C++ validating XML parser
-Requires: libxerces-c-3_2 = %{version}-%{release}
-Provides: xerces-c-devel = %{version}-%{release}
+Requires: %{libname} = %{version}-%{release}
+Provides: %{compname}-devel = %{version}-%{release}
 
-%description -n libxerces-c-devel
+%description -n %{develname}
 Xerces-C++ is a validating XML parser written in a portable subset of C++.
 Xerces-C++ makes it easy to give your application the ability to read and
 write XML data. A shared library is provided for parsing, generating,
@@ -76,19 +81,19 @@ The static libraries and header files needed for development with Xerces-C++.
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && %{__rm} -rf $RPM_BUILD_ROOT
 
-%post -n libxerces-c-3_2 -p /sbin/ldconfig
+%post -n %{libname} -p /sbin/ldconfig
 
-%postun -n libxerces-c-3_2 -p /sbin/ldconfig
+%postun -n %{libname} -p /sbin/ldconfig
 
-%files -n xerces-c-bin
+%files -n %{utilname}
 %defattr(755,root,root)
 %{_bindir}/*
 
-%files -n libxerces-c-3_2
+%files -n %{libname}
 %defattr(755,root,root)
 %{_libdir}/libxerces-c-*.so
 
-%files -n libxerces-c-devel
+%files -n %{develname}
 %defattr(-,root,root)
 %{_includedir}/xercesc
 %{_libdir}/libxerces-c.so

@@ -1,4 +1,9 @@
-Name: shibboleth-resolver
+%define compname shibresolver
+%define distname shibboleth-resolver
+%define libname lib%{compname}6
+%define develname lib%{compname}-devel
+
+Name: %{distname}
 Version: 3.4.0
 Summary: Shibboleth SP Attribute Resolver Library
 Release: 1
@@ -6,7 +11,7 @@ Vendor: Shibboleth Consortium
 Group: System Environment/Libraries
 License: Apache-2.0
 URL: https://www.shibboleth.net/
-Source0: https://shibboleth.net/downloads/service-provider/extensions/shibresolver/%{version}/%{name}-%{version}.tar.bz2
+Source0: https://shibboleth.net/downloads/service-provider/extensions/%{compname}/%{version}/%{distname}-%{version}.tar.bz2
 BuildRequires: libxerces-c-devel >= 3.2
 BuildRequires: libxml-security-c-devel >= 2.0.0
 BuildRequires: libxmltooling-devel >= 3.2.0
@@ -32,25 +37,25 @@ This package contains a Shibboleth SP Extension that provides
 externally accessible attribute resolver functionality for processing
 local and remote sources of federated attribute information.
 
-%package -n libshibresolver6
+%package -n %{libname}
 Summary: Shibboleth SP Attribute Resolver library
 Group: Development/Libraries
-Provides: shibboleth-resolver = %{version}-%{release}
-Obsoletes: shibboleth-resolver < %{version}-%{release}
+Provides: %{distname} = %{version}-%{release}
+Obsoletes: %{distname} < %{version}-%{release}
 
-%description -n libshibresolver6
+%description -n %{libname}
 This package contains a Shibboleth SP Extension that provides
 externally accessible attribute resolver functionality for processing
 local and remote sources of federated attribute information.
 
 This package contains just the shared library.
 
-%package -n libshibresolver-devel
+%package -n %{develname}
 Summary: Shibboleth SP Attribute Resolver development Headers
 Group: Development/Libraries
-Requires: libshibresolver6 = %{version}-%{release}
-Provides: shibboleth-resolver-devel = %{version}-%{release}
-Obsoletes: shibboleth-resolver-devel < %{version}-%{release}
+Requires: %{libname} = %{version}-%{release}
+Provides: %{distname}-devel = %{version}-%{release}
+Obsoletes: %{distname}-devel < %{version}-%{release}
 Requires: libxerces-c-devel >= 3.2
 Requires: libxml-security-c-devel >= 2.0.0
 Requires: libxmltooling-devel >= 3.2.0
@@ -59,7 +64,7 @@ Requires: shibboleth-devel >= 3.4.0
 %{?_with_log4cpp:Requires: liblog4cpp-devel >= 1.0}
 %{!?_with_log4cpp:Requires: liblog4shib-devel >= 1.0.4}
 
-%description -n libshibresolver-devel
+%description -n %{develname}
 This package contains a Shibboleth SP Extension that provides
 externally accessible attribute resolver functionality for processing
 local and remote sources of federated attribute information.
@@ -99,17 +104,17 @@ This package includes files needed for development.
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && %{__rm} -rf $RPM_BUILD_ROOT
 
-%post -n libshibresolver6 -p /sbin/ldconfig
+%post -n %{libname} -p /sbin/ldconfig
 
-%postun -n libshibresolver6 -p /sbin/ldconfig
+%postun -n %{libname} -p /sbin/ldconfig
 
-%files -n libshibresolver6
+%files -n %{libname}
 %defattr(-,root,root,-)
 %{_libdir}/libshibresolver-lite.so.*
 %{_libdir}/libshibresolver.so.*
 %exclude %{_libdir}/*.la
 
-%files -n libshibresolver-devel
+%files -n %{develname}
 %defattr(-,root,root,-)
 %{_includedir}/*
 %{_libdir}/*.so

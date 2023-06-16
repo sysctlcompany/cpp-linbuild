@@ -1,4 +1,9 @@
-Name: xmltooling
+%define compname xmltooling
+%define libname lib%{compname}10
+%define develname lib%{compname}-devel
+%define schemaname %{compname}-schemas
+
+Name: %{compname}
 Version: 3.2.4
 Release: 1
 Summary: OpenSAML XML Processing library
@@ -6,7 +11,7 @@ Group: Development/Libraries/C and C++
 Vendor: Shibboleth Consortium
 License: Apache-2.0
 URL: http://www.opensaml.org/
-Source0: https://shibboleth.net/downloads/c++-opensaml/3.2.1/%{name}-%{version}.tar.bz2
+Source0: https://shibboleth.net/downloads/c++-opensaml/3.2.1/%{compname}-%{version}.tar.bz2
 BuildRequires: libxerces-c-devel >= 3.2
 BuildRequires: libxml-security-c-devel >= 2.0.0
 %{?_with_log4cpp:BuildRequires: liblog4cpp-devel >= 1.0}
@@ -32,9 +37,9 @@ BuildRequires: gdb
 %endif
 
 %if "%{_vendor}" == "suse"
-%define pkgdocdir %{_docdir}/%{name}
+%define pkgdocdir %{_docdir}/%{compname}
 %else
-%define pkgdocdir %{_docdir}/%{name}-%{version}
+%define pkgdocdir %{_docdir}/%{compname}-%{version}
 %endif
 
 # Prevent the RHEL/etc 6+ package from requiring a vanilla libcurl.
@@ -50,16 +55,16 @@ for declaring element- and type-specific API and implementation
 classes to add value around the DOM, as well as signing and encryption
 support.
 
-%package -n libxmltooling10
+%package -n %{libname}
 Summary: OpenSAML XMLTooling library
 Group: Development/Libraries/C and C++
-Provides: xmltooling = %{version}-%{release}
-Obsoletes: xmltooling < %{version}-%{release}
+Provides: %{compname} = %{version}-%{release}
+Obsoletes: %{compname} < %{version}-%{release}
 %if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
 Requires: libcurl-openssl >= 7.21.7
 %endif
 
-%description -n libxmltooling10
+%description -n %{libname}
 The XMLTooling library contains generic XML parsing and processing
 classes based on the Xerces-C DOM. It adds more powerful facilities
 for declaring element- and type-specific API and implementation
@@ -68,12 +73,12 @@ support.
 
 This package contains just the shared library.
 
-%package -n libxmltooling-devel
+%package -n %{develname}
 Summary: XMLTooling development Headers
 Group: Development/Libraries/C and C++
-Requires: libxmltooling10 = %{version}-%{release}
-Provides: xmltooling-devel = %{version}-%{release}
-Obsoletes: xmltooling-devel < %{version}-%{release}
+Requires: %{libname} = %{version}-%{release}
+Provides: %{compname}-devel = %{version}-%{release}
+Obsoletes: %{compname}-devel < %{version}-%{release}
 Requires: libxerces-c-devel >= 3.2
 Requires: libxml-security-c-devel >= 2.0.0
 %{?_with_log4cpp:Requires: liblog4cpp-devel >= 1.0}
@@ -86,7 +91,7 @@ Requires: libcurl-openssl-devel >= 7.21.7
 Requires: curl-devel >= 7.10.6
 %endif
 
-%description -n libxmltooling-devel
+%description -n %{develname}
 The XMLTooling library contains generic XML parsing and processing
 classes based on the Xerces-C DOM. It adds more powerful facilities
 for declaring element- and type-specific API and implementation
@@ -95,11 +100,11 @@ support.
 
 This package includes files needed for development with XMLTooling.
 
-%package -n xmltooling-schemas
+%package -n %{schemaname}
 Summary: XMLTooling schemas and catalog
 Group: Development/Libraries/C and C++
 
-%description -n xmltooling-schemas
+%description -n %{schemaname}
 The XMLTooling library contains generic XML parsing and processing
 classes based on the Xerces-C DOM. It adds more powerful facilities
 for declaring element- and type-specific API and implementation
@@ -130,21 +135,21 @@ This package includes XML schemas and related files.
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && %{__rm} -rf $RPM_BUILD_ROOT
 
-%post -n libxmltooling10 -p /sbin/ldconfig
+%post -n %{libname} -p /sbin/ldconfig
 
-%postun -n libxmltooling10 -p /sbin/ldconfig
+%postun -n %{libname} -p /sbin/ldconfig
 
-%files -n libxmltooling10
+%files -n %{libname}
 %defattr(-,root,root,-)
 %{_libdir}/*.so.*
 %exclude %{_libdir}/*.la
 
-%files -n xmltooling-schemas
+%files -n %{schemaname}
 %defattr(-,root,root,-)
 %dir %{_datadir}/xml/xmltooling
 %{_datadir}/xml/xmltooling/*
 
-%files -n libxmltooling-devel
+%files -n %{develname}
 %defattr(-,root,root,-)
 %{_includedir}/*
 %{_libdir}/*.so

@@ -1,12 +1,16 @@
-Name: log4shib
+%define compname log4shib
+%define libname lib%{compname}2
+%define develname lib%{compname}-devel
+
+Name: %{compname}
 Version: 2.0.1
 Release: 1
 Summary: Log for C++, Shibboleth Edition
 License: LGPL-2.1-only
 Group: Development/Libraries
 Vendor: Shibboleth Consortium
-URL: http://shibboleth.net/downloads/log4shib/%version%
-Source0: https://shibboleth.net/downloads/%{name}/%{version}/%{name}-%{version}.tar.bz2
+URL: https://shibboleth.net/downloads/%{compname}/%{version}
+Source0: https://shibboleth.net/downloads/%{compname}/%{version}/%{compname}-%{version}.tar.bz2
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig
 %{!?_without_doxygenrpm:BuildRequires: doxygen}
@@ -19,9 +23,9 @@ BuildRequires: gdb
 %endif
 
 %if "%{_vendor}" == "suse"
-%define pkgdocdir %{_docdir}/%{name}
+%define pkgdocdir %{_docdir}/%{compname}
 %else
-%define pkgdocdir %{_docdir}/%{name}-%{version}
+%define pkgdocdir %{_docdir}/%{compname}-%{version}
 %endif
 
 %description
@@ -29,27 +33,27 @@ Log for C++ is a library of classes for flexible logging to files, syslog,
 and other destinations. It is modeled after the Log for Java library and
 stays as close to its API as is reasonable.
 
-%package -n liblog4shib2
+%package -n %{libname}
 Summary: Log for C++, Shibboleth Edition
 Group: Development/Libraries
-Provides: log4shib = %{version}-%{release}
-Obsoletes: log4shib < %{version}-%{release}
+Provides: %{compname} = %{version}-%{release}
+Obsoletes: %{compname} < %{version}-%{release}
 
-%description -n liblog4shib2
+%description -n %{libname}
 Log for C++ is a library of classes for flexible logging to files, syslog,
 and other destinations. It is modeled after the Log for Java library and
 stays as close to its API as is reasonable.
 
 This package contains just the shared library.
 
-%package -n liblog4shib-devel
+%package -n %{develname}
 Summary: Development tools for Log for C++
 Group: Development/Libraries
-Requires: liblog4shib2 = %{version}-%{release}
-Provides: log4shib-devel = %{version}-%{release}
-Obsoletes: log4shib-devel < %{version}-%{release}
+Requires: %{libname} = %{version}-%{release}
+Provides: %{compname}-devel = %{version}-%{release}
+Obsoletes: %{compname}-devel < %{version}-%{release}
 
-%description -n liblog4shib-devel
+%description -n %{develname}
 The static libraries and header files needed for development with log4shib.
 
 %prep
@@ -70,20 +74,20 @@ config/install-sh -m 644 -c AUTHORS COPYING INSTALL NEWS README THANKS ChangeLog
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && %{__rm} -rf $RPM_BUILD_ROOT
 
-%post -n liblog4shib2 -p /sbin/ldconfig
+%post -n %{libname} -p /sbin/ldconfig
 
-%post -n liblog4shib-devel
+%post -n %{develname}
 if test "x$RPM_INSTALL_PREFIX0" != "x" ; then
     %{__perl} -pi -e"s|^prefix=\"[^\"]*\"|prefix=\"$RPM_INSTALL_PREFIX0\"|" $RPM_INSTALL_PREFIX0/bin/log4shib-config
 fi
 
-%postun -n liblog4shib2 -p /sbin/ldconfig
+%postun -n %{libname} -p /sbin/ldconfig
 
-%files -n liblog4shib2
+%files -n %{libname}
 %defattr(-,root,root,755)
 %attr(755,root,root) %{_libdir}/lib*.so.*
 
-%files -n liblog4shib-devel
+%files -n %{develname}
 %defattr(-,root,root,755)
 %{_includedir}/*
 %{!?_without_doxygenrpm:%{_mandir}/man?/*}

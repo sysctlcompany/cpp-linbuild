@@ -1,4 +1,10 @@
-Name: opensaml
+%define compname opensaml
+%define libname libsaml12
+%define develname libsaml-devel
+%define schemaname %{compname}-schemas
+%define utilname %{compname}-bin
+
+Name: %{compname}
 Version: 3.2.1
 Release: 1
 Summary: OpenSAML SAML library
@@ -6,7 +12,7 @@ Group: Development/Libraries/C and C++
 Vendor: Shibboleth Consortium
 License: Apache-2.0
 URL: http://www.opensaml.org/
-Source0: https://shibboleth.net/downloads/c++-%{name}/%{version}/%{name}-%{version}.tar.bz2
+Source0: https://shibboleth.net/downloads/c++-%{compname}/%{version}/%{compname}-%{version}.tar.bz2
 BuildRequires: libxerces-c-devel >= 3.2
 BuildRequires: libxml-security-c-devel >= 2.0.0
 BuildRequires: libxmltooling-devel >= 3.2.0
@@ -25,9 +31,9 @@ BuildRequires: gdb
 %endif
 
 %if "%{_vendor}" == "suse"
-%define pkgdocdir %{_docdir}/%{name}
+%define pkgdocdir %{_docdir}/%{compname}
 %else
-%define pkgdocdir %{_docdir}/%{name}-%{version}
+%define pkgdocdir %{_docdir}/%{compname}-%{version}
 %endif
 
 %description
@@ -35,54 +41,54 @@ OpenSAML is an open source implementation of the OASIS Security Assertion
 Markup Language Specification. It contains a set of open source C++ classes
 that support the SAML 1.0, 1.1, and 2.0 specifications.
 
-%package -n opensaml-bin
+%package -n %{utilname}
 Summary: Utilities for OpenSAML library
 Group: Development/Libraries/C and C++
 
-%description -n opensaml-bin
+%description -n %{utilname}
 OpenSAML is an open source implementation of the OASIS Security Assertion
 Markup Language Specification. It contains a set of open source C++ classes
 that support the SAML 1.0, 1.1, and 2.0 specifications.
 
 This package contains the utility programs.
 
-%package -n libsaml12
+%package -n %{libname}
 Summary: OpenSAML SAML library
 Group: Development/Libraries/C and C++
-Provides: opensaml = %{version}-%{release}
-Obsoletes: opensaml < %{version}-%{release}
+Provides: %{compname} = %{version}-%{release}
+Obsoletes: %{compname} < %{version}-%{release}
 
-%description -n libsaml12
+%description -n %{libname}
 OpenSAML is an open source implementation of the OASIS Security Assertion
 Markup Language Specification. It contains a set of open source C++ classes
 that support the SAML 1.0, 1.1, and 2.0 specifications.
 
 This package contains just the shared library.
 
-%package -n libsaml-devel
+%package -n %{develname}
 Summary: OpenSAML development Headers
 Group: Development/Libraries/C and C++
-Requires: libsaml12 = %{version}-%{release}
-Provides: opensaml-devel = %{version}-%{release}
-Obsoletes: opensaml-devel < %{version}-%{release}
+Requires: %{libname} = %{version}-%{release}
+Provides: %{compname}-devel = %{version}-%{release}
+Obsoletes: %{compname}-devel < %{version}-%{release}
 Requires: libxerces-c-devel >= 3.2
 Requires: libxml-security-c-devel >= 2.0.0
 Requires: libxmltooling-devel >= 3.2.0
 %{?_with_log4cpp:Requires: liblog4cpp-devel >= 1.0}
 %{!?_with_log4cpp:Requires: liblog4shib-devel >= 1.0.4}
 
-%description -n libsaml-devel
+%description -n %{develname}
 OpenSAML is an open source implementation of the OASIS Security Assertion
 Markup Language Specification. It contains a set of open source C++ classes
 that support the SAML 1.0, 1.1, and 2.0 specifications.
 
 This package includes files needed for development with OpenSAML.
 
-%package -n opensaml-schemas
+%package -n %{schemaname}
 Summary: OpenSAML schemas and catalog
 Group: Development/Libraries/C and C++
 
-%description -n opensaml-schemas
+%description -n %{schemaname}
 OpenSAML is an open source implementation of the OASIS Security Assertion
 Markup Language Specification. It contains a set of open source C++ classes
 that support the SAML 1.0, 1.1, and 2.0 specifications.
@@ -111,25 +117,25 @@ This package includes XML schemas and related files.
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && %{__rm} -rf $RPM_BUILD_ROOT
 
-%post -n libsaml12 -p /sbin/ldconfig
+%post -n %{libname} -p /sbin/ldconfig
 
-%postun -n libsaml12 -p /sbin/ldconfig
+%postun -n %{libname} -p /sbin/ldconfig
 
-%files -n opensaml-bin
+%files -n %{utilname}
 %defattr(-,root,root,-)
 %{_bindir}/samlsign
 
-%files -n libsaml12
+%files -n %{libname}
 %defattr(-,root,root,-)
 %{_libdir}/libsaml.so.*
 %exclude %{_libdir}/libsaml.la
 
-%files -n opensaml-schemas
+%files -n %{schemaname}
 %defattr(-,root,root,-)
 %dir %{_datadir}/xml/opensaml
 %{_datadir}/xml/opensaml/*
 
-%files -n libsaml-devel
+%files -n %{develname}
 %defattr(-,root,root,-)
 %{_includedir}/*
 %{_libdir}/*.so
