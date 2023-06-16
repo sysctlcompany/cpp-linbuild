@@ -75,8 +75,6 @@ BuildRequires: systemd-devel
 %endif
 %endif
 
-%{!?_tmpfilesdir:%global _tmpfilesdir /usr/lib/tmpfiles.d}
-
 %define runuser shibd
 %if "%{_vendor}" == "suse"
 %define pkgdocdir %{_docdir}/shibboleth
