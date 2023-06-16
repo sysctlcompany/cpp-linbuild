@@ -110,7 +110,7 @@ exchange of rich attributes subject to privacy controls.
 This package includes files needed for development with Shibboleth.
 
 %prep
-%setup -n %{name}-sp-%{version}
+%setup -q -n %{name}-sp-%{version}
 
 %build
 %if 0%{?suse_version} >= 1300
