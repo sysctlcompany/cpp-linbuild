@@ -6,7 +6,6 @@ URL: http://xerces.apache.org/xerces-c/
 Source0: https://shibboleth.net/downloads/%{name}/%{name}-%{version}.tar.bz2
 License: Apache-2.0
 Group: Libraries
-Prefix: /usr
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig
 %{?_with_curl:BuildRequires: curl-devel}
