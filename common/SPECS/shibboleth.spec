@@ -10,15 +10,15 @@ Source: %{name}-sp-%{version}.tar.bz2
 Obsoletes: shibboleth-sp = 2.5.0
 Requires: openssl
 %if 0%{?rhel} >= 6 || 0%{?amzn} == 1 || 0%{?amzn} == 2
-PreReq: xmltooling-schemas%{?_isa} >= 3.2.0
-PreReq: opensaml-schemas%{?_isa} >= 3.2.0
+Requires(pre,preun): xmltooling-schemas%{?_isa} >= 3.2.0
+Requires(pre,preun): opensaml-schemas%{?_isa} >= 3.2.0
 %else
-PreReq: xmltooling-schemas >= 3.2.0
-PreReq: opensaml-schemas >= 3.2.0
+Requires(pre,preun): xmltooling-schemas >= 3.2.0
+Requires(pre,preun): opensaml-schemas >= 3.2.0
 %endif
 %if 0%{?suse_version} > 1030 && 0%{?suse_version} < 1130
-PreReq: %{insserv_prereq}
-PreReq: %{fillup_prereq}
+Requires(pre,preun): %{insserv_prereq}
+Requires(pre,preun): %{fillup_prereq}
 %endif
 %if 0%{?rhel} >= 7
 Requires: hostname
