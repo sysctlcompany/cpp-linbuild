@@ -131,11 +131,7 @@ This package includes files needed for development with Shibboleth.
 %if 0%{?rhel} >= 6
     %configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{?_with-memcached} %{?shib_options} PKG_CONFIG_PATH=/opt/shibboleth/%{_lib}/pkgconfig:./pkgconfig-workarounds/rh6
 %else
-%if 0%{?rhel} >= 5
-    %configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{?_with_memcached} %{?shib_options} PKG_CONFIG_PATH=./pkgconfig-workarounds/rh5
-%else
     %configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{?_with_memcached} %{?shib_options}
-%endif
 %endif
 %endif
 %endif
@@ -273,12 +269,11 @@ fi
 
 %if "%{_vendor}" == "redhat" || "%{_vendor}" == "amazon" || "%{_vendor}" == "suse"
 if [ "$SYSTEMD_SHIBD" == "no" ] ; then
-    # %%{_initddir} not yet in RHEL5, use deprecated %%{_initrddir}
-    install -d -m 0755 $RPM_BUILD_ROOT%{_initrddir}
-    install -m 0755 $RPM_BUILD_ROOT%{_sysconfdir}/shibboleth/shibd-%{_vendor} $RPM_BUILD_ROOT%{_initrddir}/shibd
+    install -d -m 0755 $RPM_BUILD_ROOT%{_initddir}
+    install -m 0755 $RPM_BUILD_ROOT%{_sysconfdir}/shibboleth/shibd-%{_vendor} $RPM_BUILD_ROOT%{_initddir}/shibd
 %if "%{_vendor}" == "suse"
     install -d -m 0755 $RPM_BUILD_ROOT/%{_sbindir}
-    %{__ln_s} -f %{_initrddir}/shibd $RPM_BUILD_ROOT%{_sbindir}/rcshibd
+    %{__ln_s} -f %{_initddir}/shibd $RPM_BUILD_ROOT%{_sbindir}/rcshibd
 %endif
 fi
 %endif
@@ -453,14 +448,14 @@ exit 0
 %if "%{_vendor}" == "redhat"
 %if 0%{?rhel} >= 7
 %else
-%config %{_initrddir}/shibd
+%config %{_initddir}/shibd
 %endif
 %endif
 %if "%{_vendor}" == "amazon"
-%config %{_initrddir}/shibd
+%config %{_initddir}/shibd
 %endif
 %if "%{_vendor}" == "suse" && 0%{?suse_version} < 1210
-%config %{_initrddir}/shibd
+%config %{_initddir}/shibd
 %{_sbindir}/rcshibd
 %endif
 %if 0%{?suse_version} >= 1210 || 0%{?rhel} >= 7

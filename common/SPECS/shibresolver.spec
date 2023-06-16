@@ -82,11 +82,7 @@ This package includes files needed for development.
 %if 0%{?rhel} >= 6
     %configure --with-gssapi %{?shib_options} PKG_CONFIG_PATH=/opt/shibboleth/%{_lib}/pkgconfig:./pkgconfig-workarounds/rh6
 %else
-%if 0%{?rhel} >= 5
-    %configure --with-gssapi %{?shib_options} PKG_CONFIG_PATH=./pkgconfig-workarounds/rh5
-%else
     %configure --with-gssapi %{?shib_options}
-%endif
 %endif
 %endif
 %endif
