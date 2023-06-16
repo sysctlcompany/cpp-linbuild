@@ -275,7 +275,7 @@ fi
 
 %if "%{_vendor}" == "redhat" || "%{_vendor}" == "amazon" || "%{_vendor}" == "suse"
 if [ "$SYSTEMD_SHIBD" == "no" ] ; then
-    # %{_initddir} not yet in RHEL5, use deprecated %{_initrddir}
+    # %%{_initddir} not yet in RHEL5, use deprecated %%{_initrddir}
     install -d -m 0755 $RPM_BUILD_ROOT%{_initrddir}
     install -m 0755 $RPM_BUILD_ROOT%{_sysconfdir}/shibboleth/shibd-%{_vendor} $RPM_BUILD_ROOT%{_initrddir}/shibd
 %if "%{_vendor}" == "suse"
@@ -412,7 +412,7 @@ exit 0
 
 %posttrans
 # One-time extra restart of shibd and Apache to work around
-# SUSE bug that breaks old %restart_on_update macro.
+# SUSE bug that breaks old %%restart_on_update macro.
 # If we remove, upgrades from pre-systemd to post-systemd
 # will stop doing the final restart.
 %if "%{_vendor}" == "suse" && 0%{?suse_version} >= 1210
