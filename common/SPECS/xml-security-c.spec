@@ -3,7 +3,7 @@
 %define develname lib%{compname}-devel
 %define utilname %{compname}-bin
 
-Name: %{compname}
+Name: %{libname}
 Version: 2.0.4
 Release: 1
 Summary: Apache XML security C++ library
@@ -11,6 +11,8 @@ Group: Development/Libraries/C and C++
 License: Apache-2.0
 URL: http://www.apache.org/dist/santuario/c-library/
 Source0: https://downloads.apache.org/santuario/c-library/%{compname}-%{version}.tar.bz2
+Provides: %{compname} = %{version}-%{release}
+Obsoletes: %{compname} < %{version}-%{release}
 
 %{?_with_xalan:BuildRequires: libxalan-c-devel >= 1.11}
 BuildRequires: libxerces-c-devel >= 3.2
@@ -29,6 +31,8 @@ and Encryption specifications. The library makes use of the Apache XML project's
 Xerces-C XML Parser and Xalan-C XSLT processor. The latter is used for processing
 XPath and XSLT transforms.
 
+The main package contains just the shared library.
+
 %package -n %{utilname}
 Summary: Utilities for XML security C++ library
 Group: Development/Libraries/C and C++
@@ -40,19 +44,6 @@ Xerces-C XML Parser and Xalan-C XSLT processor. The latter is used for processin
 XPath and XSLT transforms.
 
 This package contains the utility programs.
-
-%package -n %{libname}
-Summary: Apache XML security C++ library
-Group: Development/Libraries/C and C++
-Provides: %{compname} = %{version}-%{release}
-
-%description -n %{libname}
-The xml-security-c library is a C++ implementation of the XML Digital Signature
-and Encryption specifications. The library makes use of the Apache XML project's
-Xerces-C XML Parser and Xalan-C XSLT processor. The latter is used for processing
-XPath and XSLT transforms.
-
-This package contains just the shared library.
 
 %package -n %{develname}
 Summary: Development files for the Apache C++ XML security library
@@ -72,7 +63,7 @@ XPath and XSLT transforms.
 This package includes files needed for development with xml-security-c.
 
 %prep
-%setup -q
+%setup -q -n %{compname}-%{version}
 
 %build
 %configure --with-openssl %{!?_with_xalan: --without-xalan} %{!?_enable_xkms: --disable-xkms}
@@ -85,15 +76,15 @@ This package includes files needed for development with xml-security-c.
 %{__rm} -rf $RPM_BUILD_ROOT
 
 
-%post -n %{libname} -p /sbin/ldconfig
+%post -p /sbin/ldconfig
 
-%postun -n %{libname} -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files -n %{utilname}
 %defattr(-,root,root,-)
 %{_bindir}/*
 
-%files -n %{libname}
+%files
 %defattr(-,root,root,-)
 %{_libdir}/*.so.*
 

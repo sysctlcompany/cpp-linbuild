@@ -4,7 +4,7 @@
 %define schemaname %{compname}-schemas
 %define utilname %{compname}-bin
 
-Name: %{compname}
+Name: %{libname}
 Version: 3.2.1
 Release: 1
 Summary: OpenSAML SAML library
@@ -13,6 +13,8 @@ Vendor: Shibboleth Consortium
 License: Apache-2.0
 URL: http://www.opensaml.org/
 Source0: https://shibboleth.net/downloads/c++-%{compname}/%{version}/%{compname}-%{version}.tar.bz2
+Provides: %{compname} = %{version}-%{release}
+Obsoletes: %{compname} < %{version}-%{release}
 BuildRequires: libxerces-c-devel >= 3.2
 BuildRequires: libxml-security-c-devel >= 2.0.0
 BuildRequires: libxmltooling-devel >= 3.2.0
@@ -41,6 +43,8 @@ OpenSAML is an open source implementation of the OASIS Security Assertion
 Markup Language Specification. It contains a set of open source C++ classes
 that support the SAML 1.0, 1.1, and 2.0 specifications.
 
+The main package contains just the shared library.
+
 %package -n %{utilname}
 Summary: Utilities for OpenSAML library
 Group: Development/Libraries/C and C++
@@ -51,19 +55,6 @@ Markup Language Specification. It contains a set of open source C++ classes
 that support the SAML 1.0, 1.1, and 2.0 specifications.
 
 This package contains the utility programs.
-
-%package -n %{libname}
-Summary: OpenSAML SAML library
-Group: Development/Libraries/C and C++
-Provides: %{compname} = %{version}-%{release}
-Obsoletes: %{compname} < %{version}-%{release}
-
-%description -n %{libname}
-OpenSAML is an open source implementation of the OASIS Security Assertion
-Markup Language Specification. It contains a set of open source C++ classes
-that support the SAML 1.0, 1.1, and 2.0 specifications.
-
-This package contains just the shared library.
 
 %package -n %{develname}
 Summary: OpenSAML development Headers
@@ -96,7 +87,7 @@ that support the SAML 1.0, 1.1, and 2.0 specifications.
 This package includes XML schemas and related files.
 
 %prep
-%setup -q
+%setup -q -n %{compname}-%{version}
 
 %build
 %if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} >= 1
@@ -117,15 +108,15 @@ This package includes XML schemas and related files.
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && %{__rm} -rf $RPM_BUILD_ROOT
 
-%post -n %{libname} -p /sbin/ldconfig
+%post -p /sbin/ldconfig
 
-%postun -n %{libname} -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files -n %{utilname}
 %defattr(-,root,root,-)
 %{_bindir}/samlsign
 
-%files -n %{libname}
+%files
 %defattr(-,root,root,-)
 %{_libdir}/libsaml.so.*
 %exclude %{_libdir}/libsaml.la

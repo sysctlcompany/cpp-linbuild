@@ -2,7 +2,7 @@
 %define libname lib%{compname}2
 %define develname lib%{compname}-devel
 
-Name: %{compname}
+Name: %{libname}
 Version: 2.0.1
 Release: 1
 Summary: Log for C++, Shibboleth Edition
@@ -11,6 +11,8 @@ Group: Development/Libraries
 Vendor: Shibboleth Consortium
 URL: https://shibboleth.net/downloads/%{compname}/%{version}
 Source0: https://shibboleth.net/downloads/%{compname}/%{version}/%{compname}-%{version}.tar.bz2
+Provides: %{compname} = %{version}-%{release}
+Obsoletes: %{compname} < %{version}-%{release}
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig
 %{!?_without_doxygenrpm:BuildRequires: doxygen}
@@ -33,18 +35,7 @@ Log for C++ is a library of classes for flexible logging to files, syslog,
 and other destinations. It is modeled after the Log for Java library and
 stays as close to its API as is reasonable.
 
-%package -n %{libname}
-Summary: Log for C++, Shibboleth Edition
-Group: Development/Libraries
-Provides: %{compname} = %{version}-%{release}
-Obsoletes: %{compname} < %{version}-%{release}
-
-%description -n %{libname}
-Log for C++ is a library of classes for flexible logging to files, syslog,
-and other destinations. It is modeled after the Log for Java library and
-stays as close to its API as is reasonable.
-
-This package contains just the shared library.
+The main package contains just the shared library.
 
 %package -n %{develname}
 Summary: Development tools for Log for C++
@@ -57,7 +48,7 @@ Obsoletes: %{compname}-devel < %{version}-%{release}
 The static libraries and header files needed for development with log4shib.
 
 %prep
-%setup -q
+%setup -q -n %{compname}-%{version}
 
 %build
 %configure %{!?_without_doxygenrpm:--enable-doxygen} %{?_without_doxygenrpm:--disable-doxygen}
@@ -74,16 +65,16 @@ config/install-sh -m 644 -c AUTHORS COPYING INSTALL NEWS README THANKS ChangeLog
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && %{__rm} -rf $RPM_BUILD_ROOT
 
-%post -n %{libname} -p /sbin/ldconfig
+%post -p /sbin/ldconfig
 
 %post -n %{develname}
 if test "x$RPM_INSTALL_PREFIX0" != "x" ; then
     %{__perl} -pi -e"s|^prefix=\"[^\"]*\"|prefix=\"$RPM_INSTALL_PREFIX0\"|" $RPM_INSTALL_PREFIX0/bin/log4shib-config
 fi
 
-%postun -n %{libname} -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
-%files -n %{libname}
+%files
 %defattr(-,root,root,755)
 %attr(755,root,root) %{_libdir}/lib*.so.*
 

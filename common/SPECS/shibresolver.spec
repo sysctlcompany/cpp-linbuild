@@ -3,7 +3,7 @@
 %define libname lib%{compname}6
 %define develname lib%{compname}-devel
 
-Name: %{distname}
+Name: %{libname}
 Version: 3.4.0
 Summary: Shibboleth SP Attribute Resolver Library
 Release: 1
@@ -12,6 +12,8 @@ Group: System Environment/Libraries
 License: Apache-2.0
 URL: https://www.shibboleth.net/
 Source0: https://shibboleth.net/downloads/service-provider/extensions/%{compname}/%{version}/%{distname}-%{version}.tar.bz2
+Provides: %{compname} = %{version}-%{release}
+Obsoletes: %{compname} < %{version}-%{release}
 BuildRequires: libxerces-c-devel >= 3.2
 BuildRequires: libxml-security-c-devel >= 2.0.0
 BuildRequires: libxmltooling-devel >= 3.2.0
@@ -37,18 +39,7 @@ This package contains a Shibboleth SP Extension that provides
 externally accessible attribute resolver functionality for processing
 local and remote sources of federated attribute information.
 
-%package -n %{libname}
-Summary: Shibboleth SP Attribute Resolver library
-Group: Development/Libraries
-Provides: %{distname} = %{version}-%{release}
-Obsoletes: %{distname} < %{version}-%{release}
-
-%description -n %{libname}
-This package contains a Shibboleth SP Extension that provides
-externally accessible attribute resolver functionality for processing
-local and remote sources of federated attribute information.
-
-This package contains just the shared library.
+The main package contains just the shared library.
 
 %package -n %{develname}
 Summary: Shibboleth SP Attribute Resolver development Headers
@@ -72,7 +63,7 @@ local and remote sources of federated attribute information.
 This package includes files needed for development.
 
 %prep
-%setup -q
+%setup -q -n %{distname}-%{version}
 
 %build
 %if 0%{?suse_version} >= 1300
@@ -104,11 +95,11 @@ This package includes files needed for development.
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && %{__rm} -rf $RPM_BUILD_ROOT
 
-%post -n %{libname} -p /sbin/ldconfig
+%post -p /sbin/ldconfig
 
-%postun -n %{libname} -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
-%files -n %{libname}
+%files
 %defattr(-,root,root,-)
 %{_libdir}/libshibresolver-lite.so.*
 %{_libdir}/libshibresolver.so.*

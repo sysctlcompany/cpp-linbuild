@@ -3,7 +3,7 @@
 %define develname lib%{compname}-devel
 %define schemaname %{compname}-schemas
 
-Name: %{compname}
+Name: %{libname}
 Version: 3.2.4
 Release: 1
 Summary: OpenSAML XML Processing library
@@ -12,6 +12,8 @@ Vendor: Shibboleth Consortium
 License: Apache-2.0
 URL: http://www.opensaml.org/
 Source0: https://shibboleth.net/downloads/c++-opensaml/3.2.1/%{compname}-%{version}.tar.bz2
+Provides: %{compname} = %{version}-%{release}
+Obsoletes: %{compname} < %{version}-%{release}
 BuildRequires: libxerces-c-devel >= 3.2
 BuildRequires: libxml-security-c-devel >= 2.0.0
 %{?_with_log4cpp:BuildRequires: liblog4cpp-devel >= 1.0}
@@ -55,23 +57,7 @@ for declaring element- and type-specific API and implementation
 classes to add value around the DOM, as well as signing and encryption
 support.
 
-%package -n %{libname}
-Summary: OpenSAML XMLTooling library
-Group: Development/Libraries/C and C++
-Provides: %{compname} = %{version}-%{release}
-Obsoletes: %{compname} < %{version}-%{release}
-%if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
-Requires: libcurl-openssl >= 7.21.7
-%endif
-
-%description -n %{libname}
-The XMLTooling library contains generic XML parsing and processing
-classes based on the Xerces-C DOM. It adds more powerful facilities
-for declaring element- and type-specific API and implementation
-classes to add value around the DOM, as well as signing and encryption
-support.
-
-This package contains just the shared library.
+The main package contains just the shared library.
 
 %package -n %{develname}
 Summary: XMLTooling development Headers
@@ -114,7 +100,7 @@ support.
 This package includes XML schemas and related files.
 
 %prep
-%setup -q
+%setup -q -n %{compname}-%{version}
 
 %build
 %if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
@@ -135,11 +121,11 @@ This package includes XML schemas and related files.
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && %{__rm} -rf $RPM_BUILD_ROOT
 
-%post -n %{libname} -p /sbin/ldconfig
+%post -p /sbin/ldconfig
 
-%postun -n %{libname} -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
-%files -n %{libname}
+%files
 %defattr(-,root,root,-)
 %{_libdir}/*.so.*
 %exclude %{_libdir}/*.la

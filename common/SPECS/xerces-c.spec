@@ -4,13 +4,15 @@
 %define utilname %{compname}-bin
 
 Summary: Xerces-C++ validating XML parser
-Name: %{compname}
+Name: %{libname}
 Version: 3.2.4
 Release: 1
 URL: https://xerces.apache.org/%{compname}/
 Source0: https://shibboleth.net/downloads/%{compname}/%{compname}-%{version}.tar.bz2
+Provides: %{compname} = %{version}-%{release}
+Obsoletes: %{compname} < %{version}-%{release}
 License: Apache-2.0
-Group: Libraries
+Group: Development/Libraries
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig
 %{?_with_curl:BuildRequires: curl-devel}
@@ -29,6 +31,8 @@ Xerces-C++ makes it easy to give your application the ability to read and
 write XML data. A shared library is provided for parsing, generating,
 manipulating, and validating XML documents.
 
+The main package contains just the shared library.
+
 %package -n %{utilname}
 Summary: Utilities for Xerces-C++ validating XML parser
 Group: Development/Libraries
@@ -40,19 +44,6 @@ write XML data. A shared library is provided for parsing, generating,
 manipulating, and validating XML documents.
 
 This package contains the utility programs.
-
-%package -n %{libname}
-Summary: Shared library for Xerces-C++ validating XML parser
-Group: Development/Libraries
-Provides: %{compname} = %{version}-%{release}
-
-%description -n %{libname}
-Xerces-C++ is a validating XML parser written in a portable subset of C++.
-Xerces-C++ makes it easy to give your application the ability to read and
-write XML data. A shared library is provided for parsing, generating,
-manipulating, and validating XML documents.
-
-This package contains just the shared library.
 
 %package -n %{develname}
 Group: Development/Libraries
@@ -69,7 +60,7 @@ manipulating, and validating XML documents.
 The static libraries and header files needed for development with Xerces-C++.
 
 %prep
-%setup -q
+%setup -q -n %{compname}-%{version}
 
 %build
 %configure %{?_with_curl:--enable-netaccessor-curl} %{!?_with_curl:--disable-netaccessor-curl} %{?_with_icu:--enable-transcoder-icu --enable-msgloader-icu} %{?xerces_options}
@@ -81,15 +72,15 @@ The static libraries and header files needed for development with Xerces-C++.
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && %{__rm} -rf $RPM_BUILD_ROOT
 
-%post -n %{libname} -p /sbin/ldconfig
+%post -p /sbin/ldconfig
 
-%postun -n %{libname} -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files -n %{utilname}
 %defattr(755,root,root)
 %{_bindir}/*
 
-%files -n %{libname}
+%files
 %defattr(755,root,root)
 %{_libdir}/libxerces-c-*.so
 
