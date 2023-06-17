@@ -7,7 +7,7 @@
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: curl-openssl
 Version: 7.86.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: MIT
 Group: Applications/Internet
 Source0: http://curl.haxx.se/download/curl-%{version}.tar.bz2
@@ -140,6 +140,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/aclocal/libcurl.m4
 
 %changelog
+* Sat Jun 17 2023 John W. O'Brien <john@saltant.com> 7.86.0-2
+- Normalize SPEC file whitespace
+- Delete obsolete BuildRoot macro
+- Ensure Source is valid and fetchable
+- Adopt %make_install
+
 * Thu Feb 18 2016 Scott Cantor <cantor.2@osu.edu> 7.47.1-1
 - update version
 - add missing file to package

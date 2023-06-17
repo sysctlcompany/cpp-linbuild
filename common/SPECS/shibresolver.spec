@@ -6,7 +6,7 @@
 Name: %{libname}
 Version: 3.4.0
 Summary: Shibboleth SP Attribute Resolver Library
-Release: 1
+Release: 2%{?dist}
 Vendor: Shibboleth Consortium
 Group: System Environment/Libraries
 License: Apache-2.0
@@ -114,6 +114,17 @@ This package includes files needed for development.
 %doc %{pkgdocdir}
 
 %changelog
+* Sat Jun 17 2023 John W. O'Brien <john@saltant.com> - 3.4.0-2
+- Normalize SPEC file whitespace
+- Delete obsolete BuildRoot macro
+- Limit macro specifications to one per line for diff-ability
+- Ensure Source is valid and fetchable
+- Adopt %make_install
+- Drop support for RHEL 5
+- Parameterize (sub-)package names
+- Replace empty main package with lib sub-package
+- Append %dist to Release
+
 * Mon Oct 24 2022 Scott Cantor <cantor.2@osu.edu> - 3.4.0-1
 - Bump version
 

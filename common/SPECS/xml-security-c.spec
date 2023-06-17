@@ -5,7 +5,7 @@
 
 Name: %{libname}
 Version: 2.0.4
-Release: 1
+Release: 2%{?dist}
 Summary: Apache XML security C++ library
 Group: Development/Libraries/C and C++
 License: Apache-2.0
@@ -96,6 +96,16 @@ This package includes files needed for development with xml-security-c.
 %exclude %{_libdir}/*.la
 
 %changelog
+* Sat Jun 17 2023 John W. O'Brien <john@saltant.com> 2.0.4-2
+- Normalize SPEC file whitespace
+- Delete obsolete BuildRoot macro
+- Conform License field to SPDX License List
+- Ensure Source is valid and fetchable
+- Adopt %make_install
+- Parameterize (sub-)package names
+- Replace empty main package with lib sub-package
+- Append %dist to Release
+
 * Mon Nov 13 2017 Scott Cantor <cantor.2@osu.edu> 2.0.0-1
 - update to 2.0.0
 - exclude libtool archive

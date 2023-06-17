@@ -1,6 +1,6 @@
 Name: shibboleth
 Version: 3.4.1
-Release: 2
+Release: 3%{?dist}
 Summary: Open source system for attribute-based Web SSO
 Group: Productivity/Networking/Security
 Vendor: Shibboleth Consortium
@@ -480,6 +480,19 @@ exit 0
 %doc %{pkgdocdir}/api
 
 %changelog
+* Sat Jun 17 2023 John W. O'Brien <john@saltant.com> - 3.4.1-3
+- Normalize SPEC file whitespace
+- Delete obsolete BuildRoot macro
+- Limit macro specifications to one per line for diff-ability
+- Escape macros in comments
+- Avoid hardcoding library path
+- Replace deprecated PreReq
+- Run %setup quietly
+- Ensure Source is valid and fetchable
+- Adopt %make_install
+- Drop support for RHEL 5
+- Append %dist to Release
+
 * Fri Mar 24 2023 John W. O'Brien <john@saltant.com> 3.4.1-2
 - Build with memcached on RHEL 8 and later and derivatives
 

@@ -6,7 +6,7 @@
 Summary: Xerces-C++ validating XML parser
 Name: %{libname}
 Version: 3.2.4
-Release: 1
+Release: 2%{?dist}
 URL: https://xerces.apache.org/%{compname}/
 Source0: https://shibboleth.net/downloads/%{compname}/%{compname}-%{version}.tar.bz2
 Provides: %{compname} = %{version}-%{release}
@@ -93,6 +93,18 @@ The static libraries and header files needed for development with Xerces-C++.
 %exclude %{_libdir}/libxerces-c.la
 
 %changelog
+* Sat Jun 17 2023 John W. O'Brien <john@saltant.com> 3.2.4-2
+- Normalize SPEC file whitespace
+- Delete obsolete BuildRoot macro
+- Limit macro specifications to one per line for diff-ability
+- Conform License field to SPDX License List
+- Ensure Source is valid and fetchable
+- Adopt %make_install
+- Drop support for relocatable xerces-c RPM
+- Parameterize (sub-)package names
+- Replace empty main package with lib sub-package
+- Append %dist to Release
+
 * Fri Oct 21 2022 John W. O'Brien <john@saltant.com> 3.2.4-1
 - Bump version
 

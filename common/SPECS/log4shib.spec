@@ -4,7 +4,7 @@
 
 Name: %{libname}
 Version: 2.0.1
-Release: 1
+Release: 2%{?dist}
 Summary: Log for C++, Shibboleth Edition
 License: LGPL-2.1-only
 Group: Development/Libraries
@@ -88,6 +88,18 @@ fi
 %doc %{pkgdocdir}
 
 %changelog
+* Sat Jun 17 2023 John W. O'Brien <john@saltant.com> - 2.0.1-2
+- Normalize SPEC file whitespace
+- Delete obsolete BuildRoot macro
+- Limit macro specifications to one per line for diff-ability
+- Conform License field to SPDX License List
+- Escape macros in comments
+- Ensure Source is valid and fetchable
+- Adopt %make_install
+- Parameterize (sub-)package names
+- Replace empty main package with lib sub-package
+- Append %dist to Release
+
 * Thu Oct 28 2021 Scott Cantor <cantor.2@osu.edu> - 2.0.1-1
 - Remove static library from manifest.
 
