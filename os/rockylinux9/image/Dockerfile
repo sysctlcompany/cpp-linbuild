@@ -2,11 +2,10 @@ FROM rockylinux:9.2.20230513
 
 COPY *.repo /etc/yum.repos.d/
 
-RUN yum -y install epel-release \
-    && yum -y update \
+RUN yum -y update \
     && yum -y install --enablerepo crb \
         autoconf automake boost-devel chrpath curl-devel doxygen \
-        gcc-c++ gdb git groff httpd-devel libidn-devel \
+        gcc-c++ gdb git groff httpd-devel \
         libmemcached-devel libtool make openldap-devel openssl-devel \
         pkgconfig rpm-build stunnel systemd-devel unixODBC-devel \
         zlib-devel createrepo_c yum-utils \

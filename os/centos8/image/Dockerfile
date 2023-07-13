@@ -10,7 +10,7 @@ RUN sed -i "s/enabled=0/enabled=1/" /etc/yum.repos.d/CentOS-Linux-PowerTools.rep
     && yum -y update \
     && yum -y install \
         autoconf automake boost-devel chrpath curl-devel doxygen \
-        gcc-c++ gdb git groff httpd-devel libidn-devel \
+        gcc-c++ gdb git groff httpd-devel \
         libmemcached-devel libtool make openldap-devel openssl-devel \
         pkgconfig rpm-build stunnel systemd-devel unixODBC-devel \
         zlib-devel createrepo_c yum-utils \

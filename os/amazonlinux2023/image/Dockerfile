@@ -5,7 +5,7 @@ COPY *.repo /etc/yum.repos.d/
 RUN dnf -y update \
     && dnf -y install \
         autoconf automake boost-devel chrpath curl-devel doxygen \
-        gcc-c++ gdb git groff httpd-devel libidn-devel \
+        gcc-c++ gdb git groff httpd-devel \
         libtool make openldap-devel openssl-devel \
         pkgconfig rpm-build stunnel systemd-devel unixODBC-devel \
         zlib-devel createrepo_c yum-utils \
