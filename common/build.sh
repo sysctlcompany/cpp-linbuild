@@ -20,7 +20,7 @@ localrepo=${EXT_BASE}/out/RPMS/${arch}
 if [ ! -e ${localrepo}/repodata/repomd.xml ]; then
     # Initialize empty local RPM repository
     mkdir -p ${localrepo}
-    createrepo_c ${localrepo}
+    createrepo ${localrepo}
 fi
 
 # Install dependencies
@@ -35,4 +35,4 @@ rpmspec -q --rpms ${component}.spec > ${EXT_BASE}/out/${component}.rpms
 rpmspec -q --srpm ${component}.spec > ${EXT_BASE}/out/${component}.srpm
 
 # Generate/update local RPM repository
-createrepo_c ${localrepo}
+createrepo ${localrepo}
