@@ -26,6 +26,15 @@
 # 			Run an interactive build environment container
 # 			for component <comp> on platform <plat>
 #
+# Platform-specific notes:
+#
+# The following platforms are only enabled for all of the above
+# targets when the variable HOST_IS_RHEL_QUALIFIED is defined
+# (the value is not inspected).
+#
+# 	rhel7
+# 	rhel8
+# 	rhel9
 
 # Constants and utility variables
 
@@ -100,7 +109,7 @@ CURLOPENSSL_DISTNAME=curl
 CURLOPENSSL_VERSION=8.3.0
 CURLOPENSSL_DISTFILE=$(CURLOPENSSL_DISTNAME)-$(CURLOPENSSL_VERSION).$(DEFAULT_DIST_EXT)
 CURLOPENSSL_URL=https://curl.haxx.se/download/$(CURLOPENSSL_DISTFILE)
-CURLOPENSSL_VALID_PLATFORMS=amazonlinux2 centos7
+CURLOPENSSL_VALID_PLATFORMS=amazonlinux2 centos7 rhel7
 
 # Look closely: these variables refer to the OPENSAML variables
 XMLTOOLING_COMPNAME=xmltooling
@@ -168,6 +177,20 @@ PLATFORMS=\
 	centos8 \
 	rockylinux8 \
 	rockylinux9
+
+# Red Hat Enterprise Linux (RHEL) builds, which run inside
+# Universal Base Image (UBI) containers, can only be performed
+# on a RHEL host (8 or higher, suggested) that is registered
+# with an active Red Hat account and attached to a valid
+# subscription that makes the necessary RPM package
+# repositories available inside each container. Ensure that:
+# /etc/rhsm/rhsm.conf:manage_repos = 1
+ifdef HOST_IS_RHEL_QUALIFIED
+PLATFORMS:=$(PLATFORMS) \
+	rhel7 \
+	rhel8 \
+	rhel9
+endif
 
 # To add a new platform, create the following
 #	os/$OS/
