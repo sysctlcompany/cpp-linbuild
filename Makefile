@@ -206,7 +206,7 @@ $(foreach component,$(COMPONENTS),$(eval $(component)_VALID_PLATFORMS ?= $(PLATF
 
 # Each virtual component depends on being built on all valid platforms
 define validity-component
-$$($(1)_COMPNAME): $(foreach platform,$($(1)_VALID_PLATFORMS),$$($(1)_COMPNAME)_$(platform))
+$$($(1)_COMPNAME): $(foreach platform,$($(1)_VALID_PLATFORMS),$(if $(filter $(platform), $(PLATFORMS)), $$($(1)_COMPNAME)_$(platform)))
 endef
 
 $(foreach component,$(COMPONENTS),$(eval $(call validity-component,$(component))))
