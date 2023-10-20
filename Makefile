@@ -276,7 +276,7 @@ $$($(1)_$(2)_token): $$($(1)_$(2)_image_token) $(SOURCEDIR)/$$($(1)_DISTFILE) $(
 		-v $$($(2)_products):/opt/build/external/out:z \
 		-v $(srcdir)common:/opt/build/external/in:z \
 		shibboleth/$(2):$($(1)_COMPNAME) \
-		/bin/sh /opt/build/external/in/build.sh $($(1)_COMPNAME)
+		/bin/sh -e /opt/build/external/in/build.sh $($(1)_COMPNAME)
 	touch $$($(1)_$(2)_token)
 $$($(1)_COMPNAME)_$(2): $$($(1)_$(2)_token)
 endef
