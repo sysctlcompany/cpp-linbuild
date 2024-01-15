@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi7/ubi:7.9-1210
+FROM registry.access.redhat.com/ubi7/ubi:7.9-1255
 
 COPY *.repo /etc/yum.repos.d/
 
