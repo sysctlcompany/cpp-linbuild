@@ -1,6 +1,6 @@
 Name: shibboleth-embedded-ds
-Version: 1.2.2
-Release: 2%{?dist}
+Version: 1.3.0
+Release: 1%{?dist}
 Summary: Client-side federation discovery service for SAML-based SSO
 Group: Productivity/Networking/Security
 Vendor: Shibboleth Consortium
@@ -92,6 +92,9 @@ cd /
 %config %{_sysconfdir}/shibboleth-ds/shibboleth-ds.conf
 
 %changelog
+* Tue Feb 27 2024 Scott Cantor <cantor.2@osu.edu> - 1.3.0-1
+- Update version.
+
 * Sat Jun 17 2023 John W. O'Brien <john@saltant.com> - 1.2.2-2
 - Normalize SPEC file whitespace
 - Delete obsolete BuildRoot macro
