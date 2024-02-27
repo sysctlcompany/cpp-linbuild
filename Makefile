@@ -83,7 +83,7 @@ COMPONENTS=\
 
 
 SHIBEDS_COMPNAME=shibboleth-embedded-ds
-SHIBEDS_VERSION=1.2.2
+SHIBEDS_VERSION=1.3.0
 SHIBEDS_DISTFILE=$(SHIBEDS_COMPNAME)-$(SHIBEDS_VERSION).tar.gz
 SHIBEDS_URL=https://shibboleth.net/downloads/embedded-discovery-service/$(SHIBEDS_VERSION)/$(SHIBEDS_DISTFILE)
 
