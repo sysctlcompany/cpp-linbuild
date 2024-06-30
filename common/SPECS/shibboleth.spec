@@ -1,6 +1,6 @@
 Name: shibboleth
 Version: 3.4.1
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: Open source system for attribute-based Web SSO
 Group: Productivity/Networking/Security
 Vendor: Shibboleth Consortium
@@ -181,7 +181,7 @@ fi
 
 # Establish location of systemd file, if any.
 SYSTEMD_SHIBD="no"
-%if 0%{?suse_version} >= 1210 || 0%{?rhel} >= 7
+%if 0%{?suse_version} >= 1210 || 0%{?rhel} >= 7 || 0%{?amzn2023}
     %{__mkdir} -p $RPM_BUILD_ROOT%{_unitdir}
     echo "%attr(0444,-,-) %{_unitdir}/shibd.service" >> rpm.filelist
     SYSTEMD_SHIBD="$RPM_BUILD_ROOT%{_unitdir}/shibd.service"
@@ -451,7 +451,7 @@ exit 0
 %config %{_initddir}/shibd
 %endif
 %endif
-%if "%{_vendor}" == "amazon"
+%if "%{_vendor}" == "amazon" && 0%{?amzn} == 2
 %config %{_initddir}/shibd
 %endif
 %if "%{_vendor}" == "suse" && 0%{?suse_version} < 1210
@@ -480,6 +480,9 @@ exit 0
 %doc %{pkgdocdir}/api
 
 %changelog
+* Sun Jun 30 2024 John W. O'Brien <john@saltant.com> - 3.4.1-4
+- SSPCPP-987 Include missed conversion from SysV to SystemD for AL2023
+
 * Sat Jun 17 2023 John W. O'Brien <john@saltant.com> - 3.4.1-3
 - Normalize SPEC file whitespace
 - Delete obsolete BuildRoot macro
