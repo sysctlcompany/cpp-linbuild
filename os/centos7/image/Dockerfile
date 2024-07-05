@@ -2,7 +2,11 @@ FROM docker.io/library/centos:7.9.2009
 
 COPY *.repo /etc/yum.repos.d/
 
-RUN yum -y update \
+RUN sed -i \
+        -e "s/^mirrorlist/#mirrorlist/" \
+        -e "s|^#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|" \
+        /etc/yum.repos.d/CentOS-Base.repo \
+    && yum -y update \
     && yum -y install \
         autoconf automake boost-devel chrpath doxygen gcc-c++ git groff \
         httpd-devel libidn-devel libmemcached-devel libtool make \
