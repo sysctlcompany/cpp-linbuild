@@ -1,6 +1,6 @@
 Name: shibboleth
 Version: 3.4.1
-Release: 4%{?dist}
+Release: 5%{?dist}
 Summary: Open source system for attribute-based Web SSO
 Group: Productivity/Networking/Security
 Vendor: Shibboleth Consortium
@@ -20,7 +20,7 @@ Requires(pre,preun): opensaml-schemas >= 3.2.0
 Requires(pre,preun): %{insserv_prereq}
 Requires(pre,preun): %{fillup_prereq}
 %endif
-%if 0%{?rhel} >= 7
+%if 0%{?rhel} >= 7 || 0%{?amzn2023}
 Requires: hostname
 BuildRequires: systemd-devel
 %else
@@ -323,7 +323,7 @@ if [ $1 -gt 1 ] ; then
         fi
     fi
 
-%if 0%{?rhel} >= 7
+%if 0%{?rhel} >= 7 || 0%{?amzn2023}
     # Initial prep for systemd
     %systemd_post shibd.service
     if [ $1 -gt 1 ] ; then
@@ -350,7 +350,7 @@ if [ $1 -gt 1 ] ; then
 %preun
 # On final removal, stop shibd and remove service, restart Apache if running.
 %if "%{_vendor}" == "redhat" || "%{_vendor}" == "amazon"
-%if 0%{?rhel} >= 7
+%if 0%{?rhel} >= 7 || 0%{?amzn2023}
     %systemd_preun shibd.service
 %else
     if [ $1 -eq 0 ] ; then
@@ -380,7 +380,7 @@ exit 0
 /sbin/ldconfig
 %if "%{_vendor}" == "redhat" || "%{_vendor}" == "amazon"
 # On upgrade, restart components if they're already running.
-%if 0%{?rhel} >= 7
+%if 0%{?rhel} >= 7 || 0%{?amzn2023}
     %systemd_postun_with_restart shibd.service
 %else
     if [ $1 -ge 1 ] ; then
@@ -458,7 +458,7 @@ exit 0
 %config %{_initddir}/shibd
 %{_sbindir}/rcshibd
 %endif
-%if 0%{?suse_version} >= 1210 || 0%{?rhel} >= 7
+%if 0%{?suse_version} >= 1210 || 0%{?rhel} >= 7 || 0%{?amzn2023}
 %{_tmpfilesdir}/%{name}.conf
 %endif
 %{_sysconfdir}/shibboleth/example-shibboleth2.xml
@@ -480,6 +480,9 @@ exit 0
 %doc %{pkgdocdir}/api
 
 %changelog
+* Tue Jul 30 2024 John W. O'Brien <john@saltant.com> - 3.4.1-5
+- SSPCPP-989 Fix add'l SysV/SystemD mismatches on AL2023
+
 * Sun Jun 30 2024 John W. O'Brien <john@saltant.com> - 3.4.1-4
 - SSPCPP-987 Include missed conversion from SysV to SystemD for AL2023
 
