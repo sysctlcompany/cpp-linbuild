@@ -4,7 +4,7 @@ COPY *.repo /etc/yum.repos.d/
 
 RUN dnf \
         config-manager \
-        --enable codeready-builder-for-rhel-9-x86_64-rpms \
+        --enable codeready-builder-for-rhel-9-$(arch)-rpms \
     && dnf -y update \
     && dnf -y install \
         autoconf automake boost-devel chrpath curl-devel doxygen \
