@@ -1,6 +1,6 @@
 Name: shibboleth
 Version: 3.4.1
-Release: 5%{?dist}
+Release: 6%{?dist}
 Summary: Open source system for attribute-based Web SSO
 Group: Productivity/Networking/Security
 Vendor: Shibboleth Consortium
@@ -483,7 +483,11 @@ exit 0
 %{_libdir}/pkgconfig/*.pc
 %doc %{pkgdocdir}/api
 
-%changelog
+%changeloga
+* Wed Jul 31 2024 Scott Cantor <cantor.2@osu.edu> - 3.4.1-6
+- SSPCPP-990 - Add dedicated configure for AL2023
+- Fix missing memcache dep. on newer platforms.
+
 * Tue Jul 30 2024 John W. O'Brien <john@saltant.com> - 3.4.1-5
 - SSPCPP-989 Fix add'l SysV/SystemD mismatches on AL2023
 
