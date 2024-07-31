@@ -49,7 +49,7 @@ BuildRequires: boost-devel >= 1.32.0
 %{!?_without_doxygen:BuildRequires: doxygen}
 %{!?_without_odbc:BuildRequires:unixODBC-devel}
 %{?_with_fastcgi:BuildRequires: fcgi-devel}
-%if 0%{?centos} == 6 || 0%{?centos} == 7
+%if 0%{?centos} == 6 || 0%{?centos} == 7 || 0%{?rhel} >= 6 || 0%{?amzn2023}
 BuildRequires: libmemcached-devel
 %endif
 %{?_with_memcached:BuildRequires: libmemcached-devel}
