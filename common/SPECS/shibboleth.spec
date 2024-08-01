@@ -483,7 +483,7 @@ exit 0
 %{_libdir}/pkgconfig/*.pc
 %doc %{pkgdocdir}/api
 
-%changeloga
+%changelog
 * Wed Jul 31 2024 Scott Cantor <cantor.2@osu.edu> - 3.4.1-6
 - SSPCPP-990 - Add dedicated configure for AL2023
 - Fix missing memcache dep. on newer platforms.
