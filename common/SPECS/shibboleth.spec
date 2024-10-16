@@ -1,6 +1,6 @@
 Name: shibboleth
-Version: 3.4.1
-Release: 6%{?dist}
+Version: 3.5.0
+Release: 1%{?dist}
 Summary: Open source system for attribute-based Web SSO
 Group: Productivity/Networking/Security
 Vendor: Shibboleth Consortium
@@ -10,11 +10,11 @@ Source0: https://shibboleth.net/downloads/service-provider/%{version}/%{name}-sp
 Obsoletes: shibboleth-sp = 2.5.0
 Requires: openssl
 %if 0%{?rhel} >= 6 || 0%{?amzn} == 1 || 0%{?amzn} == 2
-Requires(pre,preun): xmltooling-schemas%{?_isa} >= 3.2.0
-Requires(pre,preun): opensaml-schemas%{?_isa} >= 3.2.0
+Requires(pre,preun): xmltooling-schemas%{?_isa} >= 3.3.0
+Requires(pre,preun): opensaml-schemas%{?_isa} >= 3.3.0
 %else
-Requires(pre,preun): xmltooling-schemas >= 3.2.0
-Requires(pre,preun): opensaml-schemas >= 3.2.0
+Requires(pre,preun): xmltooling-schemas >= 3.3.0
+Requires(pre,preun): opensaml-schemas >= 3.3.0
 %endif
 %if 0%{?suse_version} > 1030 && 0%{?suse_version} < 1130
 Requires(pre,preun): %{insserv_prereq}
@@ -97,8 +97,8 @@ Requires: %{name} = %{version}-%{release}
 Obsoletes: shibboleth-sp-devel = 2.5.0
 Requires: libxerces-c-devel >= 3.2
 Requires: libxml-security-c-devel >= 2.0.0
-Requires: libxmltooling-devel >= 3.2.0
-Requires: libsaml-devel >= 3.2.0
+Requires: libxmltooling-devel >= 3.3.0
+Requires: libsaml-devel >= 3.3.0
 %{?_with_log4cpp:Requires: liblog4cpp-devel >= 1.0}
 %{!?_with_log4cpp:Requires: liblog4shib-devel >= 2}
 
@@ -484,9 +484,12 @@ exit 0
 %doc %{pkgdocdir}/api
 
 %changelog
+* Wed Oct 16 2024 Scott Cantor <cantor.2@osu.edu> - 3.5.0-1
+- Bump version and xmltooling/opensaml dependencies
+
 * Wed Jul 31 2024 Scott Cantor <cantor.2@osu.edu> - 3.4.1-6
 - SSPCPP-990 - Add dedicated configure for AL2023
-- Fix missing memcache dep. on newer platforms.
+- Fix missing memcache dep. on newer platforms
 
 * Tue Jul 30 2024 John W. O'Brien <john@saltant.com> - 3.4.1-5
 - SSPCPP-989 Fix add'l SysV/SystemD mismatches on AL2023

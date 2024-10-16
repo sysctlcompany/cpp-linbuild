@@ -1,14 +1,14 @@
 %define compname xerces-c
-%define libname lib%{compname}-3_2
+%define libname lib%{compname}-3_3
 %define develname lib%{compname}-devel
 %define utilname %{compname}-bin
 
 Summary: Xerces-C++ validating XML parser
 Name: %{libname}
-Version: 3.2.4
-Release: 2%{?dist}
+Version: 3.3.0
+Release: 1%{?dist}
 URL: https://xerces.apache.org/%{compname}/
-Source0: https://shibboleth.net/downloads/%{compname}/%{compname}-%{version}.tar.bz2
+Source0: https://downloads.apache.org/xerces/c/3/sources/%{compname}-%{version}.tar.bz2
 Provides: %{compname} = %{version}-%{release}
 Obsoletes: %{compname} < %{version}-%{release}
 License: Apache-2.0
@@ -93,6 +93,9 @@ The static libraries and header files needed for development with Xerces-C++.
 %exclude %{_libdir}/libxerces-c.la
 
 %changelog
+* Wed Oct 16 2024 Scott Cantor <cantor.2@osu.edu> 3.3.0-1
+- Update version to 3.3.0 and update lib package name
+
 * Sat Jun 17 2023 John W. O'Brien <john@saltant.com> 3.2.4-2
 - Normalize SPEC file whitespace
 - Delete obsolete BuildRoot macro

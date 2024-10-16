@@ -1,12 +1,12 @@
 %define compname opensaml
-%define libname libsaml12
+%define libname libsaml13
 %define develname libsaml-devel
 %define schemaname %{compname}-schemas
 %define utilname %{compname}-bin
 
 Name: %{libname}
-Version: 3.2.1
-Release: 2%{?dist}
+Version: 3.3.0
+Release: 1%{?dist}
 Summary: OpenSAML SAML library
 Group: Development/Libraries/C and C++
 Vendor: Shibboleth Consortium
@@ -17,7 +17,7 @@ Provides: %{compname} = %{version}-%{release}
 Obsoletes: %{compname} < %{version}-%{release}
 BuildRequires: libxerces-c-devel >= 3.2
 BuildRequires: libxml-security-c-devel >= 2.0.0
-BuildRequires: libxmltooling-devel >= 3.2.0
+BuildRequires: libxmltooling-devel >= 3.3.0
 %{?_with_log4cpp:BuildRequires: liblog4cpp-devel >= 1.0}
 %{!?_with_log4cpp:BuildRequires: liblog4shib-devel >= 1.0.4}
 BuildRequires: gcc-c++
@@ -64,7 +64,7 @@ Provides: %{compname}-devel = %{version}-%{release}
 Obsoletes: %{compname}-devel < %{version}-%{release}
 Requires: libxerces-c-devel >= 3.2
 Requires: libxml-security-c-devel >= 2.0.0
-Requires: libxmltooling-devel >= 3.2.0
+Requires: libxmltooling-devel >= 3.3.0
 %{?_with_log4cpp:Requires: liblog4cpp-devel >= 1.0}
 %{!?_with_log4cpp:Requires: liblog4shib-devel >= 1.0.4}
 
@@ -134,6 +134,9 @@ This package includes XML schemas and related files.
 %doc %{pkgdocdir}
 
 %changelog
+* Wed Oct 16 2024 Scott Cantor <cantor.2@osu.edu> - 3.3.0-1
+- Bump version and xmltooling dependency
+
 * Sat Jun 17 2023 John W. O'Brien <john@saltant.com> - 3.2.1-2
 - Normalize SPEC file whitespace
 - Delete obsolete BuildRoot macro

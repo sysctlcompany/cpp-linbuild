@@ -1,17 +1,17 @@
 %define compname xmltooling
-%define libname lib%{compname}10
+%define libname lib%{compname}11
 %define develname lib%{compname}-devel
 %define schemaname %{compname}-schemas
 
 Name: %{libname}
-Version: 3.2.4
-Release: 2%{?dist}
+Version: 3.3.0
+Release: 1%{?dist}
 Summary: OpenSAML XML Processing library
 Group: Development/Libraries/C and C++
 Vendor: Shibboleth Consortium
 License: Apache-2.0
 URL: http://www.opensaml.org/
-Source0: https://shibboleth.net/downloads/c++-opensaml/3.2.1/%{compname}-%{version}.tar.bz2
+Source0: https://shibboleth.net/downloads/c++-opensaml/3.3.0/%{compname}-%{version}.tar.bz2
 Provides: %{compname} = %{version}-%{release}
 Obsoletes: %{compname} < %{version}-%{release}
 BuildRequires: libxerces-c-devel >= 3.2
@@ -104,7 +104,7 @@ This package includes XML schemas and related files.
 
 %build
 %if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
-%configure %{?xmltooling_options} %{!?_without_xmlsec: --with-xmlsec} PKG_CONFIG_PATH=/opt/shibboleth/%{_lib}/pkgconfig
+%configure %{?xmltooling_options} %{!?_without_xmlsec: --with-xmlsec} PKG_CONFIG_PATH=/opt/shibboleth/%{_lib}/pkgconfig CXXFLAGS="-std=c++11"
 %else
 %configure %{?xmltooling_options} %{!?_without_xmlsec: --with-xmlsec}
 %endif
@@ -144,6 +144,10 @@ This package includes XML schemas and related files.
 %doc %{pkgdocdir}
 
 %changelog
+* Wed Oct 16 2024 Scott Cantor <cantor.2@osu.edu> - 3.3.0-1
+- Bump version and libname
+- Add conditional C++11 CXXFLAGS for older Linux
+
 * Sat Jun 17 2023 John W. O'Brien <john@saltant.com> - 3.2.4-2
 - Normalize SPEC file whitespace
 - Delete obsolete BuildRoot macro

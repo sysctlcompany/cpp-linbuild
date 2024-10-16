@@ -6,7 +6,7 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: curl-openssl
-Version: 8.4.0
+Version: 8.10.1
 Release: 1%{?dist}
 License: MIT
 Group: Applications/Internet
@@ -67,13 +67,13 @@ developing applications which can use cURL's capabilities internally.
 %setup -q -n curl-%{version}
 
 # Convert docs to UTF-8
-for f in CHANGES README; do
+for f in README; do
     iconv -f iso-8859-1 -t utf8 < ${f} > ${f}.utf8
     mv -f ${f}.utf8 ${f}
 done
 
 %build
-%configure --with-ssl --enable-ipv6 --without-ca-bundle --with-libidn \
+%configure --without-libpsl --with-ssl --enable-ipv6 --without-ca-bundle --with-libidn \
     --with-gssapi --enable-ldaps --disable-static --enable-manual
 sed -i -e 's,-L/usr/lib ,,g;s,-L/usr/lib64 ,,g;s,-L/usr/lib$,,g;s,-L/usr/lib64$,,g' \
     Makefile libcurl.pc
@@ -106,7 +106,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%doc CHANGES README* COPYING
+%doc CHANGES.md README* COPYING
 %doc docs/FAQ docs/TODO
 %dir %{_bindir}
 %{_bindir}/curl
@@ -140,6 +140,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/aclocal/libcurl.m4
 
 %changelog
+* Wed Oct 16 2024 Scott Cantor <cantor.2@osu.edu> 8.10.1-1
+- Update to latest curl version
+
 * Sat Jun 17 2023 John W. O'Brien <john@saltant.com> 7.86.0-2
 - Normalize SPEC file whitespace
 - Delete obsolete BuildRoot macro

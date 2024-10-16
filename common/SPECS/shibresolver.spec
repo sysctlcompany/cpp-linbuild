@@ -1,12 +1,12 @@
 %define compname shibresolver
 %define distname shibboleth-resolver
-%define libname lib%{compname}6
+%define libname lib%{compname}7
 %define develname lib%{compname}-devel
 
 Name: %{libname}
-Version: 3.4.0
+Version: 3.5.0
 Summary: Shibboleth SP Attribute Resolver Library
-Release: 2%{?dist}
+Release: 1%{?dist}
 Vendor: Shibboleth Consortium
 Group: System Environment/Libraries
 License: Apache-2.0
@@ -16,9 +16,9 @@ Provides: %{compname} = %{version}-%{release}
 Obsoletes: %{compname} < %{version}-%{release}
 BuildRequires: libxerces-c-devel >= 3.2
 BuildRequires: libxml-security-c-devel >= 2.0.0
-BuildRequires: libxmltooling-devel >= 3.2.0
-BuildRequires: libsaml-devel >= 3.2.0
-BuildRequires: shibboleth-devel >= 3.4.0
+BuildRequires: libxmltooling-devel >= 3.3.0
+BuildRequires: libsaml-devel >= 3.3.0
+BuildRequires: shibboleth-devel >= 3.5.0
 %{?_with_log4cpp:BuildRequires: liblog4cpp-devel >= 1.0}
 %{!?_with_log4cpp:BuildRequires: liblog4shib-devel >= 1.0.4}
 %{!?_without_gssapi:BuildRequires: krb5-devel}
@@ -49,9 +49,9 @@ Provides: %{distname}-devel = %{version}-%{release}
 Obsoletes: %{distname}-devel < %{version}-%{release}
 Requires: libxerces-c-devel >= 3.2
 Requires: libxml-security-c-devel >= 2.0.0
-Requires: libxmltooling-devel >= 3.2.0
-Requires: libsaml-devel >= 3.2.0
-Requires: shibboleth-devel >= 3.4.0
+Requires: libxmltooling-devel >= 3.3.0
+Requires: libsaml-devel >= 3.3.0
+Requires: shibboleth-devel >= 3.5.0
 %{?_with_log4cpp:Requires: liblog4cpp-devel >= 1.0}
 %{!?_with_log4cpp:Requires: liblog4shib-devel >= 1.0.4}
 
@@ -114,6 +114,9 @@ This package includes files needed for development.
 %doc %{pkgdocdir}
 
 %changelog
+* Wed Oct 16 2024 Scott Cantor <cantor.2@osu.edu> - 3.5.0-1
+- Bump version and our dependencies
+
 * Sat Jun 17 2023 John W. O'Brien <john@saltant.com> - 3.4.0-2
 - Normalize SPEC file whitespace
 - Delete obsolete BuildRoot macro
