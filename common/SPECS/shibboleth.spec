@@ -1,6 +1,6 @@
 Name: shibboleth
 Version: 3.5.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Open source system for attribute-based Web SSO
 Group: Productivity/Networking/Security
 Vendor: Shibboleth Consortium
@@ -484,6 +484,9 @@ exit 0
 %doc %{pkgdocdir}/api
 
 %changelog
+* Tue Oct 22 2024 Scott Cantor <cantor.2@osu.edu> - 3.5.0-2
+- Turn off memcache option for newer platforms
+
 * Wed Oct 16 2024 Scott Cantor <cantor.2@osu.edu> - 3.5.0-1
 - Bump version and xmltooling/opensaml dependencies
 
