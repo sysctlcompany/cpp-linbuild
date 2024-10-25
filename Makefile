@@ -246,36 +246,18 @@ $(foreach platform,$(PLATFORMS),$(eval $(call prepare-platform,$(platform))))
 .PHONY: images
 images: $(foreach platform,$(PLATFORMS),$(platform)-image)
 
-# Build a docker image for each component/platform combination
-define build-docker-image-component-platform
-$(srcdir)os/$(2)/image/Dockerfile.$$($(1)_COMPNAME):
-	echo "FROM shibboleth/$(2):$$(BASETAG)" > $$@
-
-$(1)_$(2)_image_token = $$(srcdir).$(1)_$(2)_image
-$$($(1)_$(2)_image_token): $$($(2)_token) $(srcdir)os/$(2)/image/Dockerfile.$$($(1)_COMPNAME)
-	@echo "==> Building Docker image for $(1) on $(2)"
-	docker build --no-cache \
-		-t shibboleth/$(2):$($(1)_COMPNAME) \
-		-f os/$(2)/image/Dockerfile.$$($(1)_COMPNAME) \
-		os/$(2)/image
-	touch $$($(1)_$(2)_image_token)
-$$($(1)_COMPNAME)-$(2)-image: $$($(1)_$(2)_image_token)
-endef
-
-$(foreach platform,$(PLATFORMS),$(foreach component,$(COMPONENTS),$(eval $(call build-docker-image-component-platform,$(component),$(platform)))))
-
 
 # Build RPMs and SRPMs for each component on each platform
 define build-component-platform
 $(1)_$(2)_token = $(srcdir).$(1)_$(2)_products
-$$($(1)_$(2)_token): $$($(1)_$(2)_image_token) $(SOURCEDIR)/$$($(1)_DISTFILE) $(SPECDIR)/$$($(1)_COMPNAME).spec
+$$($(1)_$(2)_token): $$($(2)_token) $(SOURCEDIR)/$$($(1)_DISTFILE) $(SPECDIR)/$$($(1)_COMPNAME).spec
 	@echo "==> Sanity checking $(1) on $(2)"
 	grep -E "^Version:[[:space:]]+$$($(1)_VERSION)$$$$" $(SPECDIR)/$$($(1)_COMPNAME).spec
 	@echo "==> Building $(1) on $(2)"
 	docker run -it --rm \
 		-v $$($(2)_products):/opt/build/external/out:z \
 		-v $(srcdir)common:/opt/build/external/in:z \
-		shibboleth/$(2):$($(1)_COMPNAME) \
+		shibboleth/$(2):$(BASETAG) \
 		/bin/sh -e /opt/build/external/in/build.sh $($(1)_COMPNAME)
 	touch $$($(1)_$(2)_token)
 $$($(1)_COMPNAME)_$(2): $$($(1)_$(2)_token)
