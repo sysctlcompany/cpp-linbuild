@@ -6,11 +6,10 @@
 Summary: Xerces-C++ validating XML parser
 Name: %{libname}
 Version: 3.3.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 URL: https://xerces.apache.org/%{compname}/
 Source0: https://downloads.apache.org/xerces/c/3/sources/%{compname}-%{version}.tar.bz2
 Provides: %{compname} = %{version}-%{release}
-Obsoletes: %{compname} < %{version}-%{release}
 License: Apache-2.0
 Group: Development/Libraries
 BuildRequires: gcc-c++
@@ -93,6 +92,9 @@ The static libraries and header files needed for development with Xerces-C++.
 %exclude %{_libdir}/libxerces-c.la
 
 %changelog
+* Mon Oct 28 2024 Scott Cantor <cantor.2@osu.edu> 3.3.0-2
+- Remove Obsoletes (again) to allow for SxS use.
+
 * Wed Oct 16 2024 Scott Cantor <cantor.2@osu.edu> 3.3.0-1
 - Update version to 3.3.0 and update lib package name
 
