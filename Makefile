@@ -179,7 +179,8 @@ PLATFORMS=\
 	centos8 \
 	rockylinux8 \
 	rockylinux9 \
-	rockylinux10
+	rockylinux10 \
+	fedora39
 
 # Red Hat Enterprise Linux (RHEL) builds, which run inside
 # Universal Base Image (UBI) containers, can only be performed
