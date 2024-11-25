@@ -8,4 +8,4 @@
 %_sourcedir %{shibextbase}/in/SOURCES
 %_rpmdir %{shibextbase}/out/RPMS
 %_srcrpmdir %{shibextbase}/out/SRPMS
-%packager PLACE HOLDER <USER@EXAMPLE.COM>
+%packager Sysctl AB
