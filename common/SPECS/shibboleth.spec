@@ -61,9 +61,13 @@ BuildRequires: libmemcached-devel
 %endif
 BuildRequires: redhat-rpm-config
 Requires(pre): shadow-utils
+%if 0%{?rhel} >= 7 || 0%{?amzn2023}
+ # they use systemd
+%else
 Requires(post): chkconfig
 Requires(preun): chkconfig
 Requires(preun): initscripts
+%endif
 %endif
 %if "%{_vendor}" == "suse"
 Requires(pre): pwdutils
