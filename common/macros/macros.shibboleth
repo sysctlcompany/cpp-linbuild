@@ -9,3 +9,4 @@
 %_rpmdir %{shibextbase}/out/RPMS
 %_srcrpmdir %{shibextbase}/out/SRPMS
 %packager Sysctl AB
+%rhel %{fedora}
