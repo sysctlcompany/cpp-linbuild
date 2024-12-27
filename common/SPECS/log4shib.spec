@@ -4,7 +4,7 @@
 
 Name: %{libname}
 Version: 2.0.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: Log for C++, Shibboleth Edition
 License: LGPL-2.1-only
 Group: Development/Libraries
@@ -24,11 +24,7 @@ BuildRequires: redhat-rpm-config
 BuildRequires: gdb
 %endif
 
-%if "%{_vendor}" == "suse"
-%define pkgdocdir %{_docdir}/%{compname}
-%else
 %define pkgdocdir %{_docdir}/%{compname}-%{version}
-%endif
 
 %description
 Log for C++ is a library of classes for flexible logging to files, syslog,
@@ -88,6 +84,9 @@ fi
 %doc %{pkgdocdir}
 
 %changelog
+* Fri Dec 27 2024 John W. O'Brien <john@saltant.com - 2.0.1-3
+- SSPCPP-1002 Remove support for SUSE
+
 * Sat Jun 17 2023 John W. O'Brien <john@saltant.com> - 2.0.1-2
 - Normalize SPEC file whitespace
 - Delete obsolete BuildRoot macro

@@ -1,6 +1,6 @@
 Name: shibboleth-embedded-ds
 Version: 1.3.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Client-side federation discovery service for SAML-based SSO
 Group: Productivity/Networking/Security
 Vendor: Shibboleth Consortium
@@ -11,9 +11,6 @@ BuildArch: noarch
 %if "%{_vendor}" == "redhat"
 BuildRequires: redhat-rpm-config
 %{!?_without_builtinapache:BuildRequires: httpd}
-%endif
-%if "%{_vendor}" == "suse"
-%{!?_without_builtinapache:BuildRequires: apache2}
 %endif
 
 %description
@@ -67,18 +64,7 @@ fi
         %{!?_without_builtinapache:/sbin/service httpd status 1>/dev/null && /sbin/service httpd restart 1>/dev/null}
     fi
 %endif
-%if "%{_vendor}" == "suse"
-    if [ "$1" = 0 ] ; then
-        %{!?_without_builtinapache:/sbin/service apache2 status 1>/dev/null && /sbin/service apache2 restart 1>/dev/null}
-    fi
-%endif
 exit 0
-
-%postun
-%if "%{_vendor}" == "suse"
-cd /
-%{!?_without_builtinapache:%restart_on_update apache2}
-%endif
 
 %files -f rpm.filelist
 %defattr(-,root,root,-)
@@ -92,6 +78,9 @@ cd /
 %config %{_sysconfdir}/shibboleth-ds/shibboleth-ds.conf
 
 %changelog
+* Fri Dec 27 2024 John W. O'Brien <john@saltant.com. - 1.3.0-2
+- SSPCPP-1002 Remove support for SUSE
+
 * Tue Feb 27 2024 Scott Cantor <cantor.2@osu.edu> - 1.3.0-1
 - Update version.
 

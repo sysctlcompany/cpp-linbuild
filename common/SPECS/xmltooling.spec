@@ -5,7 +5,7 @@
 
 Name: %{libname}
 Version: 3.3.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: OpenSAML XML Processing library
 Group: Development/Libraries/C and C++
 Vendor: Shibboleth Consortium
@@ -38,11 +38,7 @@ BuildRequires: redhat-rpm-config
 BuildRequires: gdb
 %endif
 
-%if "%{_vendor}" == "suse"
-%define pkgdocdir %{_docdir}/%{compname}
-%else
 %define pkgdocdir %{_docdir}/%{compname}-%{version}
-%endif
 
 # Prevent the RHEL/etc 6+ package from requiring a vanilla libcurl.
 %if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
@@ -144,6 +140,9 @@ This package includes XML schemas and related files.
 %doc %{pkgdocdir}
 
 %changelog
+* Fri Dec 27 2024 John W. O'Brien <john@saltant.com> - 3.3.0-2
+- SSPCPP-1002 Remove support for SUSE
+
 * Wed Oct 16 2024 Scott Cantor <cantor.2@osu.edu> - 3.3.0-1
 - Bump version and libname
 - Add conditional C++11 CXXFLAGS for older Linux
