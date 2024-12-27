@@ -1,4 +1,4 @@
-FROM docker.io/rockylinux/rockylinux:9.4.20240523
+FROM docker.io/rockylinux/rockylinux:9.5.20241118
 
 COPY *.repo /etc/yum.repos.d/
 
