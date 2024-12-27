@@ -20,7 +20,7 @@ BuildRequires: openssl-devel gcc-c++ pkgconfig
 BuildRequires: redhat-rpm-config
 %endif
 
-%if 0%{?rhel} >= 8 || 0%{?centos_version} >= 800
+%if 0%{?rhel} >= 8
 BuildRequires: gdb
 %endif
 
