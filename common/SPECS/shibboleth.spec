@@ -16,7 +16,7 @@ Requires(pre,preun): opensaml-schemas%{?_isa} >= 3.3.0
 Requires(pre,preun): xmltooling-schemas >= 3.3.0
 Requires(pre,preun): opensaml-schemas >= 3.3.0
 %endif
-%if 0%{?rhel} >= 7 || 0%{?amzn2023}
+%if 0%{?rhel} >= 7 || 0%{?amzn} >= 2
 Requires: hostname
 BuildRequires: systemd-devel
 %else
@@ -54,9 +54,11 @@ BuildRequires: libmemcached-devel
 %endif
 BuildRequires: redhat-rpm-config
 Requires(pre): shadow-utils
+%if 0%{?rhel} == 6 || 0%{?amzn} == 1
 Requires(post): chkconfig
 Requires(preun): chkconfig
 Requires(preun): initscripts
+%endif
 %endif
 
 %define runuser shibd
@@ -100,6 +102,7 @@ This package includes files needed for development with Shibboleth.
     %configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{?_with_memcached} %{!?_without_systemd:--enable-systemd} %{?shib_options}
 %else
 %if 0%{?rhel} >= 7
+    # includes Amazon Linux 2
     %configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{!?_without_memcached:--with-memcached} %{!?_without_systemd:--enable-systemd} %{?shib_options} PKG_CONFIG_PATH=/opt/shibboleth/%{_lib}/pkgconfig
 %else
 %if 0%{?centos} >= 6
@@ -152,7 +155,7 @@ fi
 
 # Establish location of systemd file, if any.
 SYSTEMD_SHIBD="no"
-%if 0%{?rhel} >= 7 || 0%{?amzn2023}
+%if 0%{?rhel} >= 7 || 0%{?amzn} >= 2
     %{__mkdir} -p $RPM_BUILD_ROOT%{_unitdir}
     echo "%attr(0444,-,-) %{_unitdir}/shibd.service" >> rpm.filelist
     SYSTEMD_SHIBD="$RPM_BUILD_ROOT%{_unitdir}/shibd.service"
@@ -280,7 +283,7 @@ if [ $1 -gt 1 ] ; then
         fi
     fi
 
-%if 0%{?rhel} >= 7 || 0%{?amzn2023}
+%if 0%{?rhel} >= 7 || 0%{?amzn} >= 2
     # Initial prep for systemd
     %systemd_post shibd.service
     if [ $1 -gt 1 ] ; then
@@ -295,7 +298,7 @@ if [ $1 -gt 1 ] ; then
 %preun
 # On final removal, stop shibd and remove service, restart Apache if running.
 %if "%{_vendor}" == "redhat" || "%{_vendor}" == "amazon"
-%if 0%{?rhel} >= 7 || 0%{?amzn2023}
+%if 0%{?rhel} >= 7 || 0%{?amzn} >= 2
     %systemd_preun shibd.service
 %else
     if [ $1 -eq 0 ] ; then
@@ -314,7 +317,7 @@ exit 0
 /sbin/ldconfig
 %if "%{_vendor}" == "redhat" || "%{_vendor}" == "amazon"
 # On upgrade, restart components if they're already running.
-%if 0%{?rhel} >= 7 || 0%{?amzn2023}
+%if 0%{?rhel} >= 7 || 0%{?amzn} >= 2
     %systemd_postun_with_restart shibd.service
 %else
     if [ $1 -ge 1 ] ; then
@@ -391,6 +394,7 @@ exit 0
 %changelog
 * Fri Dec 27 2024 John W. O'Brien <john@saltant.com> - 3.5.0-3
 - SSPCPP-1002 Remove support for SUSE
+- SSPCPP-991 Finish conversion from SysV to SystemD
 
 * Tue Oct 22 2024 Scott Cantor <cantor.2@osu.edu> - 3.5.0-2
 - Turn off memcache option for newer platforms
