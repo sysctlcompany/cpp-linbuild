@@ -6,7 +6,7 @@
 
 Name: %{libname}
 Version: 3.3.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: OpenSAML SAML library
 Group: Development/Libraries/C and C++
 Vendor: Shibboleth Consortium
@@ -32,11 +32,7 @@ BuildRequires: redhat-rpm-config
 BuildRequires: gdb
 %endif
 
-%if "%{_vendor}" == "suse"
-%define pkgdocdir %{_docdir}/%{compname}
-%else
 %define pkgdocdir %{_docdir}/%{compname}-%{version}
-%endif
 
 %description
 OpenSAML is an open source implementation of the OASIS Security Assertion
@@ -134,6 +130,9 @@ This package includes XML schemas and related files.
 %doc %{pkgdocdir}
 
 %changelog
+* Fri Dec 27 2024 John W. O'Brien <john@saltant.com> - 3.3.0-2
+- SSPCPP-1002 Remove support for SUSE
+
 * Wed Oct 16 2024 Scott Cantor <cantor.2@osu.edu> - 3.3.0-1
 - Bump version and xmltooling dependency
 

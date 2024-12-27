@@ -1,6 +1,6 @@
 Name: shibboleth
 Version: 3.5.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: Open source system for attribute-based Web SSO
 Group: Productivity/Networking/Security
 Vendor: Shibboleth Consortium
@@ -15,10 +15,6 @@ Requires(pre,preun): opensaml-schemas%{?_isa} >= 3.3.0
 %else
 Requires(pre,preun): xmltooling-schemas >= 3.3.0
 Requires(pre,preun): opensaml-schemas >= 3.3.0
-%endif
-%if 0%{?suse_version} > 1030 && 0%{?suse_version} < 1130
-Requires(pre,preun): %{insserv_prereq}
-Requires(pre,preun): %{fillup_prereq}
 %endif
 %if 0%{?rhel} >= 7 || 0%{?amzn2023}
 Requires: hostname
@@ -38,9 +34,6 @@ BuildRequires: libsaml-devel >= 3.2.0
 %if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
 Requires: libcurl-openssl%{?_isa} >= 7.21.7
 BuildRequires: chrpath
-%endif
-%if 0%{?suse_version} > 1300
-BuildRequires: libtool
 %endif
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig
@@ -65,22 +58,9 @@ Requires(post): chkconfig
 Requires(preun): chkconfig
 Requires(preun): initscripts
 %endif
-%if "%{_vendor}" == "suse"
-Requires(pre): pwdutils
-%{!?_without_builtinapache:BuildRequires: apache2-devel}
-%{?systemd_requires}
-%if 0%{?suse_version} >= 1210
-BuildRequires: systemd-rpm-macros
-BuildRequires: systemd-devel
-%endif
-%endif
 
 %define runuser shibd
-%if "%{_vendor}" == "suse"
-%define pkgdocdir %{_docdir}/shibboleth
-%else
 %define pkgdocdir %{_docdir}/shibboleth-%{version}
-%endif
 
 %description
 Shibboleth is a Web Single Sign-On implementations based on OpenSAML
@@ -113,12 +93,6 @@ This package includes files needed for development with Shibboleth.
 %setup -q -n %{name}-sp-%{version}
 
 %build
-%if 0%{?suse_version} >= 1300
-    %configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{!?_without_systemd:--enable-systemd} %{?shib_options} PKG_CONFIG_PATH=./pkgconfig-workarounds/opensuse13
-%else
-%if 0%{?suse_version} >= 1210
-    %configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{!?_without_systemd:--enable-systemd} %{?shib_options}
-%else
 %if 0%{?amzn2023}
     %configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{?_with_memcached} %{!?_without_systemd:--enable-systemd} %{?shib_options}
 %else
@@ -140,17 +114,10 @@ This package includes files needed for development with Shibboleth.
 %endif
 %endif
 %endif
-%endif
-%endif
 %{__make} pkgdocdir=%{pkgdocdir}
 
 %install
 %make_install NOKEYGEN=1 pkgdocdir=%{pkgdocdir}
-
-%if "%{_vendor}" == "suse"
-    %{__sed} -i "s/\/var\/log\/httpd/\/var\/log\/apache2/g" \
-        $RPM_BUILD_ROOT%{_sysconfdir}/shibboleth/native.logger
-%endif
 
 # Plug the SP into the built-in Apache on a recognized system.
 touch rpm.filelist
@@ -185,7 +152,7 @@ fi
 
 # Establish location of systemd file, if any.
 SYSTEMD_SHIBD="no"
-%if 0%{?suse_version} >= 1210 || 0%{?rhel} >= 7 || 0%{?amzn2023}
+%if 0%{?rhel} >= 7 || 0%{?amzn2023}
     %{__mkdir} -p $RPM_BUILD_ROOT%{_unitdir}
     echo "%attr(0444,-,-) %{_unitdir}/shibd.service" >> rpm.filelist
     SYSTEMD_SHIBD="$RPM_BUILD_ROOT%{_unitdir}/shibd.service"
@@ -205,11 +172,6 @@ if [ "$SYSTEMD_SHIBD" == "no" ] ; then
     %{__mkdir} -p $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig
     echo "%config(noreplace) %{_sysconfdir}/sysconfig/shibd" >> rpm.filelist
     SYSCONFIG_SHIBD="$RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/shibd"
-%endif
-%if "%{_vendor}" == "suse"
-    %{__mkdir} -p $RPM_BUILD_ROOT%{_localstatedir}/adm/fillup-templates
-    echo "%{_localstatedir}/adm/fillup-templates/sysconfig.shibd" >> rpm.filelist
-    SYSCONFIG_SHIBD="$RPM_BUILD_ROOT%{_localstatedir}/adm/fillup-templates/sysconfig.shibd"
 %endif
 fi
 
@@ -271,14 +233,10 @@ fi
     chrpath -d $RPM_BUILD_ROOT%{_bindir}/resolvertest
 %endif
 
-%if "%{_vendor}" == "redhat" || "%{_vendor}" == "amazon" || "%{_vendor}" == "suse"
+%if "%{_vendor}" == "redhat" || "%{_vendor}" == "amazon"
 if [ "$SYSTEMD_SHIBD" == "no" ] ; then
     install -d -m 0755 $RPM_BUILD_ROOT%{_initddir}
     install -m 0755 $RPM_BUILD_ROOT%{_sysconfdir}/shibboleth/shibd-%{_vendor} $RPM_BUILD_ROOT%{_initddir}/shibd
-%if "%{_vendor}" == "suse"
-    install -d -m 0755 $RPM_BUILD_ROOT/%{_sbindir}
-    %{__ln_s} -f %{_initddir}/shibd $RPM_BUILD_ROOT%{_sbindir}/rcshibd
-%endif
 fi
 %endif
 
@@ -292,9 +250,6 @@ fi
 getent group %{runuser} >/dev/null || groupadd -r %{runuser}
 getent passwd %{runuser} >/dev/null || useradd -r -g %{runuser} \
     -d  %{_localstatedir}/run/shibboleth -s /sbin/nologin -c "Shibboleth SP daemon" %{runuser}
-%if 0%{?suse_version} >= 1210
-    %service_add_pre shibd.service
-%endif
 exit 0
 
 %post
@@ -313,8 +268,6 @@ if [ $1 -gt 1 ] ; then
         # by pointing them at new version-independent /usr/share/share tree.
         # Any Aliases we didn't create we assume are custom files.
         # This is to accomodate making shib.conf a noreplace config file.
-        # We can't do this for SUSE, because they disallow changes to
-        # packaged files in scriplets.
         APACHE_CONF="no"
         if [ -f %{_sysconfdir}/httpd/conf.d/shib.conf ] ; then
             APACHE_CONF="%{_sysconfdir}/httpd/conf.d/shib.conf"
@@ -338,18 +291,6 @@ if [ $1 -gt 1 ] ; then
     /sbin/chkconfig --add shibd
 %endif
 %endif
-%if "%{_vendor}" == "suse"
-%if 0%{?suse_version} >= 1210
-    %service_add_post shibd.service
-    systemd-tmpfiles --create %{_tmpfilesdir}/%{name}.conf
-%else
-    # This adds the proper /etc/rc*.d links for the script
-    # and populates the sysconfig/shibd file.
-    cd /
-    %{fillup_only -n shibd}
-    %insserv_force_if_yast shibd
-%endif
-%endif
 
 %preun
 # On final removal, stop shibd and remove service, restart Apache if running.
@@ -364,17 +305,6 @@ if [ $1 -gt 1 ] ; then
 %endif
     if [ $1 -eq 0 ] ; then
         %{!?_without_builtinapache:/sbin/service httpd status 1>/dev/null && /sbin/service httpd restart 1>/dev/null}
-        exit 0
-    fi
-%endif
-%if "%{_vendor}" == "suse"
-%if 0%{?suse_version} >= 1210
-        %service_del_preun shibd.service
-%else
-    %stop_on_removal shibd
-%endif
-    if [ $1 -eq 0 ] ; then
-        %{!?_without_builtinapache:/sbin/service apache2 status 1>/dev/null && /sbin/service apache2 restart 1>/dev/null}
         exit 0
     fi
 %endif
@@ -396,26 +326,8 @@ exit 0
         exit 0
     fi
 %endif
-%if "%{_vendor}" == "suse"
-%if 0%{?suse_version} >= 1210
-    %service_del_postun shibd.service
-%else
-    cd /
-    %restart_on_update shibd
-    %{insserv_cleanup}
-%endif
-    %{!?_without_builtinapache:%restart_on_update apache2}
-%endif
 
 %posttrans
-# One-time extra restart of shibd and Apache to work around
-# SUSE bug that breaks old %%restart_on_update macro.
-# If we remove, upgrades from pre-systemd to post-systemd
-# will stop doing the final restart.
-%if "%{_vendor}" == "suse" && 0%{?suse_version} >= 1210
-    /usr/bin/systemctl try-restart shibd >/dev/null 2>&1 || :
-    /usr/bin/systemctl try-restart apache2 >/dev/null 2>&1 || :
-%endif
 exit 0
 
 %files -f rpm.filelist
@@ -432,9 +344,6 @@ exit 0
 %{?_with_fastcgi:%{_libdir}/shibboleth/shibauthorizer}
 %{?_with_fastcgi:%{_libdir}/shibboleth/shibresponder}
 %attr(0750,%{runuser},%{runuser}) %dir %{_localstatedir}/log/shibboleth
-%if 0%{?suse_version} < 1300
-%attr(0755,%{runuser},%{runuser}) %dir %{_localstatedir}/run/shibboleth
-%endif
 %attr(0755,%{runuser},%{runuser}) %dir %{_localstatedir}/cache/shibboleth
 %dir %{_datadir}/xml/shibboleth
 %{_datadir}/xml/shibboleth/*
@@ -458,11 +367,7 @@ exit 0
 %if "%{_vendor}" == "amazon" && 0%{?amzn} == 2
 %config %{_initddir}/shibd
 %endif
-%if "%{_vendor}" == "suse" && 0%{?suse_version} < 1210
-%config %{_initddir}/shibd
-%{_sbindir}/rcshibd
-%endif
-%if 0%{?suse_version} >= 1210 || 0%{?rhel} >= 7 || 0%{?amzn2023}
+%if 0%{?rhel} >= 7 || 0%{?amzn2023}
 %{_tmpfilesdir}/%{name}.conf
 %endif
 %{_sysconfdir}/shibboleth/example-shibboleth2.xml
@@ -484,6 +389,9 @@ exit 0
 %doc %{pkgdocdir}/api
 
 %changelog
+* Fri Dec 27 2024 John W. O'Brien <john@saltant.com> - 3.5.0-3
+- SSPCPP-1002 Remove support for SUSE
+
 * Tue Oct 22 2024 Scott Cantor <cantor.2@osu.edu> - 3.5.0-2
 - Turn off memcache option for newer platforms
 

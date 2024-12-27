@@ -6,7 +6,7 @@
 Name: %{libname}
 Version: 3.5.0
 Summary: Shibboleth SP Attribute Resolver Library
-Release: 1%{?dist}
+Release: 2%{?dist}
 Vendor: Shibboleth Consortium
 Group: System Environment/Libraries
 License: Apache-2.0
@@ -28,11 +28,7 @@ BuildRequires: pkgconfig
 BuildRequires: redhat-rpm-config
 %endif
 
-%if "%{_vendor}" == "suse"
-%define pkgdocdir %{_docdir}/%{name}
-%else
 %define pkgdocdir %{_docdir}/%{name}-%{version}
-%endif
 
 %description
 This package contains a Shibboleth SP Extension that provides
@@ -66,12 +62,6 @@ This package includes files needed for development.
 %setup -q -n %{distname}-%{version}
 
 %build
-%if 0%{?suse_version} >= 1300
-    %configure --with-gssapi %{?shib_options} PKG_CONFIG_PATH=./pkgconfig-workarounds/opensuse13
-%else
-%if 0%{?suse_version} >= 1210
-    %configure --with-gssapi %{?shib_options}
-%else
 %if 0%{?rhel} >= 7
     %configure --with-gssapi %{?shib_options} PKG_CONFIG_PATH=/opt/shibboleth/%{_lib}/pkgconfig
 %else
@@ -79,8 +69,6 @@ This package includes files needed for development.
     %configure --with-gssapi %{?shib_options} PKG_CONFIG_PATH=/opt/shibboleth/%{_lib}/pkgconfig:./pkgconfig-workarounds/rh6
 %else
     %configure --with-gssapi %{?shib_options}
-%endif
-%endif
 %endif
 %endif
 %{__make} pkgdocdir=%{pkgdocdir}
@@ -114,6 +102,9 @@ This package includes files needed for development.
 %doc %{pkgdocdir}
 
 %changelog
+* Fri Dec 27 2024 John W. O'Brien <john@saltant.com> = 3.5.0-2
+- SSPCPP-1002 Remove support for SUSE
+
 * Wed Oct 16 2024 Scott Cantor <cantor.2@osu.edu> - 3.5.0-1
 - Bump version and our dependencies
 
