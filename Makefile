@@ -22,9 +22,8 @@
 #
 # <comp>_<plat>		Build component <comp> on platform <plat>
 #
-# run_container_<comp>_<plat>
-# 			Run an interactive build environment container
-# 			for component <comp> on platform <plat>
+# run_container_<plat>	Run an interactive build environment container
+# 			for platform <plat>
 #
 # Platform-specific notes:
 #
@@ -265,16 +264,16 @@ endef
 
 $(foreach platform,$(PLATFORMS),$(foreach component,$(COMPONENTS),$(eval $(call build-component-platform,$(component),$(platform)))))
 
-# Run an interactive build environment container for each component on each platform
-define run-container-component-platform
-.PHONY: run_container_$($(1)_COMPNAME)_$(2)
-run_container_$($(1)_COMPNAME)_$(2): $$($(1)_$(2)_image_token) $(SOURCEDIR)/$$($(1)_DISTFILE)
+# Run an interactive build environment container on each platform
+define run-container-platform
+.PHONY: run_container_$(1)
+run_container_$(1): $$($(1)_token) $(SOURCEDIR)/$$($(1)_DISTFILE)
 	docker run -it --rm \
-		-v $$($(2)_products):/opt/build/external/out:z \
+		-v $$($(1)_products):/opt/build/external/out:z \
 		-v $(srcdir)common:/opt/build/external/in:z \
-		shibboleth/$(2):$($(1)_COMPNAME) \
+		shibboleth/$(1):$(BASETAG) \
 		/bin/bash
 endef
 
-$(foreach platform,$(PLATFORMS),$(foreach component,$(COMPONENTS),$(eval $(call run-container-component-platform,$(component),$(platform)))))
+$(foreach platform,$(PLATFORMS),$(eval $(call run-container-platform,$(platform))))
 
