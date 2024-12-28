@@ -98,10 +98,10 @@ This package includes files needed for development with xml-security-c.
 - Delete obsolete BuildRoot macro
 - Conform License field to SPDX License List
 - Ensure Source is valid and fetchable
-- Adopt %make_install
+- Adopt %%make_install
 - Parameterize (sub-)package names
 - Replace empty main package with lib sub-package
-- Append %dist to Release
+- Append %%dist to Release
 
 * Mon Nov 13 2017 Scott Cantor <cantor.2@osu.edu> 2.0.0-1
 - update to 2.0.0
