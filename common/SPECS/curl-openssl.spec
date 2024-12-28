@@ -147,7 +147,7 @@ rm -rf $RPM_BUILD_ROOT
 - Normalize SPEC file whitespace
 - Delete obsolete BuildRoot macro
 - Ensure Source is valid and fetchable
-- Adopt %make_install
+- Adopt %%make_install
 
 * Thu Feb 18 2016 Scott Cantor <cantor.2@osu.edu> 7.47.1-1
 - update version

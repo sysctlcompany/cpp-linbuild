@@ -104,11 +104,11 @@ The static libraries and header files needed for development with Xerces-C++.
 - Limit macro specifications to one per line for diff-ability
 - Conform License field to SPDX License List
 - Ensure Source is valid and fetchable
-- Adopt %make_install
+- Adopt %%make_install
 - Drop support for relocatable xerces-c RPM
 - Parameterize (sub-)package names
 - Replace empty main package with lib sub-package
-- Append %dist to Release
+- Append %%dist to Release
 
 * Fri Oct 21 2022 John W. O'Brien <john@saltant.com> 3.2.4-1
 - Bump version

@@ -152,10 +152,10 @@ This package includes XML schemas and related files.
 - Delete obsolete BuildRoot macro
 - Limit macro specifications to one per line for diff-ability
 - Ensure Source is valid and fetchable
-- Adopt %make_install
+- Adopt %%make_install
 - Parameterize (sub-)package names
 - Replace empty main package with lib sub-package
-- Append %dist to Release
+- Append %%dist to Release
 
 * Wed Nov 2 2022 Scott Cantor <cantor.2@osu.edu> - 3.2.2-1
 - Version bump

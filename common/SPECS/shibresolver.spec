@@ -113,11 +113,11 @@ This package includes files needed for development.
 - Delete obsolete BuildRoot macro
 - Limit macro specifications to one per line for diff-ability
 - Ensure Source is valid and fetchable
-- Adopt %make_install
+- Adopt %%make_install
 - Drop support for RHEL 5
 - Parameterize (sub-)package names
 - Replace empty main package with lib sub-package
-- Append %dist to Release
+- Append %%dist to Release
 
 * Mon Oct 24 2022 Scott Cantor <cantor.2@osu.edu> - 3.4.0-1
 - Bump version

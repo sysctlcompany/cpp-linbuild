@@ -419,11 +419,11 @@ exit 0
 - Escape macros in comments
 - Avoid hardcoding library path
 - Replace deprecated PreReq
-- Run %setup quietly
+- Run %%setup quietly
 - Ensure Source is valid and fetchable
-- Adopt %make_install
+- Adopt %%make_install
 - Drop support for RHEL 5
-- Append %dist to Release
+- Append %%dist to Release
 
 * Fri Mar 24 2023 John W. O'Brien <john@saltant.com> 3.4.1-2
 - Build with memcached on RHEL 8 and later and derivatives

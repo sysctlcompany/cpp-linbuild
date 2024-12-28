@@ -88,8 +88,8 @@ exit 0
 - Normalize SPEC file whitespace
 - Delete obsolete BuildRoot macro
 - Ensure Source is valid and fetchable
-- Adopt %make_install
-- Append %dist to Release
+- Adopt %%make_install
+- Append %%dist to Release
 
 * Mon Jun 6 2016 Scott Cantor <cantor.2@osu.edu> - 1.2.0-1
 - Update version

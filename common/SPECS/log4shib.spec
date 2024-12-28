@@ -94,10 +94,10 @@ fi
 - Conform License field to SPDX License List
 - Escape macros in comments
 - Ensure Source is valid and fetchable
-- Adopt %make_install
+- Adopt %%make_install
 - Parameterize (sub-)package names
 - Replace empty main package with lib sub-package
-- Append %dist to Release
+- Append %%dist to Release
 
 * Thu Oct 28 2021 Scott Cantor <cantor.2@osu.edu> - 2.0.1-1
 - Remove static library from manifest.
