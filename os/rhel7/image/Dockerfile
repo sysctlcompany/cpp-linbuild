@@ -4,6 +4,7 @@ COPY *.repo /etc/yum.repos.d/
 
 RUN yum-config-manager \
         --enable rhel-7-server-optional-rpms \
+        --enable rhel-server-rhscl-7-rpms \
     && yum -y update \
     && yum -y install \
         autoconf automake boost-devel chrpath doxygen gcc-c++ git groff \
@@ -11,6 +12,7 @@ RUN yum-config-manager \
         openldap-devel openssl-devel pkgconfig \
         rpm-build stunnel systemd-devel unixODBC-devel zlib-devel \
         createrepo \
+        devtoolset-7 \
     && yum clean all
 
 # internal and external are w.r.t. a container, where external locations
