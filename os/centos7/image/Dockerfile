@@ -13,6 +13,15 @@ RUN sed -i \
         openldap-devel openssl-devel pkgconfig \
         rpm-build stunnel systemd-devel unixODBC-devel zlib-devel \
         createrepo \
+    ; if [ $(uname -m) == "x86_64" ]; then \
+    yum -y install centos-release-scl \
+    && sed -i \
+        -e "s/^mirrorlist/#mirrorlist/" \
+        -e "s|^# \?baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|" \
+        /etc/yum.repos.d/CentOS-SCLo-scl.repo \
+        /etc/yum.repos.d/CentOS-SCLo-scl-rh.repo \
+    && yum -y install devtoolset-7 \
+    ; fi \
     && yum clean all
 
 # internal and external are w.r.t. a container, where external locations
