@@ -34,6 +34,7 @@
 # 	rhel7
 # 	rhel8
 # 	rhel9
+# 	rhel10
 
 # Constants and utility variables
 
@@ -190,7 +191,8 @@ ifdef HOST_IS_RHEL_QUALIFIED
 PLATFORMS:=$(PLATFORMS) \
 	rhel7 \
 	rhel8 \
-	rhel9
+	rhel9 \
+	rhel10
 endif
 
 # To add a new platform, create the following
