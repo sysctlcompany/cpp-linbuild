@@ -86,7 +86,7 @@ This package includes XML schemas and related files.
 %setup -q -n %{compname}-%{version}
 
 %build
-%if 0%{?rhel} == 7 || 0%{?amzn} >= 1
+%if 0%{?rhel} == 7 || 0%{?amzn} == 2
 %configure %{?saml_options} PKG_CONFIG_PATH=/opt/shibboleth/%{_lib}/pkgconfig
 %else
 %configure %{?saml_options}
@@ -132,6 +132,7 @@ This package includes XML schemas and related files.
 %changelog
 * Thu Feb 6 2025 John W. O'Brien <john@saltant.com> - 3.3.0-3
 - SSPCPP-1003 Remove support for RHEL 6
+- SSPCPP-1004 Remove support for Amazon Linux 1
 
 * Fri Dec 27 2024 John W. O'Brien <john@saltant.com> - 3.3.0-2
 - SSPCPP-1002 Remove support for SUSE
