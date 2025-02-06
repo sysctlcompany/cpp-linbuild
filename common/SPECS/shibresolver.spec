@@ -6,7 +6,7 @@
 Name: %{libname}
 Version: 3.5.0
 Summary: Shibboleth SP Attribute Resolver Library
-Release: 2%{?dist}
+Release: 3%{?dist}
 Vendor: Shibboleth Consortium
 Group: System Environment/Libraries
 License: Apache-2.0
@@ -65,11 +65,7 @@ This package includes files needed for development.
 %if 0%{?rhel} >= 7
     %configure --with-gssapi %{?shib_options} PKG_CONFIG_PATH=/opt/shibboleth/%{_lib}/pkgconfig
 %else
-%if 0%{?rhel} >= 6
-    %configure --with-gssapi %{?shib_options} PKG_CONFIG_PATH=/opt/shibboleth/%{_lib}/pkgconfig:./pkgconfig-workarounds/rh6
-%else
     %configure --with-gssapi %{?shib_options}
-%endif
 %endif
 %{__make} pkgdocdir=%{pkgdocdir}
 
@@ -102,6 +98,9 @@ This package includes files needed for development.
 %doc %{pkgdocdir}
 
 %changelog
+* Thu Feb 6 2025 John W. O'Brien <john@saltant.com> - 3.5.0-3
+- SSPCPP-1003 Remove support for RHEL 6
+
 * Fri Dec 27 2024 John W. O'Brien <john@saltant.com> = 3.5.0-2
 - SSPCPP-1002 Remove support for SUSE
 

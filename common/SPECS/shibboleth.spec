@@ -1,6 +1,6 @@
 Name: shibboleth
 Version: 3.5.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: Open source system for attribute-based Web SSO
 Group: Productivity/Networking/Security
 Vendor: Shibboleth Consortium
@@ -9,7 +9,7 @@ URL: http://shibboleth.net/
 Source0: https://shibboleth.net/downloads/service-provider/%{version}/%{name}-sp-%{version}.tar.bz2
 Obsoletes: shibboleth-sp = 2.5.0
 Requires: openssl
-%if 0%{?rhel} >= 6 || 0%{?amzn} == 1 || 0%{?amzn} == 2
+%if 0%{?rhel} >= 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
 Requires(pre,preun): xmltooling-schemas%{?_isa} >= 3.3.0
 Requires(pre,preun): opensaml-schemas%{?_isa} >= 3.3.0
 %else
@@ -31,7 +31,7 @@ BuildRequires: libxmltooling-devel >= 3.2.0
 BuildRequires: libsaml-devel >= 3.2.0
 %{?_with_log4cpp:BuildRequires: liblog4cpp-devel >= 1.0}
 %{!?_with_log4cpp:BuildRequires: liblog4shib-devel >= 2}
-%if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
+%if 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
 Requires: libcurl-openssl%{?_isa} >= 7.21.7
 BuildRequires: chrpath
 %endif
@@ -42,19 +42,19 @@ BuildRequires: boost-devel >= 1.32.0
 %{!?_without_doxygen:BuildRequires: doxygen}
 %{!?_without_odbc:BuildRequires:unixODBC-devel}
 %{?_with_fastcgi:BuildRequires: fcgi-devel}
-%if 0%{?centos} == 6 || 0%{?centos} == 7 || 0%{?rhel} >= 6 || 0%{?amzn2023}
+%if 0%{?centos} == 7 || 0%{?rhel} == 7 || 0%{?amzn2023}
 BuildRequires: libmemcached-devel
 %endif
 %{?_with_memcached:BuildRequires: libmemcached-devel}
 %if "%{_vendor}" == "redhat" || "%{_vendor}" == "amazon"
-%if 0%{?rhel} >= 6 || 0%{?amzn} == 1 || 0%{?amzn} == 2
+%if 0%{?rhel} >= 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
 %{!?_without_builtinapache:BuildRequires: httpd-devel%{?_isa}}
 %else
 %{!?_without_builtinapache:BuildRequires: httpd-devel}
 %endif
 BuildRequires: redhat-rpm-config
 Requires(pre): shadow-utils
-%if 0%{?rhel} == 6 || 0%{?amzn} == 1
+%if 0%{?amzn} == 1
 Requires(post): chkconfig
 Requires(preun): chkconfig
 Requires(preun): initscripts
@@ -105,15 +105,7 @@ This package includes files needed for development with Shibboleth.
     # includes Amazon Linux 2
     %configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{!?_without_memcached:--with-memcached} %{!?_without_systemd:--enable-systemd} %{?shib_options} PKG_CONFIG_PATH=/opt/shibboleth/%{_lib}/pkgconfig
 %else
-%if 0%{?centos} >= 6
-    %configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{!?_without_memcached:--with-memcached} %{?shib_options} PKG_CONFIG_PATH=/opt/shibboleth/%{_lib}/pkgconfig:./pkgconfig-workarounds/rh6
-%else
-%if 0%{?rhel} >= 6
-    %configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{?_with-memcached} %{?shib_options} PKG_CONFIG_PATH=/opt/shibboleth/%{_lib}/pkgconfig:./pkgconfig-workarounds/rh6
-%else
     %configure %{?_without_odbc:--disable-odbc} %{?_without_adfs:--disable-adfs} %{?_with_fastcgi} %{!?_without_gssapi:--with-gssapi} %{?_with_memcached} %{?shib_options}
-%endif
-%endif
 %endif
 %endif
 %endif
@@ -191,7 +183,7 @@ Before=httpd.service
 Type=notify
 NotifyAccess=main
 User=%{runuser}
-%if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
+%if 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
 Environment=LD_LIBRARY_PATH=/opt/shibboleth/%{_lib}
 %endif
 ExecStart=%{_sbindir}/shibd -f -F
@@ -220,7 +212,7 @@ SHIBD_USER=%{runuser}
 # Wait period (secs) for configuration (and metadata) to load
 SHIBD_WAIT=30
 EOF
-    %if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
+    %if 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
         cat >> $SYSCONFIG_SHIBD <<EOF
 
 # Override OS-supplied libcurl
@@ -229,7 +221,7 @@ EOF
     %endif
 fi
 
-%if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
+%if 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
     # Strip existing rpath to libcurl.
     chrpath -d $RPM_BUILD_ROOT%{_sbindir}/shibd
     chrpath -d $RPM_BUILD_ROOT%{_bindir}/mdquery
@@ -392,6 +384,9 @@ exit 0
 %doc %{pkgdocdir}/api
 
 %changelog
+* Thu Feb 6 2025 John W. O'Brien <john@saltant.com> - 3.5.0-4
+- SSPCPP-1003 Remove support for RHEL 6
+
 * Fri Dec 27 2024 John W. O'Brien <john@saltant.com> - 3.5.0-3
 - SSPCPP-1002 Remove support for SUSE
 - SSPCPP-991 Finish conversion from SysV to SystemD
