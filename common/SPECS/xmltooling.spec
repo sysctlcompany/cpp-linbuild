@@ -5,7 +5,7 @@
 
 Name: %{libname}
 Version: 3.3.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: OpenSAML XML Processing library
 Group: Development/Libraries/C and C++
 Vendor: Shibboleth Consortium
@@ -23,7 +23,7 @@ BuildRequires: pkgconfig
 BuildRequires: zlib-devel
 BuildRequires: openssl-devel
 BuildRequires: boost-devel >= 1.32.0
-%if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
+%if 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
 BuildRequires: libcurl-openssl-devel >= 7.21.7
 Requires: libcurl-openssl >= 7.21.7
 %else
@@ -40,8 +40,8 @@ BuildRequires: gdb
 
 %define pkgdocdir %{_docdir}/%{compname}-%{version}
 
-# Prevent the RHEL/etc 6+ package from requiring a vanilla libcurl.
-%if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
+# Prevent the RHEL/etc 7+ package from requiring a vanilla libcurl.
+%if 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
 %filter_from_requires /libcurl\.so\..*/d
 %filter_setup
 %endif
@@ -67,7 +67,7 @@ Requires: libxml-security-c-devel >= 2.0.0
 %{!?_with_log4cpp:Requires: liblog4shib-devel >= 1.0.4}
 Requires: openssl-devel
 Requires: boost-devel >= 1.32.0
-%if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
+%if 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
 Requires: libcurl-openssl-devel >= 7.21.7
 %else
 Requires: curl-devel >= 7.10.6
@@ -99,7 +99,7 @@ This package includes XML schemas and related files.
 %setup -q -n %{compname}-%{version}
 
 %build
-%if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
+%if 0%{?rhel} == 7 || 0%{?amzn} == 1 || 0%{?amzn} == 2
 %configure %{?xmltooling_options} %{!?_without_xmlsec: --with-xmlsec} PKG_CONFIG_PATH=/opt/shibboleth/%{_lib}/pkgconfig CXXFLAGS="-std=c++11"
 %else
 %configure %{?xmltooling_options} %{!?_without_xmlsec: --with-xmlsec}
@@ -140,6 +140,9 @@ This package includes XML schemas and related files.
 %doc %{pkgdocdir}
 
 %changelog
+* Thu Feb 6 2025 John W. O'Brien <john@saltant.com> - 3.3.0-3
+- SSPCPP-1003 Remove support for RHEL 6
+
 * Fri Dec 27 2024 John W. O'Brien <john@saltant.com> - 3.3.0-2
 - SSPCPP-1002 Remove support for SUSE
 

@@ -6,7 +6,7 @@
 
 Name: %{libname}
 Version: 3.3.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: OpenSAML SAML library
 Group: Development/Libraries/C and C++
 Vendor: Shibboleth Consortium
@@ -86,7 +86,7 @@ This package includes XML schemas and related files.
 %setup -q -n %{compname}-%{version}
 
 %build
-%if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?amzn} >= 1
+%if 0%{?rhel} == 7 || 0%{?amzn} >= 1
 %configure %{?saml_options} PKG_CONFIG_PATH=/opt/shibboleth/%{_lib}/pkgconfig
 %else
 %configure %{?saml_options}
@@ -130,6 +130,9 @@ This package includes XML schemas and related files.
 %doc %{pkgdocdir}
 
 %changelog
+* Thu Feb 6 2025 John W. O'Brien <john@saltant.com> - 3.3.0-3
+- SSPCPP-1003 Remove support for RHEL 6
+
 * Fri Dec 27 2024 John W. O'Brien <john@saltant.com> - 3.3.0-2
 - SSPCPP-1002 Remove support for SUSE
 
