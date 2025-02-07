@@ -1,6 +1,6 @@
 Name: shibboleth
 Version: 3.5.0
-Release: 4%{?dist}
+Release: 5%{?dist}
 Summary: Open source system for attribute-based Web SSO
 Group: Productivity/Networking/Security
 Vendor: Shibboleth Consortium
@@ -42,7 +42,7 @@ BuildRequires: boost-devel >= 1.32.0
 %{!?_without_doxygen:BuildRequires: doxygen}
 %{!?_without_odbc:BuildRequires:unixODBC-devel}
 %{?_with_fastcgi:BuildRequires: fcgi-devel}
-%if 0%{?centos} == 7 || 0%{?rhel} == 7 || 0%{?amzn2023}
+%if 0%{?centos} == 7 || 0%{?rhel} == 7
 BuildRequires: libmemcached-devel
 %endif
 %{?_with_memcached:BuildRequires: libmemcached-devel}
@@ -379,6 +379,9 @@ exit 0
 %doc %{pkgdocdir}/api
 
 %changelog
+* Fri Feb 7 2025 John W. O'Brien <john@saltant.com> - 3.5.0-5
+- SSPCPP-1007 Remove gratuitous libmemcached-devel from BuildRequires on AL2023
+
 * Thu Feb 6 2025 John W. O'Brien <john@saltant.com> - 3.5.0-4
 - SSPCPP-1003 Remove support for RHEL 6
 - SSPCPP-1004 Remove support for Amazon Linux 1
