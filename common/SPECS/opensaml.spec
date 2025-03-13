@@ -6,7 +6,7 @@
 
 Name: %{libname}
 Version: 3.3.1
-Release: 4%{?dist}
+Release: 3%{?dist}
 Summary: OpenSAML SAML library
 Group: Development/Libraries/C and C++
 Vendor: Shibboleth Consortium
