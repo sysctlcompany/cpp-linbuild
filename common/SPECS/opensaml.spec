@@ -5,8 +5,8 @@
 %define utilname %{compname}-bin
 
 Name: %{libname}
-Version: 3.3.0
-Release: 3%{?dist}
+Version: 3.3.1
+Release: 4%{?dist}
 Summary: OpenSAML SAML library
 Group: Development/Libraries/C and C++
 Vendor: Shibboleth Consortium
