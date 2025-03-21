@@ -68,7 +68,7 @@ COMPONENTS=\
 # *_DISTNAME	Base name of the source distibution, if different from
 #		the component's main name.
 #		Default: $(*_COMPNAME)
-# *_DISTNAME	Full filename of the source distribution.
+# *_DISTFILE	Full filename of the source distribution.
 # *_VERSION	Component's current version.
 # *_URL		URL from which to retreive the component's source code.
 #		Passed to curl or equivalent (i.e. not git, svn, etc).
