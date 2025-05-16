@@ -1,10 +1,10 @@
-FROM registry.access.redhat.com/ubi10-beta/ubi:10.0-beta-1737026793
+FROM registry.access.redhat.com/ubi10/ubi:10.0-1745487123
 
 COPY *.repo /etc/yum.repos.d/
 
 RUN dnf \
         config-manager \
-        --enable codeready-builder-beta-for-rhel-10-$(arch)-rpms \
+        --enable codeready-builder-for-rhel-10-$(arch)-rpms \
     && dnf -y update \
     && dnf -y install \
         autoconf automake boost-devel chrpath curl-devel doxygen \
