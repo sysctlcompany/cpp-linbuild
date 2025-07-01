@@ -37,4 +37,7 @@ $CP $SRC/os/rockylinux8/products/RPMS/$ARCH/*${COMP}*${VER}* $DEST/rockylinux8/$
 $CP $SRC/os/rockylinux9/products/SRPMS/*${COMP}*${VER}* $DEST/rockylinux9/src/
 $CP $SRC/os/rockylinux9/products/RPMS/$ARCH/*${COMP}*${VER}* $DEST/rockylinux9/$ARCH/
 
+$CP $SRC/os/rockylinux10/products/SRPMS/*${COMP}*${VER}* $DEST/rockylinux10/src/
+$CP $SRC/os/rockylinux10/products/RPMS/$ARCH/*${COMP}*${VER}* $DEST/rockylinux10/$ARCH/
+
 fi
