@@ -36,3 +36,4 @@ rpmspec -q --srpm ${component}.spec > ${EXT_BASE}/out/${component}.srpm
 
 # Generate/update local RPM repository
 createrepo ${localrepo}
+createrepo ${EXT_BASE}/out/SRPMS
