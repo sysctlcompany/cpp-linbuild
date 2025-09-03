@@ -1,6 +1,6 @@
 Name: shibboleth
-Version: 3.5.0
-Release: 5%{?dist}
+Version: 3.5.1
+Release: 1%{?dist}
 Summary: Open source system for attribute-based Web SSO
 Group: Productivity/Networking/Security
 Vendor: Shibboleth Consortium
@@ -379,6 +379,9 @@ exit 0
 %doc %{pkgdocdir}/api
 
 %changelog
+* Wed Sep 3 2025 Scott Cantor <cantor.2@osu.edu> - 3.5.1-1
+- Bump version.
+
 * Fri Feb 7 2025 John W. O'Brien <john@saltant.com> - 3.5.0-5
 - SSPCPP-1007 Remove gratuitous libmemcached-devel from BuildRequires on AL2023
 
