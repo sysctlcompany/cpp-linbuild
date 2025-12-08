@@ -182,7 +182,8 @@ PLATFORMS=\
 	rockylinux10 \
 	fedora39 \
 	fedora40 \
-	fedora41
+	fedora41 \
+	fedora42
 
 # Red Hat Enterprise Linux (RHEL) builds, which run inside
 # Universal Base Image (UBI) containers, can only be performed
