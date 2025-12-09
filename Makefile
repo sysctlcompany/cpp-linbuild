@@ -183,7 +183,15 @@ PLATFORMS=\
 	fedora39 \
 	fedora40 \
 	fedora41 \
-	fedora42
+	fedora42 \
+	fedora43 \
+	fedora44 \
+	fedora45 \
+	fedora46 \
+	fedora47 \
+	fedora48 \
+	fedora49 \
+	fedora50
 
 # Red Hat Enterprise Linux (RHEL) builds, which run inside
 # Universal Base Image (UBI) containers, can only be performed
