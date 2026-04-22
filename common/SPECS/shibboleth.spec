@@ -54,6 +54,8 @@ BuildRequires: libmemcached-devel
 %endif
 BuildRequires: redhat-rpm-config
 Requires(pre): shadow-utils
+Provides: user(shibd)
+Provides: group(shibd)
 %endif
 
 %define runuser shibd
